@@ -1,4 +1,6 @@
-import { format } from 'date-fns'
+import { useMemo } from 'react'
+import clsx from 'clsx'
+import { format, isSameDay } from 'date-fns'
 import '../assets/day.css'
 
 interface DayProps {
@@ -7,8 +9,9 @@ interface DayProps {
 }
 
 export const Day = ({ date, isOffMonth }: DayProps): JSX.Element => {
+  const isToday = useMemo(() => isSameDay(new Date, date), [date])
   return (
-    <div role="gridcell" className="day">
+    <li className={clsx('day', isOffMonth && 'day--off-month', isToday && 'date--today')}>
       {isOffMonth
         ? (
           <button type="button" className="day__btn">
@@ -17,6 +20,6 @@ export const Day = ({ date, isOffMonth }: DayProps): JSX.Element => {
         ) : (
           <time dateTime={format(date, 'yyyy-MM-dd')}>{format(date, 'dd')}</time>
         )}
-    </div>
+    </li>
   )
 }

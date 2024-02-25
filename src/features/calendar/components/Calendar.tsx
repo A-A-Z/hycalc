@@ -1,9 +1,10 @@
-import { useMemo } from 'react'
+import { useMemo, useId } from 'react'
 import { format, startOfWeek, endOfMonth, addWeeks } from 'date-fns'
 import { setDefaultOptions } from 'date-fns/setDefaultOptions'
 import { enAU } from 'date-fns/locale'
 
 import { Week } from './Week'
+import { Headings } from './Headings'
 import '../assets/calendar.css'
 
 interface CalendarProps {
@@ -12,6 +13,7 @@ interface CalendarProps {
 }
 
 export const Calendar = ({ year, month }: CalendarProps): JSX.Element => {
+  const gridId = useId()
   setDefaultOptions({ locale: enAU, weekStartsOn: 1 }) // TODO: move
   const firstOfTheMonth = new Date(year, (month - 1), 1)
 
@@ -29,8 +31,12 @@ export const Calendar = ({ year, month }: CalendarProps): JSX.Element => {
   }, [firstOfTheMonth])
 
   return (
-    <div className="calendar" role="grid">
-      {weeks.map(week => <Week key={`week-${format(week, 'yyyy-MM-dd')}`} date={week} activeMonth={month} />)}
-    </div>
+    <>
+      <h2 id={gridId}><time dateTime={format(firstOfTheMonth, 'yyyy-MM')}>{format(firstOfTheMonth, 'MMMM yyyy')}</time></h2>
+      <ol className="calendar" aria-labelledby={gridId}>
+        <Headings />
+        {weeks.map(week => <Week key={`week-${format(week, 'yyyy-MM-dd')}`} date={week} activeMonth={month} />)}
+      </ol>
+    </>
   )
 }

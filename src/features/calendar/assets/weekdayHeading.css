@@ -1,0 +1,7 @@
+.weekday-heading {
+  list-style-type: none;
+}
+
+.weekday-heading abbr {
+  text-decoration: none;
+}
