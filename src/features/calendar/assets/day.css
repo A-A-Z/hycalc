@@ -1,0 +1,10 @@
+.day {
+  border: 1px solid #999;
+}
+
+.day__btn {
+  background-color: transparent;
+  border: 0;
+  height: 60px;
+  width: 60px;
+}
