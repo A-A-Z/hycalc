@@ -1,5 +1,5 @@
-import { Calendar } from './features/calendar'
-import { DateRecordsProvider } from './features/records'
+import { Calendar } from 'features/calendar'
+import { DateRecordsProvider } from 'features/records'
 
 function App() {
   return (
