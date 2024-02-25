@@ -6,6 +6,7 @@
 .day__btn {
   background-color: transparent;
   border: 0;
+  cursor: pointer;
   height: 60px;
   width: 60px;
 }

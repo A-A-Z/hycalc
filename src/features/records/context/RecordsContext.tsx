@@ -1,16 +1,27 @@
-import { createContext, useContext } from 'react'
+import { createContext, useContext, useMemo, useCallback, useState } from 'react'
 
 import type { FC, ReactNode } from 'react'
-import type { DateRecords } from '../types'
+import type { DateRecords, DateRecordType, DateRecordStatus } from '../types'
 
-const DateRecordsContext = createContext<DateRecords>({})
+interface DateRecordsContextProps {
+  records: DateRecords,
+  setDateRecord: (dayOfTheMonth: number, status: DateRecordStatus) => void
+}
 
-export const useDateRecords = () => {
+const DateRecordsContext = createContext<DateRecordsContextProps>({
+  records: {},
+  setDateRecord: () => null
+})
+
+export const useDateRecords = (dayOfTheMonth: number) => {
   const context = useContext(DateRecordsContext)
   if (context === undefined) {
     throw new Error('useUser must be used within a UserProvider')
   }
-  return context
+
+  const dateStatus = context.records[dayOfTheMonth] ?? 'none'
+
+  return { ...context, dateStatus }
 }
 
 interface DateRecordsProviderProps {
@@ -18,5 +29,23 @@ interface DateRecordsProviderProps {
 }
 
 export const DateRecordsProvider: FC<DateRecordsProviderProps> = ({ children }) => {
-  return <DateRecordsContext.Provider value={{}}>{children}</DateRecordsContext.Provider>
+  const [records, setRecords] =  useState<DateRecords>({})
+
+  const setDateRecord = useCallback((dayOfTheMonth: number, status: DateRecordStatus) => {
+    const newRecords = { ...records }
+
+    if (status === 'none' && newRecords[dayOfTheMonth] !== undefined) {
+      delete newRecords[dayOfTheMonth]
+    } else {
+      newRecords[dayOfTheMonth] = status as DateRecordType
+    }
+
+    setRecords(newRecords)
+  }, [setRecords, records])
+
+  const value = useMemo(() => ({
+    records,
+    setDateRecord
+  }), [records, setDateRecord])
+  return <DateRecordsContext.Provider value={value}>{children}</DateRecordsContext.Provider>
 }
