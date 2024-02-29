@@ -6,11 +6,13 @@ import type { DateRecords, DateRecordType, DateRecordStatus } from '../types'
 interface DateRecordsContextProps {
   records: DateRecords,
   setDateRecord: (dayOfTheMonth: number, status: DateRecordStatus) => void
+  ratio: number
 }
 
 const DateRecordsContext = createContext<DateRecordsContextProps>({
   records: {},
-  setDateRecord: () => null
+  setDateRecord: () => null,
+  ratio: 0
 })
 
 export const useDateRecords = (dayOfTheMonth: number) => {
@@ -43,9 +45,16 @@ export const DateRecordsProvider: FC<DateRecordsProviderProps> = ({ children }) 
     setRecords(newRecords)
   }, [setRecords, records])
 
+  const ratio = useMemo(() => {
+    const totalDays = Object.entries(records).length
+    const daysOnSite = Object.values(records).filter((entry) => entry === 'onsite').length
+    return Math.round((daysOnSite / totalDays) * 100 || 0)
+  }, [records])
+
   const value = useMemo(() => ({
     records,
-    setDateRecord
-  }), [records, setDateRecord])
+    setDateRecord,
+    ratio
+  }), [records, setDateRecord, ratio])
   return <DateRecordsContext.Provider value={value}>{children}</DateRecordsContext.Provider>
 }

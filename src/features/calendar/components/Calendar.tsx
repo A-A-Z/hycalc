@@ -32,7 +32,6 @@ export const Calendar = ({ year, month }: CalendarProps): JSX.Element => {
 
   return (
     <>
-      <h2 id={gridId}><time dateTime={format(firstOfTheMonth, 'yyyy-MM')}>{format(firstOfTheMonth, 'MMMM yyyy')}</time></h2>
       <ol className="calendar" aria-labelledby={gridId}>
         <Headings />
         {weeks.map(week => <Week key={`week-${format(week, 'yyyy-MM-dd')}`} date={week} activeMonth={month} />)}
