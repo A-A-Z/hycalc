@@ -1,4 +1,5 @@
-import { createContext, useContext, useMemo, useCallback, useState } from 'react'
+import { createContext, useContext, useMemo, useCallback, useState, useEffect } from 'react'
+import { useDebounceCallback } from 'usehooks-ts'
 
 import type { FC, ReactNode } from 'react'
 import type { DateRecords, DateRecordType, DateRecordStatus } from '../types'
@@ -27,11 +28,15 @@ export const useDateRecords = (dayOfTheMonth: number) => {
 }
 
 interface DateRecordsProviderProps {
+  year: number
+  month: number
   children: ReactNode
 }
 
-export const DateRecordsProvider: FC<DateRecordsProviderProps> = ({ children }) => {
+export const DateRecordsProvider: FC<DateRecordsProviderProps> = ({ year, month, children }) => {
   const [records, setRecords] =  useState<DateRecords>({})
+
+  const recordsString = useMemo(() => JSON.stringify(records), [records])
 
   const setDateRecord = useCallback((dayOfTheMonth: number, status: DateRecordStatus) => {
     const newRecords = { ...records }
@@ -44,6 +49,16 @@ export const DateRecordsProvider: FC<DateRecordsProviderProps> = ({ children }) 
 
     setRecords(newRecords)
   }, [setRecords, records])
+
+  const save = useCallback((json: string) => {
+    localStorage.setItem(`${year}-${month}`, json)
+    console.log(`Records saved for: ${year}-${month}`)
+  }, [])
+  const saveDebounced = useDebounceCallback(save, 1500)
+
+  useEffect(() => {
+    saveDebounced(recordsString)
+  }, [recordsString])
 
   const ratio = useMemo(() => {
     const totalDays = Object.entries(records).length

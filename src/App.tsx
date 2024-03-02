@@ -13,7 +13,7 @@ function App() {
   const month = 2
 
   return (
-    <DateRecordsProvider>
+    <DateRecordsProvider year={year} month={month}>
       <Page>
         <Title gridId={gridId} year={year} month={month} />
         <Calendar id={gridId} year={year} month={month} />

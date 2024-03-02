@@ -11,7 +11,7 @@ export const Ratio = ({ value }: RatioProps): JSX.Element => {
     // Only proceed if currentValue does not equal the target value
     if (currentValue !== value) {
       const difference = Math.abs(value - currentValue);
-      const delay = difference > 10 ? 10 : (115 - difference * 10);
+      const delay = difference > 10 ? 20 : (115 - difference * 10);
 
       const timer = setTimeout(() => {
         setCurrentValue(prevValue => prevValue + (value > prevValue ? 1 : -1));
