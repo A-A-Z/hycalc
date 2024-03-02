@@ -29,11 +29,14 @@ export const Day = ({ date, isOffMonth }: DayProps): JSX.Element => {
     <li className={clsx('day', isOffMonth && 'day--off-month', isToday && 'date--today')}>
       {isOffMonth
         ? (
-          <button type="button" className="day__btn" onClick={onClick}>
-            <time dateTime={format(date, 'yyyy-MM-dd')}>{format(date, 'dd')} {dateStatus}</time>
+          <button type="button" className="day__item day__item--btn" onClick={onClick}>
+            <time dateTime={format(date, 'yyyy-MM-dd')}>{format(date, 'dd')}</time>
+            <span>{dateStatus}</span>
           </button>
         ) : (
-          <time dateTime={format(date, 'yyyy-MM-dd')}>{format(date, 'dd')}</time>
+          <span className="day__item day__item--off" >
+            <time dateTime={format(date, 'yyyy-MM-dd')}>{format(date, 'dd')}</time>
+          </span>
         )}
     </li>
   )

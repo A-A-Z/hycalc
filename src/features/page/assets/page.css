@@ -1,0 +1,10 @@
+.page {
+  --body-width: 900px;
+
+  width: 100%;
+}
+
+.page__body {
+  margin: 0 auto;
+  width: var(--body-width);
+}
