@@ -10,13 +10,17 @@ interface DateRecordsContextProps {
   ratio: number
 }
 
+interface useDateRecordsReturn extends DateRecordsContextProps {
+  dateStatus: DateRecordStatus
+}
+
 const DateRecordsContext = createContext<DateRecordsContextProps>({
   records: {},
   setDateRecord: () => null,
   ratio: 0
 })
 
-export const useDateRecords = (dayOfTheMonth: number) => {
+export const useDateRecords = (dayOfTheMonth: number): useDateRecordsReturn => {
   const context = useContext(DateRecordsContext)
   if (context === undefined) {
     throw new Error('useUser must be used within a UserProvider')
@@ -35,9 +39,13 @@ interface DateRecordsProviderProps {
 
 export const DateRecordsProvider: FC<DateRecordsProviderProps> = ({ year, month, children }) => {
   const [records, setRecords] =  useState<DateRecords>({})
+  const [isLoaded, setIsLoaded] = useState(false)
+  const recordSetName = `${year}-${month}`
 
+  // convert Records in to JSON string
   const recordsString = useMemo(() => JSON.stringify(records), [records])
 
+  // Callback function for updating the date records
   const setDateRecord = useCallback((dayOfTheMonth: number, status: DateRecordStatus) => {
     const newRecords = { ...records }
 
@@ -50,14 +58,41 @@ export const DateRecordsProvider: FC<DateRecordsProviderProps> = ({ year, month,
     setRecords(newRecords)
   }, [setRecords, records])
 
+  // Callback function to save records to local store
   const save = useCallback((json: string) => {
-    localStorage.setItem(`${year}-${month}`, json)
-    console.log(`Records saved for: ${year}-${month}`)
+    localStorage.setItem(`${recordSetName}`, json)
+    console.log('Records saved for:', recordSetName)
   }, [])
+
+  // use this debounced version for auto save
   const saveDebounced = useDebounceCallback(save, 1500)
 
+  // Load records from load storage
   useEffect(() => {
-    saveDebounced(recordsString)
+    if (isLoaded) {
+      return
+    }
+
+    console.log('Looking for records for:', recordSetName)
+    const recordsJson = localStorage.getItem(recordSetName)
+
+    if (recordsJson !== null) {
+      const newRecords = JSON.parse(recordsJson)
+      const recordsCount = Object.values(newRecords).length
+      setRecords(newRecords)
+      console.log(`Records found for ${recordSetName} with ${recordsCount} record${recordsCount !== 1 ? 's' : ''}`)
+    } else {
+      console.log('No records found.')
+    }
+
+    setIsLoaded(true)
+  }, [])
+
+  // called debounaced save on record change
+  useEffect(() => {
+    if (isLoaded) {
+      saveDebounced(recordsString)
+    }
   }, [recordsString])
 
   const ratio = useMemo(() => {
@@ -71,5 +106,10 @@ export const DateRecordsProvider: FC<DateRecordsProviderProps> = ({ year, month,
     setDateRecord,
     ratio
   }), [records, setDateRecord, ratio])
+
+  if (!isLoaded) {
+    return <div>Loading...</div>
+  }
+
   return <DateRecordsContext.Provider value={value}>{children}</DateRecordsContext.Provider>
 }

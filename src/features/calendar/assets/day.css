@@ -17,3 +17,20 @@
 .day__item--btn {
   cursor: pointer;
 }
+.day__item--btn:hover {
+  background-color: #ddd;
+}
+
+.day__status {
+  align-items: center;
+  display: flex;
+  height: 26px;
+  justify-content: center;
+  width: 5rem;
+}
+.day__status:is(.day__status--remote, .day__status--onsite) {
+  background-color: #888;
+}
+.day__status:is(.day__status--none) {
+  opacity: 0;
+}

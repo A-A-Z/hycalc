@@ -31,7 +31,7 @@ export const Day = ({ date, isOffMonth }: DayProps): JSX.Element => {
         ? (
           <button type="button" className="day__item day__item--btn" onClick={onClick}>
             <time dateTime={format(date, 'yyyy-MM-dd')}>{format(date, 'dd')}</time>
-            <span>{dateStatus}</span>
+            <span className={`day__status day__status--${dateStatus}`}>{dateStatus}</span>
           </button>
         ) : (
           <span className="day__item day__item--off" >
