@@ -5,6 +5,9 @@ import { Calendar } from 'features/calendar'
 import { Title  } from 'features/title'
 import { DateRecordsProvider } from 'features/records'
 
+import 'global/assets/app.css'
+import 'global/assets/themes/theme-dark.css'
+
 function App() {
   const gridId = useId()
 

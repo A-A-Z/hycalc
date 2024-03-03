@@ -1,3 +1,8 @@
+@keyframes toggleStatus {
+  0% { transform: scaleX(0); }
+  100% { transform: scaleX(1); }
+}
+
 .day {
   list-style-type: none;
 }
@@ -23,14 +28,25 @@
 
 .day__status {
   align-items: center;
+  border-radius: 5px;
   display: flex;
   height: 26px;
   justify-content: center;
+  transition: background 0.5s ease;
   width: 5rem;
+  transform-origin: left center;
 }
-.day__status:is(.day__status--remote, .day__status--onsite) {
-  background-color: #888;
+.day__status:is(.day__status--remote) {
+  background-color: var(--colour-status-remote);
+}
+.day__status:is(.day__status--onsite) {
+  background-color: var(--colour-status-onsite);
 }
 .day__status:is(.day__status--none) {
+  background-color: transparent;
   opacity: 0;
+}
+.day__item--active .day__status:is(.day__status--remote, .day__status--onsite) {
+  animation-duration: 0.2s;
+  animation-name: toggleStatus;
 }

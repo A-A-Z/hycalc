@@ -24,5 +24,5 @@ export const Ratio = ({ value }: RatioProps): JSX.Element => {
     // This effectively returns `undefined`, which is a valid `void` return type.
   }, [value, currentValue]);
 
-  return <div>{currentValue}</div>
+  return <div>{currentValue}%</div>
 }
