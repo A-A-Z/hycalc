@@ -36,7 +36,7 @@ export const Calendar = ({ id, year, month }: CalendarProps): JSX.Element => {
   }, [firstOfTheMonth])
 
   const handleKeyDown: WeekRefFnc = useCallback((weekIndex, dayIndex, key) => {
-    console.log('keydown', dayRefs.current[weekIndex][dayIndex], key)
+    // console.log('keydown', dayRefs.current[weekIndex][dayIndex], key)
     let newWeekIndex = weekIndex
     let newDatIndex = dayIndex
 
@@ -62,13 +62,13 @@ export const Calendar = ({ id, year, month }: CalendarProps): JSX.Element => {
       return
     }
 
-    console.log('new ref', dayRefs.current[newWeekIndex][newDatIndex])
+    // console.log('new ref', dayRefs.current[newWeekIndex][newDatIndex])
     dayRefs.current[newWeekIndex][newDatIndex].current?.focus()
   }, [dayRefs])
 
   return (
     <>
-      <ol className="calendar" aria-labelledby={id}>
+      <ol className="calendar" aria-labelledby={id} role="grid">
         <Headings />
         {weeks.map((week, weekIndex) => {
           return (

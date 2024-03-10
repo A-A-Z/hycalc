@@ -1,9 +1,10 @@
-import { useMemo, useState, forwardRef } from 'react'
+import { useMemo, useState, useId, forwardRef } from 'react'
 import clsx from 'clsx'
 import { format, isSameDay } from 'date-fns'
 
 import { useDateRecords } from 'features/records'
 import '../assets/day.css'
+import '../assets/status.css'
 
 import type { KeyboardEventHandler } from 'react'
 import type { DateRecordStatus } from 'features/records'
@@ -48,34 +49,17 @@ const Day = forwardRef<HTMLButtonElement, DayProps>(({
   }
 
   const onKeyDown: KeyboardEventHandler<HTMLButtonElement> = e => {
-    // const { key } = e
     handKeyDown(dayIndex, e.key)
-
-    // switch(key) {
-    //   case 'ArrowUp':
-    //     console.log('up')
-    //     break
-
-    //   case 'ArrowRight':
-    //     console.log('right')
-    //     break
-
-    //   case 'ArrowDown':
-    //     console.log('down')
-    //     break
-
-    //   case 'ArrowLeft':
-    //     console.log('left')
-    //     break  
-    // }
   }
 
   const statusOptions: DateRecordStatus[] = [
     'none', 'remote', 'onsite'
   ]
 
+  const statusId = useId()
+
   return (
-    <li className={clsx('day', isOffMonth && 'day--off-month', isToday && 'date--today')}>
+    <li className={clsx('day', isOffMonth && 'day--off-month', isToday && 'date--today')} role="gridcell">
       {isOffMonth
         ? (
           <button
@@ -85,14 +69,21 @@ const Day = forwardRef<HTMLButtonElement, DayProps>(({
             onClick={onClick}
             onKeyDown={onKeyDown}
             tabIndex={isFirstItem ? 0 : -1}
+            aria-controls={statusId}
           >
             <time dateTime={format(date, 'yyyy-MM-dd')}>{format(date, 'dd')}</time>
-            <ul role="listbox">
+            <ul id={statusId} role="listbox" className="status" aria-live="polite">
               {statusOptions.map(status => (
-                <li key={status} role="option" aria-selected={status === dateStatus}>{STATUS_LABEL[status]}</li>)
-              )}
+                <li
+                  key={status}
+                  className={`status__option status__option--${status}`}
+                  role="option"
+                  aria-selected={status === dateStatus}
+                  tabIndex={-1}>{STATUS_LABEL[status]}
+                </li>
+              ))}
             </ul>
-            <span className={`day__status day__status--${dateStatus}`}>{STATUS_LABEL[dateStatus]}</span>
+            {/* <span className={`day__status day__status--${dateStatus}`}>{STATUS_LABEL[dateStatus]}</span> */}
           </button>
         ) : (
           <span className="day__item day__item--off" >
