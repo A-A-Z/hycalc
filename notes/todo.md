@@ -9,4 +9,5 @@
  - [ ] Light Theme
  - [ ] Month switch
  - [ ] Select animation
+ - [ ] Config
  

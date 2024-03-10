@@ -1,14 +1,25 @@
-import { useMemo } from 'react'
+import { useMemo, useCallback } from 'react'
 import { format, startOfWeek, addDays } from 'date-fns'
 
 import { Day } from './Day'
 
+import type { weekRef, WeekRefFnc, DayRefFnc } from '../types'
+
 interface WeekProps {
+  weekIndex: number
   date: Date
   activeMonth: number
+  weekdayRefs: weekRef
+  handleKeyDown: WeekRefFnc
 }
 
-export const Week = ({ date, activeMonth }: WeekProps): JSX.Element => {
+export const Week = ({
+  weekIndex,
+  date,
+  activeMonth,
+  weekdayRefs,
+  handleKeyDown
+}: WeekProps): JSX.Element => {
   const daysOfTheWeek = useMemo(() => {
     const start = startOfWeek(date)
 
@@ -18,9 +29,21 @@ export const Week = ({ date, activeMonth }: WeekProps): JSX.Element => {
     return days
   }, [date])
 
+  const handleDayKeyDown: DayRefFnc = useCallback((dayIndex, key) => {
+    handleKeyDown(weekIndex, dayIndex, key)
+  }, [])
+
   return (
     <>
-      {daysOfTheWeek.map(weekday => <Day key={format(weekday, 'yyyy-MM-dd')} date={weekday} isOffMonth={activeMonth.toString() === format(weekday, 'M')} />)}
+      {daysOfTheWeek.map((weekday, dayIndex) => <Day
+        ref={weekdayRefs[dayIndex]}
+        key={format(weekday, 'yyyy-MM-dd')}
+        dayIndex={dayIndex}
+        isFirstItem={format(weekday, 'dd') === '01'}
+        date={weekday}
+        isOffMonth={activeMonth.toString() === format(weekday, 'M')}
+        handKeyDown={handleDayKeyDown}
+      />)}
     </>
   )
 }
