@@ -14,7 +14,12 @@ export const Title = ({ gridId, year, month }: TitleProps): JSX.Element => {
   const firstOfTheMonth = new Date(year, (month - 1), 1)
   return (
     <div className="title">
-      <h2 id={gridId}><time dateTime={format(firstOfTheMonth, DATE_FORMATS.dateTimeAttrMonth)}>{format(firstOfTheMonth, DATE_FORMATS.calendarTitle)}</time></h2>
+      <h2 id={gridId}>
+        <time dateTime={format(firstOfTheMonth, DATE_FORMATS.dateTimeAttrMonth)}>
+          <span className="title__month">{format(firstOfTheMonth, DATE_FORMATS.calendarTitleMonth)}</span>
+          <span className="title__year">{format(firstOfTheMonth, DATE_FORMATS.calendarTitleYear)}</span>
+        </time>
+      </h2>
       <Ratio value={ratio} />
     </div>
   )

@@ -17,6 +17,7 @@ body {
   --colour-dark-600: #cac5d4;
 
   --colour-white: #fff;
+  --colour-black: #000;
 
   /* 🎟️ Tokens 🎟️ */
 
@@ -24,9 +25,10 @@ body {
 
   --colour-text-primary: var(--colour-dark-600);
 
-  --colour-border-default: var(--colour-dark-300);
-  --colour-border-hover: var(--colour-primary-200);
+  --colour-border-default: var(--colour-dark-500);
+  --colour-border-hover: var(--colour-dark-600);
+  --colour-border-disabled: var(--colour-dark-400);
 
-  --colour-status-remote: #ff0;
-  --colour-status-onsite: #0ff;
+  --colour-status-remote: #b556ff;
+  --colour-status-onsite: #00d2d0;
 }

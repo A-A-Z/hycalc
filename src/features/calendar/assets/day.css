@@ -1,54 +1,53 @@
-@keyframes toggleStatus {
-  0% { transform: scaleX(0); }
-  100% { transform: scaleX(1); }
-}
-
 .day {
   list-style-type: none;
 }
 
 .day__item {
+  --active-border-colour: var(--colour-border-default);
+  --active-hover-colour: var(--colour-border-hover);
+
   align-items: center;
   background-color: transparent;
   border-radius: 6px;
-  border: 1px solid var(--colour-border-default);
+  border: 1px solid var(--active-border-colour);
   display: flex;
   flex-direction: column;
-  height: 80px;
+  height: 100px;
   justify-content: center;
+  position: relative;
   transition: border-color 0.2s ease, box-shadow 0.2s ease;
-  width: 100%;
+  width: -moz-available;
+  width: -webkit-fill-available;
+  width: fill-available;
+}
+.day__item.day__item--off {
+  border-color: var(--colour-border-disabled);
+  border-style: dashed;
+}
+.day__item:has(.status__option--onsite[aria-selected="true"]) {
+  --active-border-colour: var(--colour-status-onsite);
+  --active-hover-colour: var(--colour-status-onsite);
+}
+.day__item:has(.status__option--remote[aria-selected="true"]) {
+  --active-border-colour: var(--colour-status-remote);
+  --active-hover-colour: var(--colour-status-remote);
+  
+}
+
+.day__item time {
+  color: var(--colour-text-primary);
+  font-size: 1rem;
+  letter-spacing: 0.04em;
+  margin-top: -20px;
 }
 
 .day__item--btn {
   cursor: pointer;
+  overflow: hidden;
 }
-.day__item--btn:hover {
-  border-color: var(--colour-border-hover);
-  box-shadow: 0 0 0 2px var(--colour-border-hover);
-}
-
-.day__status {
-  align-items: center;
-  border-radius: 5px;
-  display: flex;
-  height: 26px;
-  justify-content: center;
-  transition: background 0.5s ease;
-  width: 5rem;
-  transform-origin: left center;
-}
-.day__status:is(.day__status--remote) {
-  background-color: var(--colour-status-remote);
-}
-.day__status:is(.day__status--onsite) {
-  background-color: var(--colour-status-onsite);
-}
-.day__status:is(.day__status--none) {
-  background-color: transparent;
-  opacity: 0;
-}
-.day__item--active .day__status:is(.day__status--remote, .day__status--onsite) {
-  animation-duration: 0.2s;
-  animation-name: toggleStatus;
+.day__item--btn:is(:hover, :focus-visible) {
+  border-color: var(--active-hover-colour);
+  box-shadow: 0 0 0 2px var(--active-hover-colour);
+  outline-color: transparent;
+  outline-style: solid;
 }

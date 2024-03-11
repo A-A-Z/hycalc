@@ -6,9 +6,15 @@
  - [ ] PWA support
  - [ ] Favicon
  - [ ] Dark Theme
- - [ ] Select animation
+ - [x] Select animation
  - [x] Advanced keydown nav
  - [ ] Unit tests
+ - [ ] Language
+ - [ ] Highlight today
+ - [ ] Highlight current week
+ - [ ] Focus on today
+ - [ ] Icons
+ - [ ] Ratio colour
  
 ## Optional Features
 
@@ -18,6 +24,9 @@
  - [ ] Light Theme
  - [ ] Pre-select template
  - [ ] Multi select
+ - [ ] Select methods
+ - [ ] Hide weekends
+ - [ ] Public holidays
 
 ## Configs
 

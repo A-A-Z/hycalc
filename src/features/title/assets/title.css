@@ -1,5 +1,26 @@
 .title {
-  align-items: center;
+  align-items: baseline;
   display: flex;
   justify-content: space-between;
+  margin: 0 0 35px 0;
+}
+
+.title__month,
+.title__year,
+.title__ratio {
+  font-size: 3rem;
+  letter-spacing: 0.008em;
+}
+
+.title__month {
+  font-weight: 600;
+  margin: 0 0.15em 0 0;
+}
+
+.title__year {
+  font-weight: 100;
+}
+
+.title__ratio {
+  font-weight: 500;
 }

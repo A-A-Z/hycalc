@@ -80,7 +80,9 @@ const Day = forwardRef<HTMLButtonElement, DayProps>(({
                   className={`status__option status__option--${status}`}
                   role="option"
                   aria-selected={status === dateStatus}
-                  tabIndex={-1}>{STATUS_LABEL[status]}
+                  tabIndex={-1}
+                >
+                    {STATUS_LABEL[status]}
                 </li>
               ))}
             </ul>

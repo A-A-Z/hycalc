@@ -4,7 +4,8 @@ export const DATE_FORMATS = {
   dateTimeAttrMonth: 'yyyy-MM',
   dayCellLabel: 'do',
   dayCellLabelOffMonth: 'do LLL',
-  calendarTitle: 'MMMM yyyy',
+  calendarTitleMonth: 'MMMM',
+  calendarTitleYear: 'yyyy',
   recordDayOfMonth: 'd',
   weekdayAbbr: 'EEE',
   weekdayFull: 'EEEE'
