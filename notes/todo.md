@@ -1,6 +1,6 @@
 # HyCalc TODO
 
-## Main Features
+## Core Features
 
  - [ ] Fonts
  - [ ] PWA support
@@ -17,6 +17,7 @@
  - [ ] Mobile support
  - [ ] Light Theme
  - [ ] Pre-select template
+ - [ ] Multi select
 
 ## Configs
 

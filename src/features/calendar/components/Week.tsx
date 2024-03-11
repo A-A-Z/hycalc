@@ -3,13 +3,13 @@ import { format, startOfWeek, addDays, isFirstDayOfMonth, isOffMonth, DATE_FORMA
 
 import { Day } from './Day'
 
-import type { weekRef, WeekRefFnc, DayRefFnc } from '../types'
+import type { WeekRef, WeekRefFnc, DayRefFnc } from '../types'
 
 interface WeekProps {
   weekIndex: number
   date: Date
   activeMonth: number
-  weekdayRefs: weekRef
+  weekdayRefs: WeekRef
   handleKeyDown: WeekRefFnc
 }
 

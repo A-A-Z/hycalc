@@ -4,9 +4,10 @@ import { format, startOfWeek, endOfMonth, addWeeks, DATE_FORMATS } from 'lib/dat
 
 import { Week } from './Week'
 import { Headings } from './Headings'
+import { handleGridNav } from '../utils'
 import '../assets/calendar.css'
 
-import type { weekRef, dayRef, WeekRefFnc } from '../types'
+import type { WeekRef, DayRef, WeekRefFnc } from '../types'
 
 interface CalendarProps {
   id: string
@@ -15,7 +16,7 @@ interface CalendarProps {
 }
 
 export const Calendar = ({ id, year, month }: CalendarProps): JSX.Element => {
-  const dayRefs = useRef<weekRef[]>([])
+  const dayRefs = useRef<WeekRef[]>([])
   const firstOfTheMonth = new Date(year, (month - 1), 1)
 
   const weeks = useMemo(() => {
@@ -26,40 +27,16 @@ export const Calendar = ({ id, year, month }: CalendarProps): JSX.Element => {
     while (currentWeekStart <= lastDayOfMonth) {
       weeks.push(currentWeekStart)
       currentWeekStart = addWeeks(currentWeekStart, 1)
-      const weekdayRefs = Array.from({ length: 7 }, (): dayRef => createRef<HTMLButtonElement>())
+      const weekdayRefs = Array.from({ length: 7 }, (): DayRef => createRef<HTMLButtonElement>())
       dayRefs.current.push(weekdayRefs)
     }
 
     return weeks
   }, [firstOfTheMonth])
 
-  const handleKeyDown: WeekRefFnc = useCallback((weekIndex, dayIndex, key) => {
-    let newWeekIndex = weekIndex
-    let newDatIndex = dayIndex
-
-    switch(key) {
-      case 'ArrowUp':
-        newWeekIndex--
-        break
-
-      case 'ArrowRight':
-        newDatIndex++
-        break
-
-      case 'ArrowDown':
-        newWeekIndex++
-        break
-
-      case 'ArrowLeft':
-        newDatIndex--
-        break  
-    }
-
-    if (dayRefs.current?.[newWeekIndex]?.[newDatIndex] === undefined) {
-      return
-    }
-
-    dayRefs.current[newWeekIndex][newDatIndex].current?.focus()
+  // create callback function for grid keyboard nav
+  const handleKeyDown: WeekRefFnc = useCallback((rowIndex, columnIndex, key) => {
+    handleGridNav(dayRefs, rowIndex, columnIndex, key)
   }, [dayRefs])
 
   return (
