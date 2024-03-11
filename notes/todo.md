@@ -1,4 +1,4 @@
-# TODO
+# HyCalc TODO
 
 ## Main Features
 
@@ -6,8 +6,21 @@
  - [ ] PWA support
  - [ ] Favicon
  - [ ] Dark Theme
- - [ ] Light Theme
- - [ ] Month switch
  - [ ] Select animation
- - [ ] Config
  
+## Optional Features
+
+ - [ ] Month select
+ - [ ] Config
+ - [ ] Mobile support
+ - [ ] Light Theme
+ - [ ] Pre-select template
+
+## Configs
+
+  - [ ] Theme switching
+  - [ ] Status Colours
+  - [ ] Status Wording
+  - [ ] Icons
+  - [ ] Ratio format
+  - [ ] Min ratio

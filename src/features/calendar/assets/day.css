@@ -11,11 +11,12 @@
   align-items: center;
   background-color: transparent;
   border-radius: 6px;
-  border: 1px solid #999;
+  border: 1px solid var(--colour-border-default);
   display: flex;
   flex-direction: column;
   height: 80px;
   justify-content: center;
+  transition: border-color 0.2s ease, box-shadow 0.2s ease;
   width: 100%;
 }
 
@@ -23,7 +24,8 @@
   cursor: pointer;
 }
 .day__item--btn:hover {
-  background-color: #ddd;
+  border-color: var(--colour-border-hover);
+  box-shadow: 0 0 0 2px var(--colour-border-hover);
 }
 
 .day__status {

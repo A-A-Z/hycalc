@@ -71,7 +71,7 @@ const Day = forwardRef<HTMLButtonElement, DayProps>(({
             tabIndex={isFirstItem ? 0 : -1}
             aria-controls={statusId}
           >
-            <time dateTime={format(date, 'yyyy-MM-dd')}>{format(date, 'dd')}</time>
+            <time dateTime={format(date, 'yyyy-MM-dd')}>{format(date, 'do')}</time>
             <ul id={statusId} role="listbox" className="status" aria-live="polite">
               {statusOptions.map(status => (
                 <li
@@ -87,7 +87,7 @@ const Day = forwardRef<HTMLButtonElement, DayProps>(({
           </button>
         ) : (
           <span className="day__item day__item--off" >
-            <time dateTime={format(date, 'yyyy-MM-dd')}>{format(date, 'dd')}</time>
+            <time dateTime={format(date, 'yyyy-MM-dd')}>{format(date, 'do')}</time>
           </span>
         )}
     </li>
