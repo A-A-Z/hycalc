@@ -2,12 +2,12 @@
 
 ## Core Features
 
- - [ ] Fonts
+ - [x] Fonts
  - [ ] PWA support
  - [ ] Favicon
  - [ ] Dark Theme
  - [ ] Select animation
- - [ ] Advanced keydown nav
+ - [x] Advanced keydown nav
  - [ ] Unit tests
  
 ## Optional Features
