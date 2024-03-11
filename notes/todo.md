@@ -7,6 +7,8 @@
  - [ ] Favicon
  - [ ] Dark Theme
  - [ ] Select animation
+ - [ ] Advanced keydown nav
+ - [ ] Unit tests
  
 ## Optional Features
 
@@ -24,3 +26,4 @@
   - [ ] Icons
   - [ ] Ratio format
   - [ ] Min ratio
+  - [ ] Week local format (m-s, s-s)

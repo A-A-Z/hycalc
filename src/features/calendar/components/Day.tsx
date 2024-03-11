@@ -1,6 +1,6 @@
 import { useMemo, useState, useId, forwardRef } from 'react'
 import clsx from 'clsx'
-import { format, isSameDay } from 'date-fns'
+import { format, isSameDay, DATE_FORMATS } from 'lib/date'
 
 import { useDateRecords } from 'features/records'
 import '../assets/day.css'
@@ -38,7 +38,7 @@ const Day = forwardRef<HTMLButtonElement, DayProps>(({
   isOffMonth,
   handKeyDown
 }, ref) => {
-  const dayOfTheMonth = parseInt(format(date, 'd'))
+  const dayOfTheMonth = parseInt(format(date, DATE_FORMATS.recordDayOfMonth))
   const [isClicked, setIsClicked] = useState(false)
   const { setDateRecord, dateStatus } = useDateRecords(dayOfTheMonth)
 
@@ -62,6 +62,7 @@ const Day = forwardRef<HTMLButtonElement, DayProps>(({
     <li className={clsx('day', isOffMonth && 'day--off-month', isToday && 'date--today')} role="gridcell">
       {isOffMonth
         ? (
+          /* On month format */
           <button
             ref={ref}
             type="button"
@@ -71,7 +72,7 @@ const Day = forwardRef<HTMLButtonElement, DayProps>(({
             tabIndex={isFirstItem ? 0 : -1}
             aria-controls={statusId}
           >
-            <time dateTime={format(date, 'yyyy-MM-dd')}>{format(date, 'do')}</time>
+            <time dateTime={format(date, DATE_FORMATS.dateTimeAttr)}>{format(date, DATE_FORMATS.dayCellLabel)}</time>
             <ul id={statusId} role="listbox" className="status" aria-live="polite">
               {statusOptions.map(status => (
                 <li
@@ -86,8 +87,9 @@ const Day = forwardRef<HTMLButtonElement, DayProps>(({
             {/* <span className={`day__status day__status--${dateStatus}`}>{STATUS_LABEL[dateStatus]}</span> */}
           </button>
         ) : (
+          /* Off month format */
           <span className="day__item day__item--off" >
-            <time dateTime={format(date, 'yyyy-MM-dd')}>{format(date, 'do')}</time>
+            <time dateTime={format(date, DATE_FORMATS.dateTimeAttr)}>{format(date, DATE_FORMATS.dayCellLabelOffMonth)}</time>
           </span>
         )}
     </li>

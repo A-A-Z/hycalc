@@ -8,7 +8,8 @@ export default defineConfig({
   resolve: {
     alias: {
       features: path.resolve(__dirname, './src/features'),
-      global: path.resolve(__dirname, './src/global')
+      global: path.resolve(__dirname, './src/global'),
+      lib: path.resolve(__dirname, './src/lib')
     }
   }
 })

@@ -1,7 +1,6 @@
 import { useMemo, useRef, useCallback, createRef } from 'react'
-import { format, startOfWeek, endOfMonth, addWeeks } from 'date-fns'
-import { setDefaultOptions } from 'date-fns/setDefaultOptions'
-import { enAU } from 'date-fns/locale'
+
+import { format, startOfWeek, endOfMonth, addWeeks, DATE_FORMATS } from 'lib/date'
 
 import { Week } from './Week'
 import { Headings } from './Headings'
@@ -17,7 +16,6 @@ interface CalendarProps {
 
 export const Calendar = ({ id, year, month }: CalendarProps): JSX.Element => {
   const dayRefs = useRef<weekRef[]>([])
-  setDefaultOptions({ locale: enAU, weekStartsOn: 1 }) // TODO: move
   const firstOfTheMonth = new Date(year, (month - 1), 1)
 
   const weeks = useMemo(() => {
@@ -36,7 +34,6 @@ export const Calendar = ({ id, year, month }: CalendarProps): JSX.Element => {
   }, [firstOfTheMonth])
 
   const handleKeyDown: WeekRefFnc = useCallback((weekIndex, dayIndex, key) => {
-    // console.log('keydown', dayRefs.current[weekIndex][dayIndex], key)
     let newWeekIndex = weekIndex
     let newDatIndex = dayIndex
 
@@ -62,7 +59,6 @@ export const Calendar = ({ id, year, month }: CalendarProps): JSX.Element => {
       return
     }
 
-    // console.log('new ref', dayRefs.current[newWeekIndex][newDatIndex])
     dayRefs.current[newWeekIndex][newDatIndex].current?.focus()
   }, [dayRefs])
 
@@ -73,7 +69,7 @@ export const Calendar = ({ id, year, month }: CalendarProps): JSX.Element => {
         {weeks.map((week, weekIndex) => {
           return (
             <Week
-              key={`week-${format(week, 'yyyy-MM-dd')}`}
+              key={`week-${format(week, DATE_FORMATS.dateKey)}`}
               weekIndex={weekIndex}
               date={week}
               activeMonth={month}

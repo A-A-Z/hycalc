@@ -1,5 +1,5 @@
 import { memo } from 'react'
-import { format, startOfWeek, addDays } from 'date-fns'
+import { format, startOfWeek, addDays, DATE_FORMATS } from 'lib/date'
 import '../assets/weekdayHeading.css'
 
 const HeadingsSrc = (): JSX.Element => {
@@ -8,7 +8,9 @@ const HeadingsSrc = (): JSX.Element => {
   return (
     <>
       {days.map(headerDate => (
-        <li key={format(headerDate, 'EEE')} className='weekday-heading'><abbr title={format(headerDate, 'EEEE')}>{format(headerDate, 'EEE')}</abbr></li>)
+        <li key={format(headerDate, DATE_FORMATS.weekdayAbbr)} className='weekday-heading' role="columnheader">
+          <abbr title={format(headerDate, DATE_FORMATS.weekdayFull)}>{format(headerDate, DATE_FORMATS.weekdayAbbr)}</abbr>
+        </li>)
       )}
     </>
   )

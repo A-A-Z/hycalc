@@ -1,5 +1,5 @@
 import { useMemo, useCallback } from 'react'
-import { format, startOfWeek, addDays } from 'date-fns'
+import { format, startOfWeek, addDays, isFirstDayOfMonth, isOffMonth, DATE_FORMATS } from 'lib/date'
 
 import { Day } from './Day'
 
@@ -37,11 +37,11 @@ export const Week = ({
     <>
       {daysOfTheWeek.map((weekday, dayIndex) => <Day
         ref={weekdayRefs[dayIndex]}
-        key={format(weekday, 'yyyy-MM-dd')}
+        key={format(weekday, DATE_FORMATS.dateKey)}
         dayIndex={dayIndex}
-        isFirstItem={format(weekday, 'dd') === '01'}
+        isFirstItem={isFirstDayOfMonth(weekday)}
         date={weekday}
-        isOffMonth={activeMonth.toString() === format(weekday, 'M')}
+        isOffMonth={isOffMonth(activeMonth, weekday)}
         handKeyDown={handleDayKeyDown}
       />)}
     </>
