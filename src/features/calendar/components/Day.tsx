@@ -56,8 +56,7 @@ const Day = forwardRef<HTMLButtonElement, DayProps>(({
   ]
 
   const statusId = useId()
-
-  // work out tabIndex
+  
   const isDayToday = isToday(date)
   const isDayThisMonth = isThisMonth(date)
   // day is tabIndexed if is today or if an off month then is first item

@@ -1,3 +1,4 @@
+import { useEffect } from 'react'
 import { format, DATE_FORMATS } from 'lib/date'
 import { useDateRecords } from 'features/records'
 import { Ratio } from './Ratio'
@@ -12,6 +13,12 @@ interface TitleProps {
 export const Title = ({ gridId, year, month }: TitleProps): JSX.Element => {
   const { ratio } = useDateRecords(1)
   const firstOfTheMonth = new Date(year, (month - 1), 1)
+
+  useEffect(() => {
+    document.title = `${format(firstOfTheMonth, DATE_FORMATS.documentTitle)} ${ratio}% - HyCalc`
+  }, [month, ratio])
+
+  console.log('test', month, ratio)
   return (
     <div className="title">
       <h2 id={gridId}>

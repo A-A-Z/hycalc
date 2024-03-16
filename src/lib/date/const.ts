@@ -4,6 +4,7 @@ export const DATE_FORMATS = {
   dateTimeAttrMonth: 'yyyy-MM',
   dayCellLabel: 'do',
   dayCellLabelOffMonth: 'do LLL',
+  documentTitle: 'MMM',
   calendarTitleMonth: 'MMMM',
   calendarTitleYear: 'yyyy',
   recordDayOfMonth: 'd',
