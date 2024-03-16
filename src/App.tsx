@@ -4,6 +4,7 @@ import { Page } from 'features/page'
 import { Calendar } from 'features/calendar'
 import { Title  } from 'features/title'
 import { DateRecordsProvider } from 'features/records'
+import { getYearAndMonth } from 'lib/date'
 
 import 'global/assets/reset.css'
 import 'global/assets/app.css'
@@ -12,10 +13,7 @@ import 'global/assets/themes/theme-dark.css'
 
 function App() {
   const gridId = useId()
-
-  // TODO: replace with real
-  const year = 2024
-  const month = 2
+  const { year, month } = getYearAndMonth(0)
 
   return (
     <DateRecordsProvider year={year} month={month}>

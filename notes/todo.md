@@ -15,6 +15,9 @@
  - [ ] Focus on today
  - [ ] Icons
  - [ ] Ratio colour
+ - [ ] HTML title
+ - [ ] Page header
+ - [ ] Clear old date records
  
 ## Optional Features
 
@@ -27,6 +30,8 @@
  - [ ] Select methods
  - [ ] Hide weekends
  - [ ] Public holidays
+ - [ ] Dynamic favicon
+ - [ ] Easter eggs
 
 ## Configs
 
@@ -37,3 +42,4 @@
   - [ ] Ratio format
   - [ ] Min ratio
   - [ ] Week local format (m-s, s-s)
+  - [ ] Hide weekend
