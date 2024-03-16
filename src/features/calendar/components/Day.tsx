@@ -1,6 +1,6 @@
-import { useMemo, useState, useId, forwardRef } from 'react'
+import { useState, useId, forwardRef } from 'react'
 import clsx from 'clsx'
-import { format, isSameDay, DATE_FORMATS } from 'lib/date'
+import { format, isToday, isThisMonth, DATE_FORMATS } from 'lib/date'
 
 import { useDateRecords } from 'features/records'
 import '../assets/day.css'
@@ -42,7 +42,6 @@ const Day = forwardRef<HTMLButtonElement, DayProps>(({
   const [isClicked, setIsClicked] = useState(false)
   const { setDateRecord, dateStatus } = useDateRecords(dayOfTheMonth)
 
-  const isToday = useMemo(() => isSameDay(new Date, date), [date])
   const onClick = () => {
     setDateRecord(dayOfTheMonth, statusIndex[dateStatus])
     setIsClicked(true)
@@ -58,8 +57,14 @@ const Day = forwardRef<HTMLButtonElement, DayProps>(({
 
   const statusId = useId()
 
+  // work out tabIndex
+  const isDayToday = isToday(date)
+  const isDayThisMonth = isThisMonth(date)
+  // day is tabIndexed if is today or if an off month then is first item
+  const isTabbed = isDayToday || (!isDayThisMonth && isFirstItem)
+
   return (
-    <li className={clsx('day', isOffMonth && 'day--off-month', isToday && 'date--today')} role="gridcell">
+    <li className={clsx('day', isOffMonth && 'day--off-month', isDayToday && 'date--today')} role="gridcell">
       {isOffMonth
         ? (
           /* On month format */
@@ -69,7 +74,7 @@ const Day = forwardRef<HTMLButtonElement, DayProps>(({
             className={clsx('day__item', 'day__item--btn', isClicked && 'day__item--active')}
             onClick={onClick}
             onKeyDown={onKeyDown}
-            tabIndex={isFirstItem ? 0 : -1}
+            tabIndex={isTabbed ? 0 : -1}
             aria-controls={statusId}
           >
             <time dateTime={format(date, DATE_FORMATS.dateTimeAttr)}>{format(date, DATE_FORMATS.dayCellLabel)}</time>

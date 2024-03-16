@@ -35,10 +35,21 @@
 }
 
 .day__item time {
+  align-items: center;
   color: var(--colour-text-primary);
+  display: flex;
   font-size: 1rem;
+  gap: 0.35em;
   letter-spacing: 0.04em;
   margin-top: -20px;
+}
+.date--today .day__item time:after {
+  background-color: #fff;
+  border-radius: 50%;
+  content: "";
+  display: inline-block;
+  height: 0.5em;
+  width: 0.5em;
 }
 
 .day__item--btn {
