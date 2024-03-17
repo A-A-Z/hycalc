@@ -6,7 +6,9 @@ import { Title  } from 'features/title'
 import { DateRecordsProvider } from 'features/records'
 import { getYearAndMonth } from 'lib/date'
 
+// import themes and global styles and vars
 import 'global/assets/reset.css'
+import 'global/assets/layout.css'
 import 'global/assets/app.css'
 import 'global/assets/common.css'
 import 'global/assets/themes/theme-dark.css'

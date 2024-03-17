@@ -1,0 +1,5 @@
+body {
+  --body-width: 900px;
+  --header-height: 35px;
+  --header-gutter: 0 22px;
+}

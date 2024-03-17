@@ -1,5 +1,5 @@
 import type { MutableRefObject } from 'react'
-import type { WeekRef } from './types'
+import type { WeekRef } from '../types'
 
 // handle keyDown nav events for grid
 export const handleGridNav = (cellRefs: MutableRefObject<WeekRef[]>, rowIndex: number, columnIndex: number, key: string): void => {

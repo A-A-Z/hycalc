@@ -1,6 +1,6 @@
 import { useState, useId, forwardRef } from 'react'
 import clsx from 'clsx'
-import { format, isToday, isThisMonth, DATE_FORMATS } from 'lib/date'
+import { format, isToday, isThisMonth, dayOfMonthSplit, DATE_FORMATS } from 'lib/date'
 
 import { useDateRecords } from 'features/records'
 import '../assets/day.css'
@@ -76,7 +76,9 @@ const Day = forwardRef<HTMLButtonElement, DayProps>(({
             tabIndex={isTabbed ? 0 : -1}
             aria-controls={statusId}
           >
-            <time dateTime={format(date, DATE_FORMATS.dateTimeAttr)}>{format(date, DATE_FORMATS.dayCellLabel)}</time>
+            <time dateTime={format(date, DATE_FORMATS.dateTimeAttr)}>
+              {dayOfMonthSplit(date).map((part: string) => <span key={part}>{part}</span>)}
+            </time>
             <ul id={statusId} role="listbox" className="status" aria-live="polite">
               {statusOptions.map(status => (
                 <li
@@ -90,12 +92,13 @@ const Day = forwardRef<HTMLButtonElement, DayProps>(({
                 </li>
               ))}
             </ul>
-            {/* <span className={`day__status day__status--${dateStatus}`}>{STATUS_LABEL[dateStatus]}</span> */}
           </button>
         ) : (
           /* Off month format */
           <span className="day__item day__item--off" >
-            <time dateTime={format(date, DATE_FORMATS.dateTimeAttr)}>{format(date, DATE_FORMATS.dayCellLabelOffMonth)}</time>
+            <time dateTime={format(date, DATE_FORMATS.dateTimeAttr)}>
+              {dayOfMonthSplit(date).map((part: string) => <span key={part}>{part}</span>)}
+            </time>
           </span>
         )}
     </li>

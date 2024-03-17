@@ -1,0 +1,8 @@
+.logo span {
+  font-size: 1.1rem;
+  letter-spacing: 0.02em;
+  color: var(--colour-status-remote);
+}
+.logo span ~ span {
+  color: var(--colour-status-onsite);
+}

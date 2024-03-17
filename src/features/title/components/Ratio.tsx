@@ -25,10 +25,11 @@ export const Ratio = ({ value }: RatioProps): JSX.Element => {
   }, [value, currentValue]);
 
   return (
-    <h3 className="title__ratio">
-      <span aria-hidden="true">{`${currentValue}%`}</span>
-      <span role="status" className="visually-hidden" aria-live="polite">{`${value} percent on site`}</span>
-    </h3>
+    <div className="title__ratio" role="status">
+      <span aria-hidden="true">{currentValue}</span>
+      <span aria-hidden="true">%</span>
+      <div role="status" className="visually-hidden" aria-live="polite">{`${value} percent on site`}</div>
+    </div>
   )
 }
  

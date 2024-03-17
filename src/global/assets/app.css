@@ -4,3 +4,7 @@ body {
   font-family: "Montserrat", sans-serif;
   font-optical-sizing: auto;
 }
+
+time, button {
+  font-family: "Montserrat", sans-serif;
+}

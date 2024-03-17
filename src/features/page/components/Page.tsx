@@ -1,3 +1,4 @@
+import { Header } from './Header'
 import '../assets/page.css'
 
 interface PageProps {
@@ -7,9 +8,7 @@ interface PageProps {
 export const Page = ({ children }: PageProps): JSX.Element => {
   return (
     <div className="page">
-      <header className="page__header">
-        <h1>HyCalc</h1>
-      </header>
+      <Header />
       <main className="page__body">{children}</main>
     </div>
   )

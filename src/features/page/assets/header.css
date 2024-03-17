@@ -1,0 +1,13 @@
+.header {
+  align-items: center;
+  background-color: var(--colour-black);
+  display: flex;
+  gap: 0.8em;
+  height: var(--header-height);
+  padding: var(--header-gutter);
+}
+
+.header p {
+  font-size: 0.9rem;
+  font-weight: 200;
+}

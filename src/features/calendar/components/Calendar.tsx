@@ -4,7 +4,7 @@ import { format, startOfWeek, endOfMonth, addWeeks, DATE_FORMATS } from 'lib/dat
 
 import { Week } from './Week'
 import { Headings } from './Headings'
-import { handleGridNav } from '../utils'
+import { handleGridNav } from '../utils/handleGridNav'
 import '../assets/calendar.css'
 
 import type { WeekRef, DayRef, WeekRefFnc } from '../types'

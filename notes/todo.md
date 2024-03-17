@@ -9,19 +9,20 @@
  - [x] Select animation
  - [x] Advanced keydown nav
  - [ ] Unit tests
- - [ ] Language
- - [ ] Highlight today
+ - [x] Highlight today
  - [ ] Highlight current week
- - [ ] Focus on today
+ - [x] Focus on today
  - [ ] Icons
  - [ ] Ratio colour
- - [ ] HTML title
- - [ ] Page header
+ - [x] HTML title
+ - [x] Page header
  - [ ] Clear old date records
  
 ## Optional Features
 
  - [ ] Month select
+ - [ ] Language
+ - [ ] Console log styling
  - [ ] Config
  - [ ] Mobile support
  - [ ] Light Theme

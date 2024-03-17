@@ -18,7 +18,6 @@ export const Title = ({ gridId, year, month }: TitleProps): JSX.Element => {
     document.title = `${format(firstOfTheMonth, DATE_FORMATS.documentTitle)} ${ratio}% - HyCalc`
   }, [month, ratio])
 
-  console.log('test', month, ratio)
   return (
     <div className="title">
       <h2 id={gridId}>
