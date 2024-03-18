@@ -12,11 +12,12 @@
  - [x] Highlight today
  - [ ] Highlight current week
  - [x] Focus on today
- - [ ] Icons
+ - [x] Icons
  - [ ] Ratio colour
  - [x] HTML title
  - [x] Page header
  - [ ] Clear old date records
+ - [ ] Update storage to use library hook
  
 ## Optional Features
 

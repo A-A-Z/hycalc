@@ -11,6 +11,7 @@
   color: var(--colour-black);
   display: flex;
   font-weight: 600;
+  gap: 0.4em;
   height: 22px;
   justify-content: center;
   opacity: 0.5;
@@ -35,4 +36,7 @@
 .status__option[aria-selected="true"] {
   inset: auto 0 10px 0;
   opacity: 1;
+}
+.status__option svg {
+  font-size: 0.9rem;
 }

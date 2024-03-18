@@ -1,4 +1,5 @@
 import { useState, useId, forwardRef } from 'react'
+import { FaBuilding, FaHouse } from 'react-icons/fa6'
 import clsx from 'clsx'
 import { format, isToday, isThisMonth, dayOfMonthSplit, DATE_FORMATS } from 'lib/date'
 
@@ -62,6 +63,12 @@ const Day = forwardRef<HTMLButtonElement, DayProps>(({
   // day is tabIndexed if is today or if an off month then is first item
   const isTabbed = isDayToday || (!isDayThisMonth && isFirstItem)
 
+  const icons: Record<DateRecordStatus, JSX.Element> = {
+    none: <span />,
+    remote: <FaHouse aria-hidden={true} />,
+    onsite: <FaBuilding aria-hidden={true} />
+  }
+
   return (
     <li className={clsx('day', isOffMonth && 'day--off-month', isDayToday && 'date--today')} role="gridcell">
       {isOffMonth
@@ -88,7 +95,7 @@ const Day = forwardRef<HTMLButtonElement, DayProps>(({
                   aria-selected={status === dateStatus}
                   tabIndex={-1}
                 >
-                    {STATUS_LABEL[status]}
+                    {icons[status]}{STATUS_LABEL[status]}
                 </li>
               ))}
             </ul>
