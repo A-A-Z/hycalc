@@ -2,7 +2,7 @@
   align-items: center;
   background-color: var(--colour-black);
   display: flex;
-  gap: 0.8em;
+  gap: 0.5em;
   height: var(--header-height);
   padding: var(--header-gutter);
 }
@@ -10,4 +10,10 @@
 .header p {
   font-size: 0.9rem;
   font-weight: 200;
+  padding: 0 0 0 0.4rem;
+}
+
+.header img {
+  height: 1rem;
+  width: 1rem;
 }
