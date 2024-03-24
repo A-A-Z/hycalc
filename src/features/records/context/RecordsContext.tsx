@@ -74,6 +74,14 @@ export const DateRecordsProvider: FC<DateRecordsProviderProps> = ({ year, month,
       return
     }
 
+    // clear out old values
+    Object.keys(localStorage)
+      .filter(key => key !== recordSetName)
+      .forEach(key => {
+        log(['Deleting old records for:', key])
+        localStorage.removeItem(key)
+      })
+
     log(['Looking for records for:', recordSetName])
     const recordsJson = localStorage.getItem(recordSetName)
 
@@ -81,7 +89,7 @@ export const DateRecordsProvider: FC<DateRecordsProviderProps> = ({ year, month,
       const newRecords = JSON.parse(recordsJson)
       const recordsCount = Object.values(newRecords).length
       setRecords(newRecords)
-      log([`Records for ${recordSetName}:`, recordsCount.toString()])
+      log([`Records loaded for ${recordSetName}:`, recordsCount.toString()])
     } else {
       log(['No records found'])
     }
