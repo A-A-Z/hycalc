@@ -15,6 +15,7 @@ export const Title = ({ gridId, year, month }: TitleProps): JSX.Element => {
   const firstOfTheMonth = new Date(year, (month - 1), 1)
 
   useEffect(() => {
+    // Update document title with current maonth and ratio
     document.title = `${format(firstOfTheMonth, DATE_FORMATS.documentTitle)} ${ratio}% - HyCalc`
   }, [month, ratio])
 

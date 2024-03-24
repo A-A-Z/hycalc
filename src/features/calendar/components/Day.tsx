@@ -42,6 +42,9 @@ const Day = forwardRef<HTMLButtonElement, DayProps>(({
   const dayOfTheMonth = parseInt(format(date, DATE_FORMATS.recordDayOfMonth))
   const [isClicked, setIsClicked] = useState(false)
   const { setDateRecord, dateStatus } = useDateRecords(dayOfTheMonth)
+  const statusId = useId()
+  const isDayToday = isToday(date)
+  const isDayThisMonth = isThisMonth(date)
 
   const onClick = () => {
     setDateRecord(dayOfTheMonth, statusIndex[dateStatus])
@@ -55,11 +58,7 @@ const Day = forwardRef<HTMLButtonElement, DayProps>(({
   const statusOptions: DateRecordStatus[] = [
     'none', 'remote', 'onsite'
   ]
-
-  const statusId = useId()
   
-  const isDayToday = isToday(date)
-  const isDayThisMonth = isThisMonth(date)
   // day is tabIndexed if is today or if an off month then is first item
   const isTabbed = isDayToday || (!isDayThisMonth && isFirstItem)
 

@@ -4,7 +4,7 @@
 
  - [x] Fonts
  - [ ] PWA support
- - [ ] Favicon
+ - [x] Favicon
  - [ ] Dark Theme
  - [x] Select animation
  - [x] Advanced keydown nav
@@ -34,6 +34,8 @@
  - [ ] Public holidays
  - [ ] Dynamic favicon
  - [ ] Easter eggs
+ - [ ] shift click reverse selects
+ - [ ] Mobile support
 
 ## Configs
 
