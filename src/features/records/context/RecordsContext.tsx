@@ -1,5 +1,6 @@
 import { createContext, useContext, useMemo, useCallback, useState, useEffect } from 'react'
 import { useDebounceCallback } from 'usehooks-ts'
+import { log } from '../utils/log'
 
 import type { FC, ReactNode } from 'react'
 import type { DateRecords, DateRecordType, DateRecordStatus } from '../types'
@@ -61,7 +62,7 @@ export const DateRecordsProvider: FC<DateRecordsProviderProps> = ({ year, month,
   // Callback function to save records to local store
   const save = useCallback((json: string) => {
     localStorage.setItem(`${recordSetName}`, json)
-    console.log('Records saved for:', recordSetName)
+    log(['Records saved for:', recordSetName])
   }, [])
 
   // use this debounced version for auto save
@@ -73,16 +74,16 @@ export const DateRecordsProvider: FC<DateRecordsProviderProps> = ({ year, month,
       return
     }
 
-    console.log('Looking for records for:', recordSetName)
+    log(['Looking for records for:', recordSetName])
     const recordsJson = localStorage.getItem(recordSetName)
 
     if (recordsJson !== null) {
       const newRecords = JSON.parse(recordsJson)
       const recordsCount = Object.values(newRecords).length
       setRecords(newRecords)
-      console.log(`Records found for ${recordSetName} with ${recordsCount} record${recordsCount !== 1 ? 's' : ''}`)
+      log([`Records for ${recordSetName}:`, recordsCount.toString()])
     } else {
-      console.log('No records found.')
+      log(['No records found'])
     }
 
     setIsLoaded(true)

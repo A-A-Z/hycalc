@@ -18,6 +18,8 @@
  - [x] Page header
  - [ ] Clear old date records
  - [ ] Update storage to use library hook
+ - [ ] GitHub page
+ - [ ] Read Me
  
 ## Optional Features
 
