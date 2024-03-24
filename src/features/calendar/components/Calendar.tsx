@@ -59,4 +59,3 @@ export const Calendar = ({ id, year, month }: CalendarProps): JSX.Element => {
     </>
   )
 }
-// ref([week][day])
