@@ -3,7 +3,7 @@
 ## Core Features
 
  - [x] Fonts
- - [ ] PWA support
+ - [x] PWA support
  - [x] Favicon
  - [ ] Dark Theme
  - [x] Select animation
@@ -20,6 +20,7 @@
  - [ ] Update storage to use library hook
  - [ ] GitHub page
  - [ ] Read Me
+ - [ ] Accessibility pass
  
 ## Optional Features
 
