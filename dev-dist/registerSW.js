@@ -1,1 +1,0 @@
-if('serviceWorker' in navigator) navigator.serviceWorker.register('/hycalc/dev-sw.js?dev-sw', { scope: '/hycalc/', type: 'classic' })
