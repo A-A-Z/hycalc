@@ -4,5 +4,5 @@
   grid-template-columns: repeat(7, 1fr);
   margin: 0;
   padding: 0;
-  width: 900px;
+  width: var(--body-width);
 }

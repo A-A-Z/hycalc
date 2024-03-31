@@ -1,5 +1,14 @@
 body {
   --body-width: 900px;
+  --body-width-small: 800px;
   --header-height: 35px;
   --header-gutter: 0 22px;
+  --title-font-size: 3.5rem;
+}
+
+@media (height <= 820px) or (width <= 950px) {
+  body {
+    --body-width: 780px;
+    --title-font-size: 2rem;
+  }
 }
