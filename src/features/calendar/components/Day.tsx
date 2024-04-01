@@ -70,7 +70,11 @@ const Day = forwardRef<HTMLButtonElement, DayProps>(({
   }
 
   return (
-    <li className={clsx('day', isOffMonth && 'day--off-month', isDayToday && 'date--today')} role="gridcell">
+    <div
+      className={clsx('day', isOffMonth && 'day--off-month', isDayToday && 'date--today')}
+      role="gridcell"
+      aria-colindex={dayIndex + 1}
+    >
       {isOffMonth
         ? (
           /* On month format */
@@ -117,7 +121,7 @@ const Day = forwardRef<HTMLButtonElement, DayProps>(({
             </time>
           </span>
         )}
-    </li>
+    </div>
   )
 })
 

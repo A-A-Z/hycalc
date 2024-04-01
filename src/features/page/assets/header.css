@@ -1,6 +1,6 @@
 .header {
   align-items: center;
-  background-color: var(--colour-black);
+  background-color: var(--banner-bg);
   display: flex;
   gap: 0.5em;
   height: var(--header-height);
