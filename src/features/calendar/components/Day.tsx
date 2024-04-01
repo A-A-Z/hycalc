@@ -42,6 +42,7 @@ const Day = forwardRef<HTMLButtonElement, DayProps>(({
   const dayOfTheMonth = parseInt(format(date, DATE_FORMATS.recordDayOfMonth))
   const [isClicked, setIsClicked] = useState(false)
   const { setDateRecord, dateStatus } = useDateRecords(dayOfTheMonth)
+  const dateId = useId()
   const statusId = useId()
   const isDayToday = isToday(date)
   const isDayThisMonth = isThisMonth(date)
@@ -82,10 +83,19 @@ const Day = forwardRef<HTMLButtonElement, DayProps>(({
             tabIndex={isTabbed ? 0 : -1}
             aria-controls={statusId}
           >
-            <time dateTime={format(date, DATE_FORMATS.dateTimeAttr)}>
+            <time
+              id={dateId}
+              dateTime={format(date, DATE_FORMATS.dateTimeAttr)}
+            >
               {dayOfMonthSplit(date).map((part: string) => <span key={part}>{part}</span>)}
             </time>
-            <ul id={statusId} role="listbox" className="status" aria-live="polite">
+            <ul
+              id={statusId}
+              role="listbox" 
+              className="status"
+              aria-labelledby={dateId}
+              aria-live="polite"
+            >
               {statusOptions.map(status => (
                 <li
                   key={status}

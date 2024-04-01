@@ -39,6 +39,7 @@
  - [ ] Easter eggs
  - [ ] shift click reverse selects
  - [ ] Mobile support
+ - [ ] Export/import
 
 ## Configs
 

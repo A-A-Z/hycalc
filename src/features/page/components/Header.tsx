@@ -4,7 +4,7 @@ import '../assets/header.css'
 export const Header = (): JSX.Element => {
   return (
     <header className="header">
-      <img src="./hycalc-logo.svg" />
+      <img src="./hycalc-logo.svg" alt="HyCalc logo" />
       <h1 className="header__title logo">
         <span>Hy</span><span>Calc</span>
       </h1>
