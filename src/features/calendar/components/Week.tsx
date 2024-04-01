@@ -1,7 +1,9 @@
 import { useMemo, useCallback } from 'react'
-import { format, startOfWeek, addDays, isFirstDayOfMonth, isOffMonth, DATE_FORMATS } from 'lib/date'
+import clsx from 'clsx'
+import { format, startOfWeek, addDays, isFirstDayOfMonth, isOffMonth, isThisWeek, DATE_FORMATS } from 'lib/date'
 
 import { Day } from './Day'
+import '../assets/week.css'
 
 import type { WeekRef, WeekRefFnc, DayRefFnc } from '../types'
 
@@ -20,6 +22,8 @@ export const Week = ({
   weekdayRefs,
   handleKeyDown
 }: WeekProps): JSX.Element => {
+  const isCurrentWeek = isThisWeek(date)
+
   const daysOfTheWeek = useMemo(() => {
     const start = startOfWeek(date)
 
@@ -34,7 +38,7 @@ export const Week = ({
   }, [])
 
   return (
-    <>
+    <div className={clsx('week', isCurrentWeek && 'week--current')} role="row">
       {daysOfTheWeek.map((weekday, dayIndex) => <Day
         ref={weekdayRefs[dayIndex]}
         key={format(weekday, DATE_FORMATS.dateKey)}
@@ -44,6 +48,6 @@ export const Week = ({
         isOffMonth={isOffMonth(activeMonth, weekday)}
         handKeyDown={handleDayKeyDown}
       />)}
-    </>
+    </div>
   )
 }

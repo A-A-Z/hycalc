@@ -10,22 +10,22 @@
  - [x] Advanced keydown nav
  - [ ] Unit tests
  - [x] Highlight today
- - [ ] Highlight current week
+ - [x] Highlight current week
  - [x] Focus on today
  - [x] Icons
- - [ ] Ratio colour
  - [x] HTML title
  - [x] Page header
  - [x] Clear old date records
- - [ ] Update storage to use library hook
- - [ ] GitHub page
+ - [x] GitHub page
  - [ ] Read Me
- - [ ] Accessibility pass
+ - [x] Accessibility pass
  
 ## Optional Features
 
  - [ ] Month select
  - [ ] Language
+ - [ ] Update storage to use library hook
+ - [ ] Ratio colour
  - [ ] Console log styling
  - [ ] Config
  - [ ] Mobile support

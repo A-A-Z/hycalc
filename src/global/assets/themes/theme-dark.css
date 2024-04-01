@@ -1,15 +1,8 @@
 body {
   /* 🌈 Primitives 🌈 */
   
-  --colour-primary-100: #382bf0;
-  --colour-primary-200: #5e43f3;
-  --colour-primary-300: #7a5af5;
-  --colour-primary-400: #9171f8;
-  --colour-primary-500: #a688fa;
-  --colour-primary-600: #ba9ffb;
-
-  --colour-dark-100: #2f2b3a;
-  --colour-dark-200: #1a1625;
+  --colour-dark-100: #1a1625;
+  --colour-dark-200: #2f2b3a;
   --colour-dark-300: #46424f;
   --colour-dark-400: #5e5a66;
   --colour-dark-500: #76737e;
@@ -19,9 +12,12 @@ body {
   --colour-white: #fff;
   --colour-black: #000;
 
+  --colour-status-remote: #b556ff;
+  --colour-status-onsite: #00d2d0;
+
   /* 🎟️ Tokens 🎟️ */
 
-  --colour-background-primary: var(--colour-dark-100);
+  --colour-background-primary: var(--colour-dark-200);
 
   --colour-text-primary: var(--colour-dark-600);
   --colour-text-highlight: var(--colour-white);
@@ -30,6 +26,5 @@ body {
   --colour-border-hover: var(--colour-dark-600);
   --colour-border-disabled: var(--colour-dark-400);
 
-  --colour-status-remote: #b556ff;
-  --colour-status-onsite: #00d2d0;
+  --banner-bg: var(--colour-dark-100);
 }

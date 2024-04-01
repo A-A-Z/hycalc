@@ -40,22 +40,20 @@ export const Calendar = ({ id, year, month }: CalendarProps): JSX.Element => {
   }, [dayRefs])
 
   return (
-    <>
-      <ol className="calendar" aria-labelledby={id} role="grid">
-        <Headings />
-        {weeks.map((week, weekIndex) => {
-          return (
-            <Week
-              key={`week-${format(week, DATE_FORMATS.dateKey)}`}
-              weekIndex={weekIndex}
-              date={week}
-              activeMonth={month}
-              weekdayRefs={dayRefs.current[weekIndex]}
-              handleKeyDown={handleKeyDown}
-            />
-          )
-        })}
-      </ol>
-    </>
+    <div className="calendar" aria-labelledby={id} role="grid" aria-colcount={7}>
+      <Headings />
+      {weeks.map((week, weekIndex) => {
+        return (
+          <Week
+            key={`week-${format(week, DATE_FORMATS.dateKey)}`}
+            weekIndex={weekIndex}
+            date={week}
+            activeMonth={month}
+            weekdayRefs={dayRefs.current[weekIndex]}
+            handleKeyDown={handleKeyDown}
+          />
+        )
+      })}
+    </div>
   )
 }
