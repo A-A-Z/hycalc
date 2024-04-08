@@ -1,4 +1,4 @@
-import { useId } from 'react'
+import { useId, useMemo } from 'react'
 
 import { Page } from 'features/page'
 import { Calendar } from 'features/calendar'
@@ -15,7 +15,7 @@ import 'global/assets/themes/theme-dark.css'
 
 function App() {
   const gridId = useId()
-  const { year, month } = getYearAndMonth(0)
+  const { year, month } = useMemo(() => getYearAndMonth(0), [])
 
   return (
     <DateRecordsProvider year={year} month={month}>
