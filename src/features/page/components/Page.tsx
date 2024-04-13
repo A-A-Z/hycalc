@@ -1,4 +1,5 @@
 import { Header } from './Header'
+import { Footer } from './Footer'
 import '../assets/page.css'
 
 interface PageProps {
@@ -10,6 +11,7 @@ export const Page = ({ children }: PageProps): JSX.Element => {
     <div className="page">
       <Header />
       <main className="page__body">{children}</main>
+      <Footer />
     </div>
   )
 }

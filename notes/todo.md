@@ -19,6 +19,7 @@
  - [x] GitHub page
  - [ ] Read Me
  - [x] Accessibility pass
+ - [ ] Fotoer with version
  
 ## Optional Features
 

@@ -16,7 +16,6 @@ import 'global/assets/themes/theme-dark.css'
 function App() {
   const gridId = useId()
   const { year, month } = useMemo(() => getYearAndMonth(0), [])
-
   return (
     <DateRecordsProvider year={year} month={month}>
       <Page>

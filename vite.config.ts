@@ -52,6 +52,9 @@ export default defineConfig({
     }),
   ],
   base: '/hycalc/',
+  define: {
+    APP_VERSION: JSON.stringify(process.env.npm_package_version),
+  },
   resolve: {
     alias: {
       features: path.resolve(__dirname, './src/features'),

@@ -1,0 +1,6 @@
+.footer {
+  font-size: 0.8rem;
+  inset: auto auto 0.8rem 0.8rem;
+  position: fixed;
+  opacity: 0.5;
+}
