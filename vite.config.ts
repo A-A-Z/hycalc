@@ -23,7 +23,7 @@ export default defineConfig({
         name: 'HyCalc',
         short_name: 'HyCalc',
         description: 'Hybrid workplace calculator',
-        theme_color: '#2f2b3a',
+        theme_color: '#1a1625',
         icons: [
           {
             src: 'favicon-64x64.png',
