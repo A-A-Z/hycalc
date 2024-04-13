@@ -5,7 +5,7 @@
  - [x] Fonts
  - [x] PWA support
  - [x] Favicon
- - [ ] Dark Theme
+ - [x] Dark Theme
  - [x] Select animation
  - [x] Advanced keydown nav
  - [ ] Unit tests
