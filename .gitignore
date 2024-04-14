@@ -12,6 +12,7 @@ dist
 dev-dist
 dist-ssr
 coverage
+notes
 *.local
 
 # Editor directories and files
