@@ -11,7 +11,9 @@ interface TitleProps {
 }
 
 export const Title = ({ gridId, year, month }: TitleProps): JSX.Element => {
+  // Get ratio (day of the week param is not important)
   const { ratio } = useDateRecords(1)
+  console.log('test', ratio)
   const firstOfTheMonth = new Date(year, (month - 1), 1)
 
   useEffect(() => {
