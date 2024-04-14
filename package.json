@@ -1,6 +1,7 @@
 {
   "name": "hycalc",
-  "private": true,
+  "description": "Hybrid workplace calculator",
+  "private": false,
   "version": "0.1.1",
   "type": "module",
   "scripts": {
