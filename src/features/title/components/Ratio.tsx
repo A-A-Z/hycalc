@@ -7,7 +7,6 @@ interface RatioProps {
 
 export const Ratio = ({ value }: RatioProps): JSX.Element => {
   const [currentValue, setCurrentValue] = useState(value)
-  // const [isUpdating, setIsUpdatin] = useState(false)
 
   useEffect(() => {
     // Only proceed if currentValue does not equal the target value
@@ -29,8 +28,8 @@ export const Ratio = ({ value }: RatioProps): JSX.Element => {
   const isUpdating = useMemo(() => currentValue !== value, [currentValue, value])
 
   return (
-    <div className={clsx('title__ratio', isUpdating && 'title__ratio--updating')} role="status">
-      <span aria-hidden="true">{currentValue}</span>
+    <div className={clsx('title__ratio', isUpdating && 'title__ratio--updating')}>
+      <span aria-hidden="true" data-testid="counter">{currentValue}</span>
       <span aria-hidden="true">%</span>
       <div
         role="status"
