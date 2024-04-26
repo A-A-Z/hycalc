@@ -1,6 +1,7 @@
 import { useMemo, useRef, useCallback, createRef } from 'react'
 
 import { format, startOfWeek, endOfMonth, addWeeks, DATE_FORMATS } from 'lib/date'
+import { useConfig } from 'features/config'
 
 import { Week } from './Week'
 import { Headings } from './Headings'
@@ -18,6 +19,10 @@ interface CalendarProps {
 export const Calendar = ({ id, year, month }: CalendarProps): JSX.Element => {
   const dayRefs = useRef<WeekRef[]>([])
   const firstOfTheMonth = new Date(year, (month - 1), 1)
+
+  const { config, setConfig } = useConfig()
+  console.log('config', config)
+  setConfig('theme', 'light')
 
   const weeks = useMemo(() => {
     const lastDayOfMonth = endOfMonth(firstOfTheMonth)

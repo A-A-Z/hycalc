@@ -11,7 +11,7 @@ interface DateRecordsContextProps {
   ratio: number
 }
 
-interface useDateRecordsReturn extends DateRecordsContextProps {
+interface UseDateRecordsReturn extends DateRecordsContextProps {
   dateStatus: DateRecordStatus
 }
 
@@ -21,7 +21,7 @@ const DateRecordsContext = createContext<DateRecordsContextProps>({
   ratio: 0
 })
 
-export const useDateRecords = (dayOfTheMonth: number): useDateRecordsReturn => {
+export const useDateRecords = (dayOfTheMonth: number): UseDateRecordsReturn => {
   const context = useContext(DateRecordsContext)
   if (context === undefined) {
     throw new Error('useUser must be used within a UserProvider')
