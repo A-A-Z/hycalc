@@ -76,7 +76,7 @@ export const DateRecordsProvider: FC<DateRecordsProviderProps> = ({ year, month,
 
     // clear out old values
     Object.keys(localStorage)
-      .filter(key => key !== recordSetName)
+      .filter(key => key !== recordSetName && key !== 'config')
       .forEach(key => {
         log(['Deleting old records for:', key])
         localStorage.removeItem(key)
