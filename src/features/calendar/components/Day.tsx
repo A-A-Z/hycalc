@@ -31,7 +31,6 @@ const STATUS_LABEL: Record<DateRecordStatus, string>  = {
   remote: 'Remote'
 }
 
-// export const Day =  ({ date, isOffMonth }: DayProps): JSX.Element => {
 const Day = forwardRef<HTMLButtonElement, DayProps>(({
   dayIndex,
   isFirstItem,

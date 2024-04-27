@@ -20,6 +20,7 @@ import { useId, useMemo, useCallback, useState } from 'react'
 import { Page } from 'features/page'
 import { Calendar } from 'features/calendar'
 import { Title  } from 'features/title'
+import { Toolbar } from 'features/toolbar'
 import { ConfigProvider } from 'features/config'
 import { DateRecordsProvider } from 'features/records'
 import { getYearAndMonth } from 'lib/date'
@@ -50,6 +51,7 @@ function App() {
           <Page>
             <Title gridId={gridId} year={year} month={month} />
             <Calendar id={gridId} year={year} month={month} />
+            <Toolbar gridId={gridId} />
           </Page>
         </div>
       </DateRecordsProvider>
