@@ -23,6 +23,7 @@ import { Title  } from 'features/title'
 import { Toolbar } from 'features/toolbar'
 import { ConfigProvider } from 'features/config'
 import { DateRecordsProvider } from 'features/records'
+import { GridStatusProvider } from 'features/status'
 import { getYearAndMonth } from 'lib/date'
 
 // import themes and global styles and vars
@@ -45,17 +46,19 @@ function App() {
   }, [setCounter])
 
   return (
-    <ConfigProvider>
-      <DateRecordsProvider year={year} month={month}>
-        <div onMouseEnter={onEnterPage}>
-          <Page>
-            <Title gridId={gridId} year={year} month={month} />
-            <Calendar id={gridId} year={year} month={month} />
-            <Toolbar gridId={gridId} />
-          </Page>
-        </div>
-      </DateRecordsProvider>
-    </ConfigProvider>
+    <GridStatusProvider>
+      <ConfigProvider>
+        <DateRecordsProvider year={year} month={month}>
+          <div onMouseEnter={onEnterPage}>
+            <Page>
+              <Title gridId={gridId} year={year} month={month} />
+              <Calendar id={gridId} year={year} month={month} />
+              <Toolbar gridId={gridId} />
+            </Page>
+          </div>
+        </DateRecordsProvider>
+      </ConfigProvider>
+    </GridStatusProvider>
   )
 }
 

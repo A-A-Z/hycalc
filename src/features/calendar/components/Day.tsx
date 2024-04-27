@@ -4,6 +4,7 @@ import clsx from 'clsx'
 import { format, isToday, isThisMonth, dayOfMonthSplit, DATE_FORMATS } from 'lib/date'
 
 import { useDateRecords } from 'features/records'
+import { useGridStatus } from 'features/status'
 import '../assets/day.css'
 import '../assets/status.css'
 
@@ -45,6 +46,7 @@ const Day = forwardRef<HTMLButtonElement, DayProps>(({
   const statusId = useId()
   const isDayToday = isToday(date)
   const isDayThisMonth = isThisMonth(date)
+  const { status: { isReadOnly } } = useGridStatus()
 
   const onClick = () => {
     setDateRecord(dayOfTheMonth, statusIndex[dateStatus])
@@ -80,7 +82,7 @@ const Day = forwardRef<HTMLButtonElement, DayProps>(({
           <button
             ref={ref}
             type="button"
-            className={clsx('day__item', 'day__item--btn', isClicked && 'day__item--active')}
+            className={clsx('day__item', 'day__item--btn', isClicked && 'day__item--active', isReadOnly && 'day__item--read-only')}
             onClick={onClick}
             onKeyDown={onKeyDown}
             tabIndex={isTabbed ? 0 : -1}

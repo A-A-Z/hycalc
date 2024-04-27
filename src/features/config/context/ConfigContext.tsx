@@ -6,7 +6,7 @@ import type { Config } from '../types'
 
 type SetConfigFn = <K extends keyof Config>(key: K, value: Config[K]) => void
 
-interface ConfigContext {
+interface ConfigContextValues {
   config: Config
   setConfig: SetConfigFn
 }
@@ -20,12 +20,12 @@ const configInit: Config = {
   theme: 'dark'
 }
 
-const ConfigContext = createContext<ConfigContext>({
+const ConfigContext = createContext<ConfigContextValues>({
   config: configInit,
   setConfig: () => null
 })
 
-export const useConfig = (): ConfigContext => {
+export const useConfig = (): ConfigContextValues => {
   const context = useContext(ConfigContext)
 
   if (context === undefined) {
@@ -58,7 +58,7 @@ export const ConfigProvider: FC<ConfigProviderProps> = ({ children }) => {
   }, [configState, setConfigState])
 
   // build value to return in context
-  const value: ConfigContext = useMemo(() => ({
+  const value: ConfigContextValues = useMemo(() => ({
     config: configState,
     setConfig
   }), [configState, setConfig])

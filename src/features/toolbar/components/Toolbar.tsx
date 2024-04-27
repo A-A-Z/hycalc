@@ -1,4 +1,5 @@
 import { ToolCustom } from './ToolCustom'
+import '../assets/toolbar.css'
 
 // Ref: https://www.w3.org/WAI/ARIA/apg/patterns/toolbar/examples/toolbar/
 
