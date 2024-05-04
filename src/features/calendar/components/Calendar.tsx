@@ -1,4 +1,4 @@
-import { useMemo, useRef, useCallback, createRef, useEffect } from 'react'
+import { useMemo, useRef, useCallback, createRef } from 'react'
 
 import { format, startOfWeek, endOfMonth, addWeeks, DATE_FORMATS } from 'lib/date'
 import { useConfig } from 'features/config'
@@ -20,12 +20,7 @@ export const Calendar = ({ id, year, month }: CalendarProps): JSX.Element => {
   const dayRefs = useRef<WeekRef[]>([])
   const firstOfTheMonth = new Date(year, (month - 1), 1)
 
-  // TODO: testing config, remove
-  const { config, setConfig } = useConfig()
-  useEffect(() => {
-    setConfig('theme', 'light')
-  }, [])
-  console.log('config1', config)
+  const { config: { weekdays } } = useConfig()
 
   const weeks = useMemo(() => {
     const lastDayOfMonth = endOfMonth(firstOfTheMonth)
@@ -48,7 +43,7 @@ export const Calendar = ({ id, year, month }: CalendarProps): JSX.Element => {
   }, [dayRefs])
 
   return (
-    <div className="calendar" aria-labelledby={id} role="grid" aria-colcount={7}>
+    <div className="calendar" aria-labelledby={id} role="grid" aria-colcount={weekdays.length}>
       <Headings />
       {weeks.map((week, weekIndex) => {
         return (

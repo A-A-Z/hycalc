@@ -1,8 +1,19 @@
 .weekday-heading {
+  align-items: center;
+  display: flex;
   font-size: 0.9rem;
+  justify-content: space-between;
   list-style-type: none;
 }
 
 .weekday-heading abbr {
   text-decoration: none;
+}
+
+.weekday-heading__btn {
+  background-color: transparent;
+  border: 0;
+  color: #fff; /* TODO */
+  cursor: pointer;
+  height: 1em;
 }

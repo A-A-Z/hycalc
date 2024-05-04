@@ -1,10 +1,13 @@
 import { useMemo, useCallback } from 'react'
 import clsx from 'clsx'
 import { format, startOfWeek, addDays, isFirstDayOfMonth, isOffMonth, isThisWeek, DATE_FORMATS } from 'lib/date'
-
+// import { useGridStatus } from 'features/status'
+// import { useConfig } from 'features/config'
+import { useActiveWeekdays } from '../hooks/useActiveWeekdays'
 import { Day } from './Day'
 import '../assets/week.css'
 
+import type { CSSProperties } from 'react'
 import type { WeekRef, WeekRefFnc, DayRefFnc } from '../types'
 
 interface WeekProps {
@@ -23,6 +26,9 @@ export const Week = ({
   handleKeyDown
 }: WeekProps): JSX.Element => {
   const isCurrentWeek = isThisWeek(date)
+  // const { status: { isCustomMode } } = useGridStatus()
+  // const { config: { weekdays } } = useConfig()
+  const isActiveWeekday = useActiveWeekdays()
 
   const daysOfTheWeek = useMemo(() => {
     const start = startOfWeek(date)
@@ -37,17 +43,22 @@ export const Week = ({
     handleKeyDown(weekIndex, dayIndex, key)
   }, [])
 
+  const inlineStyle = { '--column-count': 7 } as CSSProperties
+
   return (
-    <div className={clsx('week', isCurrentWeek && 'week--current')} role="row">
-      {daysOfTheWeek.map((weekday, dayIndex) => <Day
-        ref={weekdayRefs[dayIndex]}
-        key={format(weekday, DATE_FORMATS.dateKey)}
-        dayIndex={dayIndex}
-        isFirstItem={isFirstDayOfMonth(weekday)}
-        date={weekday}
-        isOffMonth={isOffMonth(activeMonth, weekday)}
-        handKeyDown={handleDayKeyDown}
-      />)}
+    <div className={clsx('week', isCurrentWeek && 'week--current')} role="row" style={inlineStyle}>
+      {daysOfTheWeek
+        .filter(weekday => isActiveWeekday(weekday))
+        .map((weekday, dayIndex) => <Day
+          ref={weekdayRefs[dayIndex]}
+          key={format(weekday, DATE_FORMATS.dateKey)}
+          dayIndex={dayIndex}
+          isFirstItem={isFirstDayOfMonth(weekday)}
+          date={weekday}
+          isOffMonth={isOffMonth(activeMonth, weekday)}
+          handKeyDown={handleDayKeyDown}
+        />)
+      }
     </div>
   )
 }
