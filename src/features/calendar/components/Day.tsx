@@ -41,7 +41,7 @@ const Day = forwardRef<HTMLButtonElement, DayProps>(({
 }, ref) => {
   const dayOfTheMonth = parseInt(format(date, DATE_FORMATS.recordDayOfMonth))
   const [isClicked, setIsClicked] = useState(false)
-  const { setDateRecord, dateStatus } = useDateRecords(dayOfTheMonth)
+  const { setDateRecord, dateStatus, isLoaded } = useDateRecords(dayOfTheMonth)
   const dateId = useId()
   const statusId = useId()
   const isDayToday = isToday(date)
@@ -69,13 +69,17 @@ const Day = forwardRef<HTMLButtonElement, DayProps>(({
     onsite: <FaBuilding aria-hidden={true} />
   }
 
+  // if (!isLoaded) {
+  //   return <div />
+  // }
+
   return (
     <div
       className={clsx('day', isOffMonth && 'day--off-month', isDayToday && 'date--today')}
       role="gridcell"
       aria-colindex={dayIndex + 1}
     >
-      {isOffMonth
+      {(isOffMonth && isLoaded)
         ? (
           /* On month format */
           <button

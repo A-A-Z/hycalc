@@ -32,20 +32,26 @@ import 'global/assets/themes/theme-dark.css'
 
 function App() {
   const gridId = useId()
+  const [monthOffset, setMonthOffset] = useState(0)
   const [counter, setCounter] = useState(0)
 
   // get current year and month
-  const { year, month } = useMemo(() => getYearAndMonth(0), [counter])
+  const { year, month } = useMemo(() => getYearAndMonth(monthOffset), [counter, monthOffset])
 
   // force a update even the user enters the page
   const onEnterPage = useCallback(() => {
     setCounter(count => count + 1)
   }, [setCounter])
 
+  const onClick = useCallback(() => {
+    setMonthOffset(value => value - 1)
+  }, [setMonthOffset])
+
   return (
     <DateRecordsProvider year={year} month={month}>
       <div onMouseEnter={onEnterPage}>
         <Page>
+          <button onClick={onClick}>- {monthOffset}</button>
           <Title gridId={gridId} year={year} month={month} />
           <Calendar id={gridId} year={year} month={month} />
         </Page>
