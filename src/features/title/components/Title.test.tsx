@@ -13,7 +13,8 @@ describe('<Title />', () => {
       ratio: 50,
       dateStatus: 'none',
       records: {},
-      setDateRecord: vi.fn()
+      setDateRecord: vi.fn(),
+      isLoaded: true
     })
     document.title = ''
   })
