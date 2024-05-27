@@ -32,10 +32,11 @@ import 'global/assets/themes/theme-dark.css'
 
 function App() {
   const gridId = useId()
+  const [monthOffset] = useState(0)
   const [counter, setCounter] = useState(0)
 
   // get current year and month
-  const { year, month } = useMemo(() => getYearAndMonth(0), [counter])
+  const { year, month } = useMemo(() => getYearAndMonth(monthOffset), [counter, monthOffset])
 
   // force a update even the user enters the page
   const onEnterPage = useCallback(() => {
