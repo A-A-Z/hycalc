@@ -69,10 +69,6 @@ const Day = forwardRef<HTMLButtonElement, DayProps>(({
     onsite: <FaBuilding aria-hidden={true} />
   }
 
-  // if (!isLoaded) {
-  //   return <div />
-  // }
-
   return (
     <div
       className={clsx('day', isOffMonth && 'day--off-month', isDayToday && 'date--today')}
