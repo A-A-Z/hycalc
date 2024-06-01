@@ -23,6 +23,8 @@ interface DayProps {
   isFirstItem: boolean
   date: Date
   isOffMonth: boolean
+  isReadOnly: boolean
+  isDisabled: boolean
   handKeyDown: DayRefFnc
 }
 

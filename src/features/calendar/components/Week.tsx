@@ -1,7 +1,15 @@
 import { useMemo, useCallback } from 'react'
 import clsx from 'clsx'
-import { format, startOfWeek, addDays, isFirstDayOfMonth, isOffMonth, isThisWeek, DATE_FORMATS } from 'lib/date'
-// import { useGridStatus } from 'features/status'
+import {
+  format,
+  startOfWeek,
+  addDays,
+  isFirstDayOfMonth,
+  isOffMonth,
+  isThisWeek,
+  DATE_FORMATS
+} from 'lib/date'
+import { useGridStatus } from 'features/status'
 // import { useConfig } from 'features/config'
 import { useActiveWeekdays } from '../hooks/useActiveWeekdays'
 import { Day } from './Day'
@@ -26,8 +34,9 @@ export const Week = ({
   handleKeyDown
 }: WeekProps): JSX.Element => {
   const isCurrentWeek = isThisWeek(date)
-  // const { status: { isCustomMode } } = useGridStatus()
+  const { status: { isCustomMode } } = useGridStatus()
   // const { config: { weekdays } } = useConfig()
+  // TODO: this is wrong
   const isActiveWeekday = useActiveWeekdays()
 
   const daysOfTheWeek = useMemo(() => {
@@ -41,8 +50,9 @@ export const Week = ({
 
   const handleDayKeyDown: DayRefFnc = useCallback((dayIndex, key) => {
     handleKeyDown(weekIndex, dayIndex, key)
-  }, [])
+  }, [handleKeyDown])
 
+  // TODO: update based on active days
   const inlineStyle = { '--column-count': 7 } as CSSProperties
 
   return (
@@ -56,6 +66,9 @@ export const Week = ({
           isFirstItem={isFirstDayOfMonth(weekday)}
           date={weekday}
           isOffMonth={isOffMonth(activeMonth, weekday)}
+          // TODO set these
+          isReadOnly={isCustomMode}
+          isDisabled={false}
           handKeyDown={handleDayKeyDown}
         />)
       }
