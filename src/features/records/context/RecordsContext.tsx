@@ -1,27 +1,28 @@
 import { createContext, useContext, useMemo, useCallback, useState, useEffect } from 'react'
 import { useDebounceCallback } from 'usehooks-ts'
-import { log } from '../utils/log'
 
 import type { FC, ReactNode } from 'react'
 import type { DateRecords, DateRecordType, DateRecordStatus } from '../types'
 
 interface DateRecordsContextProps {
-  records: DateRecords,
+  records: DateRecords
   setDateRecord: (dayOfTheMonth: number, status: DateRecordStatus) => void
   ratio: number
+  isLoaded: boolean
 }
 
-interface UseDateRecordsReturn extends DateRecordsContextProps {
+interface useDateRecordsReturn extends DateRecordsContextProps {
   dateStatus: DateRecordStatus
 }
 
 const DateRecordsContext = createContext<DateRecordsContextProps>({
   records: {},
   setDateRecord: () => null,
-  ratio: 0
+  ratio: 0,
+  isLoaded: false
 })
 
-export const useDateRecords = (dayOfTheMonth: number): UseDateRecordsReturn => {
+export const useDateRecords = (dayOfTheMonth: number): useDateRecordsReturn => {
   const context = useContext(DateRecordsContext)
   if (context === undefined) {
     throw new Error('useUser must be used within a UserProvider')
@@ -38,87 +39,78 @@ interface DateRecordsProviderProps {
   children: ReactNode
 }
 
+const BLANK_VALUE = '{}'
+
 export const DateRecordsProvider: FC<DateRecordsProviderProps> = ({ year, month, children }) => {
-  const [records, setRecords] =  useState<DateRecords>({})
+  // create states
+  const [records, setRecords] =  useState<string>(BLANK_VALUE)
   const [isLoaded, setIsLoaded] = useState(false)
-  const recordSetName = `${year}-${month}`
 
-  // convert Records in to JSON string
-  const recordsString = useMemo(() => JSON.stringify(records), [records])
+  // setup localstorage tools
+  const recordKey = `${year}-${month}`
 
-  // Callback function for updating the date records
+  /********************* Handle Loading **********************/
+
+  useEffect(() => {  
+    // load saved key
+    const recordsJson = localStorage.getItem(recordKey)
+
+    // update state with records (or blank if not found)
+    setRecords(recordsJson ?? BLANK_VALUE)
+    setIsLoaded(true)
+  }, [recordKey])
+
+  /********************* Handle Saving **********************/
+
+  const save = useCallback((json: string) => {
+    // update localstore based on record key
+    localStorage.setItem(recordKey, json)
+  }, [recordKey])
+
+  // debounce the save callback so it only saves after changes are finished
+  const saveDebounced = useDebounceCallback(save, 1500)
+
+  useEffect(() => {
+    // on records change call the debounced save function (if loaded)
+    if (isLoaded) {
+      saveDebounced(records)
+    }
+  }, [records])
+
+  /********************* Handle retruned values for hook **********************/
+
+  // callback function for updating records
   const setDateRecord = useCallback((dayOfTheMonth: number, status: DateRecordStatus) => {
-    const newRecords = { ...records }
+    // turn records in to object so we can make changes to it
+    const newRecords = JSON.parse(records)
 
     if (status === 'none' && newRecords[dayOfTheMonth] !== undefined) {
+      // records is set to 'none' or invalid date: delete record
       delete newRecords[dayOfTheMonth]
     } else {
+      // otherwise update record
       newRecords[dayOfTheMonth] = status as DateRecordType
     }
 
-    setRecords(newRecords)
+    // a string is better for tracking state then a parsed object
+    setRecords(JSON.stringify(newRecords))
   }, [setRecords, records])
 
-  // Callback function to save records to local store
-  const save = useCallback((json: string) => {
-    localStorage.setItem(`${recordSetName}`, json)
-    log(['Records saved for:', recordSetName])
-  }, [])
-
-  // use this debounced version for auto save
-  const saveDebounced = useDebounceCallback(save, 1500)
-
-  // Load records from load storage
-  useEffect(() => {
-    if (isLoaded) {
-      return
-    }
-
-    // clear out old values
-    Object.keys(localStorage)
-      .filter(key => key !== recordSetName && key !== 'config')
-      .forEach(key => {
-        log(['Deleting old records for:', key])
-        localStorage.removeItem(key)
-      })
-
-    log(['Looking for records for:', recordSetName])
-    const recordsJson = localStorage.getItem(recordSetName)
-
-    if (recordsJson !== null) {
-      const newRecords = JSON.parse(recordsJson)
-      const recordsCount = Object.values(newRecords).length
-      setRecords(newRecords)
-      log([`Records loaded for ${recordSetName}:`, recordsCount.toString()])
-    } else {
-      log(['No records found'])
-    }
-
-    setIsLoaded(true)
-  }, [])
-
-  // called debounaced save on record change
-  useEffect(() => {
-    if (isLoaded) {
-      saveDebounced(recordsString)
-    }
-  }, [recordsString])
-
+  // get the ratio
   const ratio = useMemo(() => {
-    const totalDays = Object.entries(records).length
-    const daysOnSite = Object.values(records).filter((entry) => entry === 'onsite').length
+    const recordsParsed = JSON.parse(records)
+    const totalDays = Object.entries(recordsParsed).length
+    const daysOnSite = Object.values(recordsParsed).filter((entry) => entry === 'onsite').length
     return Math.round((daysOnSite / totalDays) * 100 || 0)
   }, [records])
 
-  const value = useMemo(() => ({
-    records,
-    setDateRecord,
-    ratio
-  }), [records, setDateRecord, ratio])
-
-  if (!isLoaded) {
-    return <div>Loading...</div>
-  }
+  // hook returned values
+  const value: DateRecordsContextProps = useMemo(() => ({
+    records: JSON.parse(records),
+    ratio,
+    isLoaded,
+    setDateRecord
+  }), [records, isLoaded, ratio, setDateRecord])
 
   return <DateRecordsContext.Provider value={value}>{children}</DateRecordsContext.Provider>
 }
