@@ -9,7 +9,7 @@ import {
   isThisWeek,
   DATE_FORMATS
 } from 'lib/date'
-import { useGridStatus } from 'features/status'
+// import { useGridStatus } from 'features/status'
 // import { useConfig } from 'features/config'
 import { useActiveWeekdays } from '../hooks/useActiveWeekdays'
 import { Day } from './Day'
@@ -34,10 +34,10 @@ export const Week = ({
   handleKeyDown
 }: WeekProps): JSX.Element => {
   const isCurrentWeek = isThisWeek(date)
-  const { status: { isCustomMode } } = useGridStatus()
+  // const { status: { isCustomMode } } = useGridStatus()
   // const { config: { weekdays } } = useConfig()
   // TODO: this is wrong
-  const isActiveWeekday = useActiveWeekdays()
+  const { isCustomMode, isActiveWeekday } = useActiveWeekdays()
 
   const daysOfTheWeek = useMemo(() => {
     const start = startOfWeek(date)
@@ -58,7 +58,7 @@ export const Week = ({
   return (
     <div className={clsx('week', isCurrentWeek && 'week--current')} role="row" style={inlineStyle}>
       {daysOfTheWeek
-        .filter(weekday => isActiveWeekday(weekday))
+        .filter(weekday => isCustomMode || isActiveWeekday(weekday))
         .map((weekday, dayIndex) => <Day
           ref={weekdayRefs[dayIndex]}
           key={format(weekday, DATE_FORMATS.dateKey)}
@@ -66,9 +66,7 @@ export const Week = ({
           isFirstItem={isFirstDayOfMonth(weekday)}
           date={weekday}
           isOffMonth={isOffMonth(activeMonth, weekday)}
-          // TODO set these
-          isReadOnly={isCustomMode}
-          isDisabled={false}
+          isDisabled={isActiveWeekday(weekday)}
           handKeyDown={handleDayKeyDown}
         />)
       }

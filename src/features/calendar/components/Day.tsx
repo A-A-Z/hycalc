@@ -5,10 +5,11 @@ import { format, isToday, isThisMonth, dayOfMonthSplit, DATE_FORMATS } from 'lib
 
 import { useDateRecords } from 'features/records'
 import { useGridStatus } from 'features/status'
+import { DayLabel } from './DayLabel'
 import '../assets/day.css'
 import '../assets/status.css'
 
-import type { KeyboardEventHandler } from 'react'
+import type { ReactNode, KeyboardEventHandler } from 'react'
 import type { DateRecordStatus } from 'features/records'
 import type { DayRefFnc } from '../types'
 
@@ -18,20 +19,38 @@ const statusIndex: Record<DateRecordStatus, DateRecordStatus> = {
   onsite: 'none'
 }
 
+const STATUS_LABEL: Record<DateRecordStatus, string>  = {
+  none: 'None',
+  onsite: 'On Site',
+  remote: 'Remote'
+}
+
+interface DayWrapperProps {
+  isOffMonth: boolean
+  isDayToday: boolean
+  dayIndex: number
+  children: ReactNode
+}
+
+const DayWrapper = ({ isOffMonth, isDayToday, dayIndex, children }: DayWrapperProps): JSX.Element => (
+  <div
+    className={clsx(
+      'day',
+      isOffMonth && 'day--off-month',
+      isDayToday && 'date--today'
+    )}
+    role="gridcell"
+    aria-colindex={dayIndex + 1}
+  >{children}</div>
+)
+
 interface DayProps {
   dayIndex: number
   isFirstItem: boolean
   date: Date
   isOffMonth: boolean
-  isReadOnly: boolean
   isDisabled: boolean
   handKeyDown: DayRefFnc
-}
-
-const STATUS_LABEL: Record<DateRecordStatus, string>  = {
-  none: 'None',
-  onsite: 'On Site',
-  remote: 'Remote'
 }
 
 const Day = forwardRef<HTMLButtonElement, DayProps>(({
@@ -72,59 +91,71 @@ const Day = forwardRef<HTMLButtonElement, DayProps>(({
     onsite: <FaBuilding aria-hidden={true} />
   }
 
+  if (isOffMonth || !isLoaded) {
+    return (
+      <DayWrapper isOffMonth={true} isDayToday={isDayToday} dayIndex={dayIndex}>
+        <span className="day__item day__item--off" >
+          <DayLabel id={dateId} date={date} />
+        </span>
+      </DayWrapper>
+    )
+  }
+
+  if (isReadOnly) {
+    return (
+      <DayWrapper isOffMonth={true} isDayToday={isDayToday} dayIndex={dayIndex}>
+        <div className="day__item day__item--read-only">
+          <DayLabel id={dateId} date={date} />
+          <div className="status">
+            <div
+              className={`status__option status__option--${dateStatus}`}
+            >
+              {icons[dateStatus]}{STATUS_LABEL[dateStatus]}
+            </div>
+          </div>
+        </div>
+      </DayWrapper>
+    )
+  }
+
   return (
-    <div
-      className={clsx('day', isOffMonth && 'day--off-month', isDayToday && 'date--today')}
-      role="gridcell"
-      aria-colindex={dayIndex + 1}
-    >
-      {(isOffMonth && isLoaded)
-        ? (
-          /* On month format */
-          <button
-            ref={ref}
-            type="button"
-            className={clsx('day__item', 'day__item--btn', isClicked && 'day__item--active', isReadOnly && 'day__item--read-only')}
-            onClick={onClick}
-            onKeyDown={onKeyDown}
-            tabIndex={isTabbed ? 0 : -1}
-            aria-controls={statusId}
-          >
-            <time
-              id={dateId}
-              dateTime={format(date, DATE_FORMATS.dateTimeAttr)}
-            >
-              {dayOfMonthSplit(date).map((part: string) => <span key={part}>{part}</span>)}
-            </time>
-            <ul
-              id={statusId}
-              role="listbox" 
-              className="status"
-              aria-labelledby={dateId}
-              aria-live="polite"
-            >
-              {statusOptions.map(status => (
-                <li
-                  key={status}
-                  className={`status__option status__option--${status}`}
-                  role="option"
-                  aria-selected={status === dateStatus}
-                  tabIndex={-1}
-                >
-                    {icons[status]}{STATUS_LABEL[status]}
-                </li>
-              ))}
-            </ul>
-          </button>
-        ) : (
-          /* Off month format */
-          <span className="day__item day__item--off" >
-            <time dateTime={format(date, DATE_FORMATS.dateTimeAttr)}>
-              {dayOfMonthSplit(date).map((part: string) => <span key={part}>{part}</span>)}
-            </time>
-          </span>
+    <DayWrapper isOffMonth={false} isDayToday={isDayToday} dayIndex={dayIndex}>
+      <button
+        ref={ref}
+        type="button"
+        className={clsx(
+          'day__item',
+          'day__item--btn',
+          isClicked && 'day__item--active',
+          isReadOnly && 'day__item--read-only'
         )}
-    </div>
+        onClick={onClick}
+        onKeyDown={onKeyDown}
+        tabIndex={isTabbed ? 0 : -1}
+        aria-controls={statusId}
+      >
+        <DayLabel id={dateId} date={date} />
+        <ul
+          id={statusId}
+          role="listbox" 
+          className="status"
+          aria-labelledby={dateId}
+          aria-live="polite"
+        >
+          {statusOptions.map(status => (
+            <li
+              key={status}
+              className={`status__option status__option--${status}`}
+              role="option"
+              aria-selected={status === dateStatus}
+              tabIndex={-1}
+            >
+                {icons[status]}{STATUS_LABEL[status]}
+            </li>
+          ))}
+        </ul>
+      </button>
+    </DayWrapper>
   )
 })
 
