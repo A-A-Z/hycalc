@@ -38,6 +38,11 @@
   inset: auto 0 var(--status-spacing) 0;
   opacity: 1;
 }
+.status__option.status__option--read-only {
+  inset: auto var(--status-spacing) var(--status-spacing) var(--status-spacing);
+  margin: 0;
+  opacity: 1;
+}
 .status__option svg {
   font-size: 1em;
 }

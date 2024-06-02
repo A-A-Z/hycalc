@@ -25,11 +25,11 @@
   border-color: var(--colour-border-disabled);
   border-style: dashed;
 }
-.day__item:has(.status__option--onsite[aria-selected="true"]) {
+.day__item:has(.status__option--onsite:is([aria-selected="true"], .status__option--read-only)) {
   --active-border-colour: var(--colour-status-onsite);
   --active-hover-colour: var(--colour-status-onsite);
 }
-.day__item:has(.status__option--remote[aria-selected="true"]) {
+.day__item:has(.status__option--remote:is([aria-selected="true"], .status__option--read-only)) {
   --active-border-colour: var(--colour-status-remote);
   --active-hover-colour: var(--colour-status-remote);
   

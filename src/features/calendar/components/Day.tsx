@@ -108,7 +108,7 @@ const Day = forwardRef<HTMLButtonElement, DayProps>(({
           <DayLabel id={dateId} date={date} />
           <div className="status">
             <div
-              className={`status__option status__option--${dateStatus}`}
+              className={`status__option status__option--read-only status__option--${dateStatus}`}
             >
               {icons[dateStatus]}{STATUS_LABEL[dateStatus]}
             </div>
