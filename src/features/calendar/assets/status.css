@@ -20,20 +20,37 @@
   margin: 0 var(--status-spacing);
   transition: inset 0.2s ease-out, opacity 0.2s ease;
 }
+
 .status__option.status__option--onsite {
   background-color: var(--colour-status-onsite);
   inset: auto -100% var(--status-spacing) 100%;
+}
+.status__option.status__option--read-only.status__option--onsite {
+  background-color: transparent;
+  border: 1px solid var(--colour-status-onsite);
+  color: var(--colour-status-onsite);
 }
 
 .status__option.status__option--remote {
   background-color: var(--colour-status-remote);
   inset: auto 100% var(--status-spacing) -100%;
 }
+.status__option.status__option--read-only.status__option--remote {
+  background-color: transparent;
+  border: 1px solid var(--colour-status-remote);
+  color: var(--colour-status-remote);
+}
 
 .status__option.status__option--none {
   background-color: var(--colour-border-default);
   inset: auto 0 -26px 0;
 }
+.status__option.status__option--read-only.status__option--none {
+  background-color: transparent;
+  border: 1px solid var(--colour-border-default);
+  color: var(--colour-border-default);
+}
+
 .status__option[aria-selected="true"] {
   inset: auto 0 var(--status-spacing) 0;
   opacity: 1;

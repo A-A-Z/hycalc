@@ -66,7 +66,7 @@ export const Week = ({
           isFirstItem={isFirstDayOfMonth(weekday)}
           date={weekday}
           isOffMonth={isOffMonth(activeMonth, weekday)}
-          isDisabled={isActiveWeekday(weekday)}
+          isDisabled={!isActiveWeekday(weekday)}
           handKeyDown={handleDayKeyDown}
         />)
       }

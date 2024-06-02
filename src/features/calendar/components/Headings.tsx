@@ -1,9 +1,22 @@
 import { memo, useCallback } from 'react'
+import clsx from 'clsx'
+import { FaToggleOn, FaToggleOff } from 'react-icons/fa6'
 import { format, startOfWeek, addDays, DATE_FORMATS } from 'lib/date'
 // import { useGridStatus } from 'features/status'
 import { useConfig } from 'features/config'
 import { useActiveWeekdays } from '../hooks/useActiveWeekdays'
 import '../assets/weekdayHeading.css'
+
+
+interface HeadingTitleProps {
+  date: Date
+}
+
+const HeadingTitle = ({ date }: HeadingTitleProps): JSX.Element => (
+  <abbr title={format(date, DATE_FORMATS.weekdayFull)}>
+    {format(date, DATE_FORMATS.weekdayAbbr)}
+  </abbr>
+)
 
 const HeadingsSrc = (): JSX.Element => {
   const start = startOfWeek(new Date)
@@ -50,25 +63,35 @@ const HeadingsSrc = (): JSX.Element => {
         // only count the columns that are rendered
         colIndex++
 
-        // console.log('x', format(headerDate, 'e'), 1, '1')
+        const key = format(headerDate, DATE_FORMATS.weekdayAbbr)
+
+        if (isCustomMode) {
+          return (
+            <div
+              key={key}
+              className="weekday-heading weekday-heading--custom-mode"
+              role="columnheader"
+              aria-colindex={colIndex}
+            >
+              <button
+                type="button"
+                className={clsx('weekday-heading__button', isColActive && 'weekday-heading__button--active',)}
+                onClick={() => { toggleWeekday(dayIndex) }}
+              >
+                <HeadingTitle date={headerDate} />{isColActive ? <FaToggleOn /> : <FaToggleOff />}
+              </button>
+            </div>
+          )
+        }
 
         return (
           <div
-            key={format(headerDate, DATE_FORMATS.weekdayAbbr)}
+            key={key}
             className="weekday-heading"
             role="columnheader"
             aria-colindex={colIndex}
           >
-            <abbr title={format(headerDate, DATE_FORMATS.weekdayFull)}>
-              {format(headerDate, DATE_FORMATS.weekdayAbbr)}
-            </abbr>
-            {isCustomMode && <button 
-              type="button"
-              className="weekday-heading__btn"
-              onClick={() => { toggleWeekday(dayIndex) }}
-            >
-              {isColActive ? 'X' : 'O'}
-            </button>}
+            <HeadingTitle date={headerDate} />
           </div>
         )
       })}

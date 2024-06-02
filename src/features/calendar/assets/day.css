@@ -16,7 +16,7 @@
   height: auto;
   justify-content: center;
   position: relative;
-  transition: border-color 0.2s ease, box-shadow 0.2s ease;
+  transition: border-color 0.2s ease, box-shadow 0.2s ease, scale 0.3s ease, bopacity 0.3s ease;
   width: -moz-available;
   width: -webkit-fill-available;
   width: fill-available;
@@ -32,7 +32,10 @@
 .day__item:has(.status__option--remote:is([aria-selected="true"], .status__option--read-only)) {
   --active-border-colour: var(--colour-status-remote);
   --active-hover-colour: var(--colour-status-remote);
-  
+}
+.day__item.day__item--disabled {
+  opacity: 0.8;
+  scale: 0.9;
 }
 
 .day__item time {

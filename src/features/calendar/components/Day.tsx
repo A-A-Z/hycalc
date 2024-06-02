@@ -1,7 +1,7 @@
 import { useState, useId, forwardRef } from 'react'
 import { FaBuilding, FaHouse } from 'react-icons/fa6'
 import clsx from 'clsx'
-import { format, isToday, isThisMonth, dayOfMonthSplit, DATE_FORMATS } from 'lib/date'
+import { format, isToday, isThisMonth, DATE_FORMATS } from 'lib/date'
 
 import { useDateRecords } from 'features/records'
 import { useGridStatus } from 'features/status'
@@ -58,6 +58,7 @@ const Day = forwardRef<HTMLButtonElement, DayProps>(({
   isFirstItem,
   date,
   isOffMonth,
+  isDisabled,
   handKeyDown
 }, ref) => {
   const dayOfTheMonth = parseInt(format(date, DATE_FORMATS.recordDayOfMonth))
@@ -94,7 +95,7 @@ const Day = forwardRef<HTMLButtonElement, DayProps>(({
   if (isOffMonth || !isLoaded) {
     return (
       <DayWrapper isOffMonth={true} isDayToday={isDayToday} dayIndex={dayIndex}>
-        <span className="day__item day__item--off" >
+        <span className={clsx('day__item', 'day__item--off', isDisabled && 'day__item--disabled')} >
           <DayLabel id={dateId} date={date} />
         </span>
       </DayWrapper>
@@ -104,12 +105,14 @@ const Day = forwardRef<HTMLButtonElement, DayProps>(({
   if (isReadOnly) {
     return (
       <DayWrapper isOffMonth={true} isDayToday={isDayToday} dayIndex={dayIndex}>
-        <div className="day__item day__item--read-only">
+        <div className={clsx('day__item', 'day__item--read-only', isDisabled && 'day__item--disabled')}>
           <DayLabel id={dateId} date={date} />
           <div className="status">
-            <div
-              className={`status__option status__option--read-only status__option--${dateStatus}`}
-            >
+            <div className={clsx(
+                'status__option',
+                'status__option--read-only',
+                `status__option--${dateStatus}`
+            )}>
               {icons[dateStatus]}{STATUS_LABEL[dateStatus]}
             </div>
           </div>
