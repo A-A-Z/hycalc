@@ -34,8 +34,8 @@
   --active-hover-colour: var(--colour-status-remote);
 }
 .day__item.day__item--disabled {
-  opacity: 0.8;
-  scale: 0.9;
+  opacity: 0.9;
+  scale: 0.94;
 }
 
 .day__item time {

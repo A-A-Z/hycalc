@@ -1,12 +1,11 @@
 import { memo, useCallback } from 'react'
-import clsx from 'clsx'
-import { FaToggleOn, FaToggleOff } from 'react-icons/fa6'
+// import { FaToggleOn, FaToggleOff } from 'react-icons/fa6'
 import { format, startOfWeek, addDays, DATE_FORMATS } from 'lib/date'
 // import { useGridStatus } from 'features/status'
 import { useConfig } from 'features/config'
+import { ToggleButton } from 'features/button'
 import { useActiveWeekdays } from '../hooks/useActiveWeekdays'
 import '../assets/weekdayHeading.css'
-
 
 interface HeadingTitleProps {
   date: Date
@@ -73,13 +72,12 @@ const HeadingsSrc = (): JSX.Element => {
               role="columnheader"
               aria-colindex={colIndex}
             >
-              <button
-                type="button"
-                className={clsx('weekday-heading__button', isColActive && 'weekday-heading__button--active',)}
+              <ToggleButton
+                isActive={isColActive}
                 onClick={() => { toggleWeekday(dayIndex) }}
               >
-                <HeadingTitle date={headerDate} />{isColActive ? <FaToggleOn /> : <FaToggleOff />}
-              </button>
+                <HeadingTitle date={headerDate} />
+              </ToggleButton>
             </div>
           )
         }

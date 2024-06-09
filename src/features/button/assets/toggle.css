@@ -1,0 +1,23 @@
+.toggle {
+  background-color: var(--colour-background-primary);
+  border-radius: 7px;
+  box-sizing: border-box;
+  height: 0.9rem;
+  margin: 0 -4px 0 0;
+  padding: 2px;
+  width: 26px;
+}
+
+.toggle:after {
+  aspect-ratio: 1;
+  background-color: var(--bg-colour);
+  border-radius: 50%;
+  content: "";
+  display: block;
+  height: 100%;
+  transform: translate(100%, 0);
+  transition: all 0.2s ease-in;
+}
+.toggle.toggle--active:after {
+  transform: translate(0, 0);
+}

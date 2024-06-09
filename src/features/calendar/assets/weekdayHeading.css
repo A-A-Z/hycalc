@@ -9,29 +9,6 @@
   text-decoration: none;
 }
 
-.weekday-heading__button {
-  --bg-colour: var(--colour-border-default);
-
-  align-items: center;
-  background-color: var(--bg-colour);
-  border: 0;
-  border-radius: 8px;
-  cursor: pointer;
-  display: flex;
-  font-weight: 600;
-  height: 1.3rem;
-  justify-content: space-between;
-  padding: 0 8px;
-  transition: background-color 0.2s ease, box-shadow 0.2s ease;
+.weekday-heading .btn {
   width: 100%;
-}
-.weekday-heading__button:hover {
-  box-shadow: 0 0 0 2px var(--bg-colour);
-}
-.weekday-heading__button.weekday-heading__button--active{
-  --bg-colour: var(--colour-status-onsite);
-}
-
-.weekday-heading__button svg {
-  font-size: 1rem;
 }

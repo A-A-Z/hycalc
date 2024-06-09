@@ -1,6 +1,6 @@
 import { forwardRef, useCallback } from 'react'
 import { useGridStatus } from 'features/status'
-import { Tool } from './Tool'
+import { ToggleButton } from 'features/button'
 
 import type { ToolProps } from '../types'
 
@@ -12,12 +12,13 @@ export const ToolCustom = forwardRef<HTMLButtonElement, ToolProps>(({ index }, r
   }, [isCustomMode, toggleCustomMode])
 
   return (
-    <Tool
-      ref={ref} 
-      index={index}
-      label="Custom"
+    <ToggleButton
+      ref={ref}
+      tabIndex={index === 0 ? 0 : -1}
       onClick={onClick}
-      isPressed={isCustomMode}
-    />
+      isActive={isCustomMode}
+    >
+      Custom
+    </ToggleButton>
   )
 })
