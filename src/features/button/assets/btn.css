@@ -16,7 +16,7 @@
   width: auto;
 }
 .btn:hover {
-  box-shadow: 0 0 0 2px var(--bg-colour);
+  box-shadow: 0 0 0 1px var(--bg-colour);
 }
 .btn--active,
 .btn:is([aria-pressed="true"]) {

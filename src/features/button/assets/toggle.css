@@ -1,17 +1,21 @@
 .toggle {
+  aspect-ratio: 2 / 1;
   background-color: var(--colour-background-primary);
   border-radius: 7px;
-  box-sizing: border-box;
-  height: 0.9rem;
-  margin: 0 -4px 0 0;
+  box-shadow: inset 2px 2px 3px rgba(0 0 0 / 0.6);
+  height: -moz-available;
+  height: -webkit-fill-available;
+  height: fill-available;
+  margin: 3px -3px 3px 0;
+  overflow: hidden;
   padding: 2px;
-  width: 26px;
 }
 
 .toggle:after {
   aspect-ratio: 1;
   background-color: var(--bg-colour);
   border-radius: 50%;
+  box-shadow: 2px 2px 3px rgba(0 0 0 / 0.6);
   content: "";
   display: block;
   height: 100%;

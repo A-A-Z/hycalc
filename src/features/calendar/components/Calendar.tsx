@@ -2,6 +2,7 @@ import { useMemo, useRef, useCallback, createRef } from 'react'
 
 import { format, startOfWeek, endOfMonth, addWeeks, DATE_FORMATS } from 'lib/date'
 import { useConfig } from 'features/config'
+import { useGridStatus } from 'features/status'
 
 import { Week } from './Week'
 import { Headings } from './Headings'
@@ -18,9 +19,11 @@ interface CalendarProps {
 
 export const Calendar = ({ id, year, month }: CalendarProps): JSX.Element => {
   const dayRefs = useRef<WeekRef[]>([])
+  const { status: { isCustomMode } } = useGridStatus()
   const firstOfTheMonth = new Date(year, (month - 1), 1)
 
   const { config: { weekdays } } = useConfig()
+  const columnCount = isCustomMode ? 7 : weekdays.length
 
   const weeks = useMemo(() => {
     const lastDayOfMonth = endOfMonth(firstOfTheMonth)
@@ -42,8 +45,17 @@ export const Calendar = ({ id, year, month }: CalendarProps): JSX.Element => {
     handleGridNav(dayRefs, rowIndex, columnIndex, key)
   }, [dayRefs])
 
+  if (columnCount === 0) {
+    return (
+      <div className="calendar-note">
+        <p>Yes, very cleaver.</p>
+        <p>You made all the days go away.</p>
+      </div>
+    )
+  }
+
   return (
-    <div className="calendar" aria-labelledby={id} role="grid" aria-colcount={weekdays.length}>
+    <div className="calendar" aria-labelledby={id} role="grid" aria-colcount={columnCount}>
       <Headings />
       {weeks.map((week, weekIndex) => {
         return (
