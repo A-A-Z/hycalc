@@ -20,15 +20,15 @@ const getFirstVisibleDayOfMonth = (date: Date, weekdays: number[]): Date => {
 export const useTabbedDate = (month: number, year: number): Date => {
   const { config: { weekdays } } = useConfig()
 
-  // just in case we make sure there are in fact active weekedays
-  if (weekdays.length === 0) {
-    return new Date()
-  }
-
   const value = useMemo(() => {
     const today = new Date()
     const todaysWeekdayNo = parseInt(format(today, 'i')) - 1
     const activeDate = new Date(year, month - 1, 1)
+
+    // just in case we make sure there are in fact active weekedays
+    if (weekdays.length === 0) {
+      return today
+    }
 
     if (!isOffMonth(month, today) && weekdays.includes(todaysWeekdayNo)) {
       // if active month is this month and if today is a visible weekday
