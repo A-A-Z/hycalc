@@ -1,7 +1,7 @@
 import { useState, useId, forwardRef } from 'react'
 import { FaBuilding, FaHouse } from 'react-icons/fa6'
 import clsx from 'clsx'
-import { format, isToday, isThisMonth, DATE_FORMATS } from 'lib/date'
+import { format, isToday, DATE_FORMATS } from 'lib/date'
 
 import { useDateRecords } from 'features/records'
 import { useGridStatus } from 'features/status'
@@ -46,8 +46,8 @@ const DayWrapper = ({ isOffMonth, isDayToday, dayIndex, children }: DayWrapperPr
 
 interface DayProps {
   dayIndex: number
-  isFirstItem: boolean
   date: Date
+  isTabbed: boolean
   isOffMonth: boolean
   isDisabled: boolean
   handKeyDown: DayRefFnc
@@ -55,8 +55,8 @@ interface DayProps {
 
 const Day = forwardRef<HTMLButtonElement, DayProps>(({
   dayIndex,
-  isFirstItem,
   date,
+  isTabbed,
   isOffMonth,
   isDisabled,
   handKeyDown
@@ -67,7 +67,6 @@ const Day = forwardRef<HTMLButtonElement, DayProps>(({
   const dateId = useId()
   const statusId = useId()
   const isDayToday = isToday(date)
-  const isDayThisMonth = isThisMonth(date)
   const { status: { isReadOnly } } = useGridStatus()
 
   const onClick = () => {
@@ -82,9 +81,6 @@ const Day = forwardRef<HTMLButtonElement, DayProps>(({
   const statusOptions: DateRecordStatus[] = [
     'none', 'remote', 'onsite'
   ]
-  
-  // day is tabIndexed if is today or if an off month then is first item
-  const isTabbed = isDayToday || (!isDayThisMonth && isFirstItem)
 
   const icons: Record<DateRecordStatus, JSX.Element> = {
     none: <span />,

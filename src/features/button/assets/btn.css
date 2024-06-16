@@ -18,6 +18,12 @@
 .btn:hover {
   box-shadow: 0 0 0 1px var(--bg-colour);
 }
+.btn:focus-visible {
+  outline-color: var(--bg-colour);
+  outline-offset: 3px;
+  outline-style: solid;
+  outline-width: 2px;
+}
 .btn--active,
 .btn:is([aria-pressed="true"]) {
   --bg-colour: var(--colour-status-onsite);

@@ -64,6 +64,7 @@ export const Calendar = ({ id, year, month }: CalendarProps): JSX.Element => {
             weekIndex={weekIndex}
             date={week}
             activeMonth={month}
+            activeYear={year}
             weekdayRefs={dayRefs.current[weekIndex]}
             handleKeyDown={handleKeyDown}
           />

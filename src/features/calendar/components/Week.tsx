@@ -4,12 +4,13 @@ import {
   format,
   startOfWeek,
   addDays,
-  isFirstDayOfMonth,
   isOffMonth,
   isThisWeek,
+  isSameDay,
   DATE_FORMATS
 } from 'lib/date'
 import { useActiveWeekdays } from '../hooks/useActiveWeekdays'
+import { useTabbedDate } from '../hooks/useTabbedDate'
 import { Day } from './Day'
 import '../assets/week.css'
 
@@ -19,6 +20,7 @@ interface WeekProps {
   weekIndex: number
   date: Date
   activeMonth: number
+  activeYear: number
   weekdayRefs: WeekRef
   handleKeyDown: WeekRefFnc
 }
@@ -27,11 +29,13 @@ export const Week = ({
   weekIndex,
   date,
   activeMonth,
+  activeYear,
   weekdayRefs,
   handleKeyDown
 }: WeekProps): JSX.Element => {
   const isCurrentWeek = isThisWeek(date)
   const { isCustomMode, isActiveWeekday } = useActiveWeekdays()
+  const tabbedDay = useTabbedDate(activeMonth, activeYear)
 
   const daysOfTheWeek = useMemo(() => {
     const start = startOfWeek(date)
@@ -53,8 +57,8 @@ export const Week = ({
           ref={weekdayRefs[dayIndex]}
           key={format(weekday, DATE_FORMATS.dateKey)}
           dayIndex={dayIndex}
-          isFirstItem={isFirstDayOfMonth(weekday)}
           date={weekday}
+          isTabbed={isSameDay(weekday, tabbedDay)}
           isOffMonth={isOffMonth(activeMonth, weekday)}
           isDisabled={!isActiveWeekday(weekday)}
           handKeyDown={handleDayKeyDown}
