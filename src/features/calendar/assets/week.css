@@ -1,7 +1,9 @@
 .week {
+
+
   display: grid;
   gap: var(--calendar-gap);
-  grid-template-columns: repeat(7, 1fr);
+  grid-template-columns: repeat(var(--column-count), 1fr);
 }
 
 .week.week--current {

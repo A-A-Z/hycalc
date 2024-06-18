@@ -1,8 +1,12 @@
 .title {
   align-items: baseline;
   display: flex;
+  gap: 2em;
   justify-content: space-between;
   margin: 0 0 var(--title-spacing) 0;
+
+  container-type: inline-size;
+  container-name: cardContainer;
 }
 
 .title__month,
@@ -32,4 +36,28 @@
 .title__ratio span ~ span {
   font-weight: 100;
   margin: 0 0 0 0.1rem;
+}
+
+@container cardContainer (width < 300px) {
+  .title__month,
+  .title__year,
+  .title__ratio {
+    font-size: 1.1rem;
+  }
+}
+
+@container cardContainer (width >= 300px) and (width < 500px) {
+  .title__month,
+  .title__year,
+  .title__ratio {
+    font-size: 1.8rem;
+  }
+}
+
+@container cardContainer (width >= 500px) and (width < 700px) {
+  .title__month,
+  .title__year,
+  .title__ratio {
+    font-size: 2.4rem;
+  }
 }

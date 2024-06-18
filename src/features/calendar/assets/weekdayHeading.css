@@ -1,8 +1,14 @@
 .weekday-heading {
+  align-items: center;
+  display: flex;
   font-size: 0.9rem;
-  list-style-type: none;
+  height: 1.3rem;
 }
 
 .weekday-heading abbr {
   text-decoration: none;
+}
+
+.weekday-heading .btn {
+  width: 100%;
 }
