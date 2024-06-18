@@ -3,12 +3,11 @@
   background-color: var(--colour-background-primary);
   border-radius: 7px;
   box-shadow: inset 2px 2px 3px rgba(0 0 0 / 0.6);
-  height: -moz-available;
-  height: -webkit-fill-available;
-  height: fill-available;
-  margin: 3px -3px 3px 0;
+  height: 0.64rem;
+  margin: 3px -4px 3px 0;
   overflow: hidden;
   padding: 2px;
+  width: fit-content;
 }
 
 .toggle:after {
