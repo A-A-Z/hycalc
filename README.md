@@ -39,15 +39,16 @@ Once setup you can use these commands:
 
 (Not in order, no promises)
 
-- [ ] Hide/show days of the week
 - [ ] Select/toggle modes
 - [ ] Month select/stats
+- [ ] Plan mode
 - [ ] Language
 - [ ] Light theme
 - [ ] Config state colours/names/icons
 - [ ] Mobile support
 - [ ] Import/export
 - [ ] Multi-select
+- [x] Hide/show days of the week
 
 ## License
 
