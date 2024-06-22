@@ -28,6 +28,7 @@ export const Calendar = ({ id, year, month }: CalendarProps): JSX.Element => {
   const weeks = useMemo(() => {
     const lastDayOfMonth = endOfMonth(firstOfTheMonth)
     let currentWeekStart = startOfWeek(firstOfTheMonth)
+    console.log('week', format(firstOfTheMonth, 'i d/M'), format(startOfWeek(firstOfTheMonth), 'i d/m'))
     const weeks = []
 
     while (currentWeekStart <= lastDayOfMonth) {
