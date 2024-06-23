@@ -32,7 +32,7 @@ export const Week = ({
   activeYear,
   weekdayRefs,
   handleKeyDown
-}: WeekProps): JSX.Element => {
+}: WeekProps): JSX.Element | null => {
   const isCurrentWeek = isThisWeek(date)
   const { isCustomMode, isActiveWeekday } = useActiveWeekdays()
   const tabbedDay = useTabbedDate(activeMonth, activeYear)
@@ -49,6 +49,16 @@ export const Week = ({
   const handleDayKeyDown: DayRefFnc = useCallback((dayIndex, key) => {
     handleKeyDown(weekIndex, dayIndex, key)
   }, [handleKeyDown])
+
+  // Check if at least one day is on-month
+  const hasOnMonthDays = useMemo(() =>
+    daysOfTheWeek.some(day => !isOffMonth(activeMonth, day)),
+  [daysOfTheWeek])
+
+  if (!hasOnMonthDays) {
+    // if there are no on-month days then don't render this week
+    return null
+  }
 
   return (
     <div className={clsx('week', isCurrentWeek && 'week--current')} role="row">
