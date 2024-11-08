@@ -1,12 +1,7 @@
 import { createContext, useContext, useMemo, useState, useCallback } from 'react'
 import { getYearAndMonth } from 'lib/date'
 
-import type { FC, ReactNode } from 'react'
-
-// interface GridStatuses {
-//   isReadOnly: boolean
-//   isCustomMode: boolean
-// }
+import type { FC, ReactNode, Dispatch, SetStateAction } from 'react'
 
 interface GridStatusContextValues {
   month: number
@@ -14,7 +9,7 @@ interface GridStatusContextValues {
   monthOffset: number
   isReadOnly: boolean
   isCustomMode: boolean
-  setMonthOffset: (offset: number) => void
+  setMonthOffset: Dispatch<SetStateAction<number>>
   toggleCustomMode: (isOn: boolean) => void
 }
 
@@ -32,11 +27,6 @@ const gridStatusesInit: GridStatusContextValues = {
   setMonthOffset: () => {},
   toggleCustomMode: () => null
 }
-
-// const gridStatusesInit: GridStatuses = {
-//   isReadOnly: false,
-//   isCustomMode: false
-// }
 
 const GridStatusContext = createContext<GridStatusContextValues>(gridStatusesInit)
 

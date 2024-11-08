@@ -13,13 +13,11 @@ import type { WeekRef, DayRef, WeekRefFnc } from '../types'
 
 interface CalendarProps {
   id: string
-  year: number
-  month: number
 }
 
-export const Calendar = ({ id, year, month }: CalendarProps): JSX.Element => {
+export const Calendar = ({ id }: CalendarProps): JSX.Element => {
   const dayRefs = useRef<WeekRef[]>([])
-  const { isCustomMode } = useGridStatus()
+  const { year, month, isCustomMode } = useGridStatus()
   const firstOfTheMonth = new Date(year, (month - 1), 1)
 
   const { config: { weekdays } } = useConfig()

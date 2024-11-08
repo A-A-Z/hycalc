@@ -15,7 +15,7 @@
 * along with this program.  If not, see <https://www.gnu.org/licenses/>.
 */
 
-import { useId, useMemo, useCallback, useState } from 'react'
+import { useId, useCallback, useState } from 'react'
 
 import { Page } from 'features/page'
 import { Calendar } from 'features/calendar'
@@ -24,7 +24,6 @@ import { Toolbar } from 'features/toolbar'
 import { ConfigProvider } from 'features/config'
 import { DateRecordsProvider } from 'features/records'
 import { GridStatusProvider } from 'features/status'
-import { getYearAndMonth } from 'lib/date'
 
 // import themes and global styles and vars
 import 'global/assets/reset.css'
@@ -34,11 +33,7 @@ import 'global/assets/themes/theme-dark.css'
 
 function App() {
   const gridId = useId()
-  const [monthOffset, setMonthOffset] = useState(0)
   const [counter, setCounter] = useState(0)
-
-  // get current year and month
-  const { year, month } = useMemo(() => getYearAndMonth(monthOffset), [counter, monthOffset])
 
   // force a update even the user enters the page
   const onEnterPage = useCallback(() => {
@@ -48,11 +43,11 @@ function App() {
   return (
     <GridStatusProvider counter={counter}>
       <ConfigProvider>
-        <DateRecordsProvider year={year} month={month}>
+        <DateRecordsProvider>
           <div onMouseEnter={onEnterPage}>
             <Page>
-              <Title gridId={gridId} year={year} month={month} setMonthOffset={setMonthOffset} />
-              <Calendar id={gridId} year={year} month={month} />
+              <Title gridId={gridId} />
+              <Calendar id={gridId} />
               <Toolbar gridId={gridId} />
             </Page>
           </div>

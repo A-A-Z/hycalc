@@ -5,19 +5,14 @@ import { useGridStatus } from 'features/status'
 import { Ratio } from './Ratio'
 import '../assets/title.css'
 
-import type { Dispatch, SetStateAction } from 'react'
-
 interface TitleProps {
   gridId: string
-  year: number
-  month: number
-  setMonthOffset: Dispatch<SetStateAction<number>>
 }
 
-export const Title = ({ gridId, year, month, setMonthOffset }: TitleProps): JSX.Element => {
+export const Title = ({ gridId }: TitleProps): JSX.Element => {
   // Get ratio (day of the week param is not important)
   const { ratio } = useDateRecords(1)
-  const { isReadOnly } = useGridStatus()
+  const { year, month, setMonthOffset, isReadOnly } = useGridStatus()
   const firstOfTheMonth = new Date(year, (month - 1), 1)
 
   const navMonthBack = useCallback(() => {
