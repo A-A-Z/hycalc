@@ -5,7 +5,7 @@ import { ToggleButton } from 'features/button'
 import type { ToolProps } from '../types'
 
 export const ToolCustom = forwardRef<HTMLButtonElement, ToolProps>(({ index }, ref): JSX.Element => {
-  const { status: { isCustomMode } , toggleCustomMode } = useGridStatus()
+  const { isCustomMode, toggleCustomMode } = useGridStatus()
 
   const onClick = useCallback(() => {
     toggleCustomMode(!isCustomMode)

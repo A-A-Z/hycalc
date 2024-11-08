@@ -17,7 +17,7 @@ interface TitleProps {
 export const Title = ({ gridId, year, month, setMonthOffset }: TitleProps): JSX.Element => {
   // Get ratio (day of the week param is not important)
   const { ratio } = useDateRecords(1)
-  const { status: { isReadOnly } } = useGridStatus()
+  const { isReadOnly } = useGridStatus()
   const firstOfTheMonth = new Date(year, (month - 1), 1)
 
   const navMonthBack = useCallback(() => {

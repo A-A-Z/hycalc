@@ -19,7 +19,7 @@ interface CalendarProps {
 
 export const Calendar = ({ id, year, month }: CalendarProps): JSX.Element => {
   const dayRefs = useRef<WeekRef[]>([])
-  const { status: { isCustomMode } } = useGridStatus()
+  const { isCustomMode } = useGridStatus()
   const firstOfTheMonth = new Date(year, (month - 1), 1)
 
   const { config: { weekdays } } = useConfig()

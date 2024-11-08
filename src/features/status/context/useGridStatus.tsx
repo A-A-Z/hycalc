@@ -1,30 +1,44 @@
 import { createContext, useContext, useMemo, useState, useCallback } from 'react'
+import { getYearAndMonth } from 'lib/date'
 
 import type { FC, ReactNode } from 'react'
 
-interface GridStatuses {
-  isReadOnly: boolean
-  isCustomMode: boolean
-}
+// interface GridStatuses {
+//   isReadOnly: boolean
+//   isCustomMode: boolean
+// }
 
 interface GridStatusContextValues {
-  status: GridStatuses
+  month: number
+  year: number
+  monthOffset: number
+  isReadOnly: boolean
+  isCustomMode: boolean
+  setMonthOffset: (offset: number) => void
   toggleCustomMode: (isOn: boolean) => void
 }
 
 interface GridStatusProviderProps {
+  counter: number
   children: ReactNode
 }
 
-const gridStatusesInit: GridStatuses = {
+const gridStatusesInit: GridStatusContextValues = {
+  month: 1,
+  year: 1970,
+  monthOffset: 0,
   isReadOnly: false,
-  isCustomMode: false
+  isCustomMode: false,
+  setMonthOffset: () => {},
+  toggleCustomMode: () => null
 }
 
-const GridStatusContext = createContext<GridStatusContextValues>({
-  status: gridStatusesInit,
-  toggleCustomMode: () => null
-})
+// const gridStatusesInit: GridStatuses = {
+//   isReadOnly: false,
+//   isCustomMode: false
+// }
+
+const GridStatusContext = createContext<GridStatusContextValues>(gridStatusesInit)
 
 export const useGridStatus = (): GridStatusContextValues => {
   const context = useContext(GridStatusContext)
@@ -36,7 +50,8 @@ export const useGridStatus = (): GridStatusContextValues => {
   return context
 }
 
-export const GridStatusProvider: FC<GridStatusProviderProps> = ({ children }) => {
+export const GridStatusProvider: FC<GridStatusProviderProps> = ({ counter, children }) => {
+  const [monthOffset, setMonthOffset] = useState(gridStatusesInit.monthOffset)
   const [isReadOnly, setIsReadOnly] = useState(gridStatusesInit.isReadOnly)
   const [isCustomMode, setIsCustomMode] = useState(gridStatusesInit.isCustomMode)
 
@@ -45,13 +60,27 @@ export const GridStatusProvider: FC<GridStatusProviderProps> = ({ children }) =>
     setIsReadOnly(!isReadOnly ? isOn : isReadOnly)
   }, [setIsCustomMode])
 
+  // get current year and month
+  const { year, month } = getYearAndMonth(monthOffset)
+
   const value: GridStatusContextValues = useMemo(() => ({
-    status: {
-      isReadOnly,
-      isCustomMode
-    },
+    year,
+    month,
+    monthOffset,
+    isReadOnly,
+    isCustomMode,
+    setMonthOffset,
     toggleCustomMode
-  }), [isReadOnly, isCustomMode, toggleCustomMode])
+  }), [
+    counter,
+    year,
+    month,
+    monthOffset,
+    isReadOnly,
+    isCustomMode,
+    toggleCustomMode,
+    setMonthOffset
+  ])
 
   return <GridStatusContext.Provider value={value}>{children}</GridStatusContext.Provider>
 }

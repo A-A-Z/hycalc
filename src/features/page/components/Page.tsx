@@ -13,7 +13,7 @@ interface PageProps {
 }
 
 export const Page = ({ children }: PageProps): JSX.Element => {
-  const { status: { isCustomMode } } = useGridStatus()
+  const { isCustomMode } = useGridStatus()
   const { config: { weekdays } } = useConfig()
   const columnCount = isCustomMode ? 7 : weekdays.length
   const inlineStyle = useMemo(() => ({

@@ -46,7 +46,7 @@ function App() {
   }, [setCounter])
 
   return (
-    <GridStatusProvider>
+    <GridStatusProvider counter={counter}>
       <ConfigProvider>
         <DateRecordsProvider year={year} month={month}>
           <div onMouseEnter={onEnterPage}>
