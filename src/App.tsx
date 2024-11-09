@@ -41,14 +41,14 @@ function App() {
   }, [setCounter])
 
   return (
-    <GridStatusProvider counter={counter}>
+    <GridStatusProvider gridId={gridId} counter={counter}>
       <ConfigProvider>
         <DateRecordsProvider>
           <div onMouseEnter={onEnterPage}>
             <Page>
-              <Title gridId={gridId} />
-              <Calendar id={gridId} />
-              <Toolbar gridId={gridId} />
+              <Title />
+              <Calendar />
+              <Toolbar />
             </Page>
           </div>
         </DateRecordsProvider>

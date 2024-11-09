@@ -1,43 +1,24 @@
-import { useEffect, useCallback } from 'react'
+import { useEffect } from 'react'
 import { format, DATE_FORMATS } from 'lib/date'
 import { useDateRecords } from 'features/records'
 import { useGridStatus } from 'features/status'
+import { DateLabel } from './DateLabel'
 import { Ratio } from './Ratio'
 import '../assets/title.css'
 
-interface TitleProps {
-  gridId: string
-}
-
-export const Title = ({ gridId }: TitleProps): JSX.Element => {
+export const Title = (): JSX.Element => {
   // Get ratio (day of the week param is not important)
   const { ratio } = useDateRecords(1)
-  const { year, month, setMonthOffset, isReadOnly } = useGridStatus()
-  const firstOfTheMonth = new Date(year, (month - 1), 1)
-
-  const navMonthBack = useCallback(() => {
-    setMonthOffset(oldValue => oldValue + 1)
-  }, [setMonthOffset])
-
-  const navMonthForward = useCallback(() => {
-    setMonthOffset(oldValue => oldValue - 1)
-  }, [setMonthOffset])
+  const { firstOfTheMonth } = useGridStatus()
 
   useEffect(() => {
     // Update document title with current maonth and ratio
     document.title = `${format(firstOfTheMonth, DATE_FORMATS.documentTitle)} ${ratio}% - HyCalc`
-  }, [month, ratio])
+  }, [firstOfTheMonth, ratio])
 
   return (
     <div className="title">
-      <h2 id={gridId}>
-        <button onClick={navMonthBack} disabled={isReadOnly}>--</button>
-        <button onClick={navMonthForward} disabled={isReadOnly}>++</button>
-        <time dateTime={format(firstOfTheMonth, DATE_FORMATS.dateTimeAttrMonth)}>
-          <span className="title__month">{format(firstOfTheMonth, DATE_FORMATS.calendarTitleMonth)}</span>
-          <span className="title__year">{format(firstOfTheMonth, DATE_FORMATS.calendarTitleYear)}</span>
-        </time>
-      </h2>
+      <DateLabel />
       <Ratio value={ratio} />
     </div>
   )
