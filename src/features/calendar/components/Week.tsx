@@ -64,8 +64,8 @@ export const Week = ({
     <div className={clsx('week', isCurrentWeek && 'week--current')} role="row">
       {daysOfTheWeek
         .map((weekday, dayIndex) => <Day
+          key={`day-${format(weekday, DATE_FORMATS.dateKey)}`}
           ref={weekdayRefs[dayIndex]}
-          key={format(weekday, DATE_FORMATS.dateKey)}
           dayIndex={dayIndex}
           date={weekday}
           isTabbed={isSameDay(weekday, tabbedDay)}

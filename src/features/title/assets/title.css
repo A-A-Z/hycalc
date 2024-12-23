@@ -15,7 +15,7 @@
   display: inline-flex;
   flex-direction: column;
   height: var(--label-height);
-  overflow-y: hidden;
+  overflow: hidden;
   position: relative;
 }
 
