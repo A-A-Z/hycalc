@@ -61,7 +61,10 @@ export const Week = ({
   }
 
   return (
-    <div className={clsx('week', isCurrentWeek && 'week--current')} role="row">
+    <div
+      className={clsx('week', isCurrentWeek && 'week--current')}
+      role="row"
+    >
       {daysOfTheWeek
         .map((weekday, dayIndex) => <Day
           key={`day-${format(weekday, DATE_FORMATS.dateKey)}`}

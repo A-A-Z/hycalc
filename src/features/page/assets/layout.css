@@ -18,6 +18,7 @@
 
 @media (height <= 880px) or (width <= 950px) {
   .page {
+    --calendar-gap: 10px;
     --cell-size: 100px;
     --title-spacing: 25px;
     --title-font-size: 2rem;
@@ -27,6 +28,7 @@
 
 @media (height <= 755px) or (width <= 850px) {
   .page {
+    --calendar-gap: 8px;
     --cell-size: 90px;
     --title-spacing: 12px;
     --title-font-size: 1.8rem;

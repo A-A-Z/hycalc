@@ -22,7 +22,6 @@ export const Calendar = (): JSX.Element => {
   const weeks = useMemo(() => {
     const lastDayOfMonth = endOfMonth(firstOfTheMonth)
     let currentWeekStart = startOfWeek(firstOfTheMonth)
-    console.log('week', format(firstOfTheMonth, 'i d/M'), format(startOfWeek(firstOfTheMonth), 'i d/m'))
     const weeks = []
 
     while (currentWeekStart <= lastDayOfMonth) {
@@ -60,7 +59,7 @@ export const Calendar = (): JSX.Element => {
       {weeks.map((week, weekIndex) => {
         return (
           <Week
-            key={`week-${format(week, DATE_FORMATS.dateKey)}`}
+            key={`week-${format(week, DATE_FORMATS.dateKey)}-${month}`}
             weekIndex={weekIndex}
             date={week}
             activeMonth={month}
