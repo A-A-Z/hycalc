@@ -1,0 +1,32 @@
+.month-nav {
+  --arrow-size: 8px;
+
+  display: flex;
+  flex-direction: column;
+}
+
+.month-nav__btn {
+  background-color: transparent;
+  border: 0;
+  cursor: pointer;
+  height: var(--arrow-size);
+  padding: 8px;
+}
+
+.month-nav__btn:after  {
+  content: "";
+  color: #fff;
+  display: block;
+  width: 0; 
+  height: 0;
+  border-left: var(--arrow-size) solid transparent;
+  border-right: var(--arrow-size) solid transparent;
+}
+
+.month-nav__btn.month-nav__btn--back:after  {
+  border-bottom: var(--arrow-size) solid #fff;
+}
+
+.month-nav__btn.month-nav__btn--forward:after  {
+  border-top: var(--arrow-size) solid #fff;
+}

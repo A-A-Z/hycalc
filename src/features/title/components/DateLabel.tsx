@@ -9,9 +9,6 @@ export const DateLabel = (): JSX.Element => {
     gridId,
     firstOfTheMonth,
     direcction,
-    isReadOnly,
-    navMonthForward,
-    navMonthBack
   } = useGridStatus()
   const DirectionMap: Record<ChangeDirection, number> = {
     back: 1,
@@ -22,8 +19,6 @@ export const DateLabel = (): JSX.Element => {
   const lastMonth = format(addMonths(firstOfTheMonth, DirectionMap[direcction]), DATE_FORMATS.calendarTitleMonth)
   return (
     <h2 id={gridId}>
-      <button onClick={navMonthBack} disabled={isReadOnly}>--</button>
-      <button onClick={navMonthForward} disabled={isReadOnly}>++</button>
       <time dateTime={format(firstOfTheMonth, DATE_FORMATS.dateTimeAttrMonth)}>
         <span className={clsx('title__label', 'title__label--month', `title__label--${direcction}`)}>
           <span className="title__label-offset" key={`month-${thisMonth}`}>

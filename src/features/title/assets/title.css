@@ -11,6 +11,11 @@
   container-name: cardContainer;
 }
 
+.title__left {
+  display: flex;
+  gap: 0.4em;
+}
+
 .title__label {
   display: inline-flex;
   flex-direction: column;
