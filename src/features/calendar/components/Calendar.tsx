@@ -13,9 +13,13 @@ import type { WeekRef, DayRef, WeekRefFnc } from '../types'
 
 export const Calendar = (): JSX.Element => {
   const dayRefs = useRef<WeekRef[]>([])
-  const { gridId, year, month, isCustomMode } = useGridStatus()
-  const firstOfTheMonth = new Date(year, (month - 1), 1)
-
+  const {
+    gridId,
+    year,
+    month,
+    firstOfTheMonth,
+    isCustomMode
+  } = useGridStatus()
   const { config: { weekdays } } = useConfig()
   const columnCount = isCustomMode ? 7 : weekdays.length
 

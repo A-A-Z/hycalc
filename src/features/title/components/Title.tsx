@@ -2,10 +2,9 @@ import { useEffect } from 'react'
 import { format, DATE_FORMATS } from 'lib/date'
 import { useDateRecords } from 'features/records'
 import { useGridStatus } from 'features/status'
-import { MonthNav } from './MonthNav'
+import { MonthSpinbutton } from './MonthSpinbutton'
 import { DateLabel } from './DateLabel'
 import { Ratio } from './Ratio'
-import '../assets/month-nav.css'
 import '../assets/title.css'
 
 export const Title = (): JSX.Element => {
@@ -21,7 +20,7 @@ export const Title = (): JSX.Element => {
   return (
     <div className="title">
       <div className="title__left">
-        <MonthNav />
+        <MonthSpinbutton />
         <DateLabel />
       </div>
       <Ratio value={ratio} />
