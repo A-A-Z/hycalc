@@ -2,6 +2,7 @@
   border-radius: 3px;
   display: flex;
   flex-direction: column;
+  margin: -0.05em 0 0 0;
 }
 .month-nav:focus-visible {
   outline-color: var(--colour-text-highlight);
@@ -12,21 +13,15 @@
 
 .month-nav__btn {
   --btn-colour: var(--colour-text-primary);
+  --triangle-height: calc(0.866 * var(--arrow-size));
 
   background-color: transparent;
   border: 0;
   box-sizing: content-box;
   cursor: pointer;
-  /* height: var(--arrow-size); */
-  /* height: 1em; */
   height: auto;
-  /* padding: 4px; */
-  /* padding: 5px; */
   padding: calc(var(--arrow-size) / 4);
-  /* width: var(--arrow-size); */
   width: auto;
-
-  /* outline: 1px solid #f00; */
 }
 .month-nav__btn:hover {
   --btn-colour: var(--colour-text-highlight);
@@ -43,9 +38,9 @@
 }
 
 .month-nav__btn.month-nav__btn--back:after  {
-  border-bottom: calc(0.866 * var(--arrow-size)) solid var(--btn-colour);
+  border-bottom: var(--triangle-height) solid var(--btn-colour);
 }
 
 .month-nav__btn.month-nav__btn--forward:after  {
-  border-top: calc(0.866 * var(--arrow-size)) solid var(--btn-colour);
+  border-top: var(--triangle-height) solid var(--btn-colour);
 }

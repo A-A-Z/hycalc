@@ -3,12 +3,12 @@
   --header-height: 35px;
   --header-gutter: 0 22px;
   --title-spacing: 25px;
-  --title-font-size: 3.5rem;
+  --title-font-size: 3rem;
   --calendar-gap: 12px;
   --status-font-size: 0.8rem;
   --status-height: 22px;
   --status-spacing: 10px;
-  --arrow-size: 1.2em;
+  --arrow-size: 1.1em;
 
   --column-count: 5;
   --num-gaps: calc(var(--column-count) - 1);
