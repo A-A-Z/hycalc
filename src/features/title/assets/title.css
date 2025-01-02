@@ -14,7 +14,7 @@
 .title__left {
   align-items: center;
   display: flex;
-  gap: 0.15em;
+  gap: 0.2em;
 }
 
 .title__label {
@@ -35,16 +35,25 @@
 }
 
 .title__label-offset {
+  --motion-speed: 0.3s;
+
   display: inline-flex;
   flex-direction: column;
 }
 
+@media (prefers-reduced-motion) {
+  .title__label-offset {
+    --motion-speed: 0;
+  }
+}
+
 .title__label--back .title__label-offset,
 .title__label--forward .title__label-offset {
-  animation-duration: 0.3s;
+  animation-duration: var(--motion-speed);
   animation-name: slide-in;
   animation-timing-function: ease-in-out;
 }
+
 
 .title__label--forward .title__label-offset {
   animation-direction: reverse;
@@ -58,12 +67,6 @@
 
 .title__label-offset [aria-hidden="true"] {
   width: 1em;
-}
-
-.title__label,
-.title__ratio {
-  /* font-size: var(--title-font-size);
-  letter-spacing: 0.008em; */
 }
 
 .title__label--month {

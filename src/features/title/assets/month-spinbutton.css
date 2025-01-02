@@ -2,13 +2,18 @@
   border-radius: 3px;
   display: flex;
   flex-direction: column;
-  margin: -0.05em 0 0 0;
-}
-.month-nav:focus-visible {
-  outline-color: var(--colour-text-highlight);
+  margin: -0.09em 0 0 0;
+  outline-color: transparent;
   outline-offset: 1px;
   outline-style: solid;
   outline-width: 1px;
+  transition: outline-color 0.2s ease;
+}
+.month-nav:focus-visible {
+  outline-color: var(--colour-text-highlight);
+}
+.month-nav:hover:not(:has(button:disabled)) {
+  outline-color: var(--colour-border-default);
 }
 
 .month-nav__btn {
@@ -25,6 +30,11 @@
 }
 .month-nav__btn:hover {
   --btn-colour: var(--colour-text-highlight);
+}
+.month-nav__btn:disabled {
+  --btn-colour: var(--colour-dark-400);
+
+  cursor: default;
 }
 
 .month-nav__btn:after  {

@@ -21,6 +21,12 @@
   transition: inset 0.2s ease-out, opacity 0.2s ease;
 }
 
+@media (prefers-reduced-motion) {
+  .status__option {
+    transition: opacity 0.4s ease;
+  }
+}
+
 .day__item:not(.day__item--active) .status__option {
   transition: none;
 }

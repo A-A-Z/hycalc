@@ -21,6 +21,9 @@ export const MonthSpinbutton = (): JSX.Element => {
 
   // Handle arrow keys on the spinbutton
   const handleKeyDown: KeyboardEventHandler<HTMLDivElement> = useCallback(e => {
+    if (isReadOnly) {
+      return
+    }
     switch (e.key) {
       case 'ArrowUp':
         navMonthBack()
@@ -29,13 +32,13 @@ export const MonthSpinbutton = (): JSX.Element => {
         navMonthForward()
         break
     }
-  }, [])
+  }, [navMonthBack, navMonthForward, isReadOnly])
 
   return (
     <div
       className="month-nav"
       role="spinbutton"
-      tabIndex={0}
+      tabIndex={isReadOnly ? -1 : 0}
       aria-label="Select month"
       aria-valuenow={monthOffset}
       aria-valuetext={valueTxt}
