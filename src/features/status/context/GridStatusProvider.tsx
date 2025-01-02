@@ -1,29 +1,9 @@
-import { createContext, useContext, useMemo, useState, useCallback } from 'react'
+import { createContext, useMemo, useState, useCallback } from 'react'
 import { getYearAndMonth } from 'lib/date'
 
-import type { FC, ReactNode, Dispatch, SetStateAction } from 'react'
+import type { FC } from 'react'
 import type { ChangeDirection } from 'global/types'
-
-interface GridStatusContextValues {
-  gridId: string
-  month: number
-  year: number
-  firstOfTheMonth: Date
-  monthOffset: number
-  direcction: ChangeDirection
-  isReadOnly: boolean
-  isCustomMode: boolean
-  setMonthOffset: Dispatch<SetStateAction<number>>
-  navMonthBack: () => void
-  navMonthForward: () => void
-  toggleCustomMode: (isOn: boolean) => void
-}
-
-interface GridStatusProviderProps {
-  gridId: string
-  counter: number
-  children: ReactNode
-}
+import type { GridStatusContextValues, GridStatusProviderProps } from '../types'
 
 const gridStatusesInit: GridStatusContextValues = {
   gridId: 'grid-id',
@@ -34,25 +14,16 @@ const gridStatusesInit: GridStatusContextValues = {
   direcction: 'none',
   isReadOnly: false,
   isCustomMode: false,
+  dateCheck: '',
   setMonthOffset: () => {},
   navMonthBack: () => {},
   navMonthForward: () => {},
   toggleCustomMode: () => null
 }
 
-const GridStatusContext = createContext<GridStatusContextValues>(gridStatusesInit)
+export const GridStatusContext = createContext<GridStatusContextValues>(gridStatusesInit)
 
-export const useGridStatus = (): GridStatusContextValues => {
-  const context = useContext(GridStatusContext)
-
-  if (context === undefined) {
-    throw new Error('useUser must be used within a UserProvider')
-  }
-
-  return context
-}
-
-export const GridStatusProvider: FC<GridStatusProviderProps> = ({ gridId, counter, children }) => {
+export const GridStatusProvider: FC<GridStatusProviderProps> = ({ gridId, dateCheck, children }) => {
   const [monthOffset, setMonthOffset] = useState(gridStatusesInit.monthOffset)
   const [isReadOnly, setIsReadOnly] = useState(gridStatusesInit.isReadOnly)
   const [isCustomMode, setIsCustomMode] = useState(gridStatusesInit.isCustomMode)
@@ -62,12 +33,12 @@ export const GridStatusProvider: FC<GridStatusProviderProps> = ({ gridId, counte
   const { year, month } = getYearAndMonth(monthOffset)
 
   // get the first day of the current month/year
-  const firstOfTheMonth = new Date(year, (month - 1), 1)
+  const firstOfTheMonth = useMemo(() => new Date(year, (month - 1), 1), [year, month])
 
   const toggleCustomMode = useCallback((isOn: boolean): void => {
     setIsCustomMode(isOn)
     setIsReadOnly(!isReadOnly ? isOn : isReadOnly)
-  }, [setIsCustomMode])
+  }, [setIsCustomMode, isReadOnly])
 
   const navMonthBack = useCallback(() => {
     setMonthOffset(oldValue => oldValue + 1)
@@ -88,13 +59,14 @@ export const GridStatusProvider: FC<GridStatusProviderProps> = ({ gridId, counte
     direcction,
     isReadOnly,
     isCustomMode,
+    dateCheck,
     setMonthOffset,
     navMonthBack,
     navMonthForward,
     toggleCustomMode
   }), [
     gridId,
-    counter,
+    dateCheck,
     year,
     month,
     monthOffset,
@@ -103,6 +75,8 @@ export const GridStatusProvider: FC<GridStatusProviderProps> = ({ gridId, counte
     isReadOnly,
     isCustomMode,
     toggleCustomMode,
+    navMonthBack,
+    navMonthForward,
     setMonthOffset
   ])
 

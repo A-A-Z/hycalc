@@ -16,6 +16,7 @@
 */
 
 import { useId, useCallback, useState } from 'react'
+import { format, DATE_FORMATS } from 'lib/date'
 
 import { Page } from 'features/page'
 import { Calendar } from 'features/calendar'
@@ -33,15 +34,15 @@ import 'global/assets/themes/theme-dark.css'
 
 function App() {
   const gridId = useId()
-  const [counter, setCounter] = useState(0)
+  const [dateCheck, setDateCheck] = useState(format(new Date(), DATE_FORMATS.dateKey))
 
-  // force a update even the user enters the page
+  // force a update event the user enters the page on a different date
   const onEnterPage = useCallback(() => {
-    setCounter(count => count + 1) // TODO bounch this
-  }, [setCounter])
+    setDateCheck(format(new Date(), DATE_FORMATS.dateKey)) // TODO bounch this
+  }, [])
 
   return (
-    <GridStatusProvider gridId={gridId} counter={counter}>
+    <GridStatusProvider gridId={gridId} dateCheck={dateCheck}>
       <ConfigProvider>
         <DateRecordsProvider>
           <div onMouseEnter={onEnterPage}>
