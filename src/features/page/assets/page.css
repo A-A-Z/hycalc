@@ -6,7 +6,7 @@
 }
 
 .page__body {
-  margin: 30px auto auto auto;
+  margin: calc(var(--header-height) + 25px) auto auto auto;
   padding: 0 0 10px 0;
   width: var(--body-width);
 }

@@ -4,7 +4,9 @@
   display: flex;
   gap: 0.5em;
   height: var(--header-height);
+  inset: 0 0 auto 0;
   padding: var(--header-gutter);
+  position: fixed;
 }
 
 .header p {
