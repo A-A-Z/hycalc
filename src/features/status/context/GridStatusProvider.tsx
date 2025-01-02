@@ -37,8 +37,8 @@ export const GridStatusProvider: FC<GridStatusProviderProps> = ({ gridId, dateCh
 
   const toggleCustomMode = useCallback((isOn: boolean): void => {
     setIsCustomMode(isOn)
-    setIsReadOnly(!isReadOnly ? isOn : isReadOnly)
-  }, [setIsCustomMode, isReadOnly])
+    setIsReadOnly(isOn)
+  }, [])
 
   const navMonthBack = useCallback(() => {
     setMonthOffset(oldValue => oldValue + 1)
