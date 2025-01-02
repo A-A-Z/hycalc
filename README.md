@@ -5,6 +5,7 @@
  - Track your remote vs on-site ratio.
  - Works in browser or as a PWA desktop app.
  - All progress and config settings are saved locally in browser, no back-end needed.
+ - Keyboard and screen reader support
 
 ![alt text](https://github.com/A-A-Z/hycalc/raw/main/src/common/screenshot1.png "HyCalc screenshot")
 
@@ -40,7 +41,6 @@ Once setup you can use these commands:
 (Not in order, no promises)
 
 - [ ] Select/toggle modes
-- [ ] Month select/stats
 - [ ] Plan mode
 - [ ] Language
 - [ ] Light theme
@@ -48,6 +48,8 @@ Once setup you can use these commands:
 - [ ] Mobile support
 - [ ] Import/export
 - [ ] Multi-select
+- [ ] Stickers
+- [x] Month select/stats
 - [x] Hide/show days of the week
 
 ## License
