@@ -11,6 +11,10 @@
   min-width: 12.5em;
 }
 
+.title__time {
+  display: flex;
+}
+
 .title__left {
   align-items: center;
   display: flex;
