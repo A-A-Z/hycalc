@@ -9,7 +9,6 @@
   --status-height: 22px;
   --status-spacing: 10px;
   --arrow-size: 1.1em;
-
   --column-count: 5;
   --num-gaps: calc(var(--column-count) - 1);
   --cell-size: 118px;
