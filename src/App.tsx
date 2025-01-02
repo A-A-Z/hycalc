@@ -38,7 +38,7 @@ function App() {
 
   // force a update event the user enters the page on a different date
   const onEnterPage = useCallback(() => {
-    setDateCheck(format(new Date(), DATE_FORMATS.dateKey)) // TODO bounch this
+    setDateCheck(format(new Date(), DATE_FORMATS.dateKey))
   }, [])
 
   return (
