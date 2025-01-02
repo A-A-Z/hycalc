@@ -11,7 +11,7 @@ interface useActiveWeekdaysValues {
 }
 
 export const useActiveWeekdays = (): useActiveWeekdaysValues => {
-  const { status: { isCustomMode } } = useGridStatus()
+  const { isCustomMode } = useGridStatus()
   const { config: { weekdays } } = useConfig()
 
   const isActiveWeekday: IsActiveWeekdayFn = useCallback(day => {

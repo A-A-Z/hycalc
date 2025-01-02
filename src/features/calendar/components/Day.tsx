@@ -67,7 +67,7 @@ const Day = forwardRef<HTMLButtonElement, DayProps>(({
   const dateId = useId()
   const statusId = useId()
   const isDayToday = isToday(date)
-  const { status: { isReadOnly } } = useGridStatus()
+  const { isReadOnly } = useGridStatus()
 
   const onClick = () => {
     setDateRecord(dayOfTheMonth, statusIndex[dateStatus])

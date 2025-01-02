@@ -1,27 +1,80 @@
 .title {
-  align-items: baseline;
+  --label-height: 1.1em;
+
+  align-items: center;
   display: flex;
-  gap: 2em;
+  font-size: var(--title-font-size);
+  gap: 1em;
+  letter-spacing: 0.008em;
   justify-content: space-between;
   margin: 0 0 var(--title-spacing) 0;
-
-  container-type: inline-size;
-  container-name: cardContainer;
+  min-width: 12.5em;
 }
 
-.title__month,
-.title__year,
-.title__ratio {
-  font-size: var(--title-font-size);
-  letter-spacing: 0.008em;
+.title__left {
+  align-items: center;
+  display: flex;
+  gap: 0.2em;
 }
 
-.title__month {
+.title__label {
+  display: inline-flex;
+  flex-direction: column;
+  height: var(--label-height);
+  overflow: hidden;
+  position: relative;
+}
+
+@keyframes slide-in {
+  from {
+    transform: translateY(-50%);
+  }
+  to {
+    transform: translateY(0);
+  }
+}
+
+.title__label-offset {
+  --motion-speed: 0.3s;
+
+  display: inline-flex;
+  flex-direction: column;
+}
+
+@media (prefers-reduced-motion) {
+  .title__label-offset {
+    --motion-speed: 0;
+  }
+}
+
+.title__label--back .title__label-offset,
+.title__label--forward .title__label-offset {
+  animation-duration: var(--motion-speed);
+  animation-name: slide-in;
+  animation-timing-function: ease-in-out;
+}
+
+
+.title__label--forward .title__label-offset {
+  animation-direction: reverse;
+  flex-direction: column-reverse;
+  transform: translateY(-50%);
+}
+
+.title__label-offset > span {
+  height: var(--label-height);
+}
+
+.title__label-offset [aria-hidden="true"] {
+  width: 1em;
+}
+
+.title__label--month {
   font-weight: 600;
   margin: 0 0.15em 0 0;
 }
 
-.title__year {
+.title__label--year {
   font-weight: 100;
 }
 
@@ -36,28 +89,4 @@
 .title__ratio span ~ span {
   font-weight: 100;
   margin: 0 0 0 0.1rem;
-}
-
-@container cardContainer (width < 300px) {
-  .title__month,
-  .title__year,
-  .title__ratio {
-    font-size: 1.1rem;
-  }
-}
-
-@container cardContainer (width >= 300px) and (width < 500px) {
-  .title__month,
-  .title__year,
-  .title__ratio {
-    font-size: 1.8rem;
-  }
-}
-
-@container cardContainer (width >= 500px) and (width < 700px) {
-  .title__month,
-  .title__year,
-  .title__ratio {
-    font-size: 2.4rem;
-  }
 }

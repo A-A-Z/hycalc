@@ -1,0 +1,56 @@
+.month-nav {
+  border-radius: 3px;
+  display: flex;
+  flex-direction: column;
+  margin: -0.1em 0 0 0;
+  outline-color: transparent;
+  outline-offset: 1px;
+  outline-style: solid;
+  outline-width: 1px;
+  transition: outline-color 0.2s ease;
+}
+.month-nav:focus-visible {
+  outline-color: var(--colour-text-highlight);
+}
+.month-nav:hover:not(:has(button:disabled)) {
+  outline-color: var(--colour-border-default);
+}
+
+.month-nav__btn {
+  --btn-colour: var(--colour-text-primary);
+  --triangle-height: calc(0.866 * var(--arrow-size));
+
+  background-color: transparent;
+  border: 0;
+  box-sizing: content-box;
+  cursor: pointer;
+  height: auto;
+  padding: calc(var(--arrow-size) / 4);
+  width: auto;
+}
+.month-nav__btn:hover {
+  --btn-colour: var(--colour-text-highlight);
+}
+.month-nav__btn:disabled {
+  --btn-colour: var(--colour-dark-400);
+
+  cursor: default;
+}
+
+.month-nav__btn:after  {
+  content: "";
+  border-left: calc(var(--arrow-size) / 2) solid transparent;
+  border-right: calc(var(--arrow-size) / 2) solid transparent;
+  display: block;
+  height: 0;
+  transition: border-color 0.2s ease;
+  width: 0; 
+}
+
+.month-nav__btn.month-nav__btn--back:after  {
+  border-bottom: var(--triangle-height) solid var(--btn-colour);
+}
+
+.month-nav__btn.month-nav__btn--forward:after  {
+  border-top: var(--triangle-height) solid var(--btn-colour);
+}

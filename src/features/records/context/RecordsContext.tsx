@@ -1,5 +1,6 @@
 import { createContext, useContext, useMemo, useCallback, useState, useEffect } from 'react'
 import { useDebounceCallback } from 'usehooks-ts'
+import { useGridStatus } from 'features/status'
 
 import type { FC, ReactNode } from 'react'
 import type { DateRecords, DateRecordType, DateRecordStatus } from '../types'
@@ -34,14 +35,13 @@ export const useDateRecords = (dayOfTheMonth: number): useDateRecordsReturn => {
 }
 
 interface DateRecordsProviderProps {
-  year: number
-  month: number
   children: ReactNode
 }
 
 const BLANK_VALUE = '{}'
 
-export const DateRecordsProvider: FC<DateRecordsProviderProps> = ({ year, month, children }) => {
+export const DateRecordsProvider: FC<DateRecordsProviderProps> = ({ children }) => {
+  const { year, month } = useGridStatus()
   // create states
   const [records, setRecords] =  useState<string>(BLANK_VALUE)
   const [isLoaded, setIsLoaded] = useState(false)

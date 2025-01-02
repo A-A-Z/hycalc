@@ -11,17 +11,15 @@ import '../assets/calendar.css'
 
 import type { WeekRef, DayRef, WeekRefFnc } from '../types'
 
-interface CalendarProps {
-  id: string
-  year: number
-  month: number
-}
-
-export const Calendar = ({ id, year, month }: CalendarProps): JSX.Element => {
+export const Calendar = (): JSX.Element => {
   const dayRefs = useRef<WeekRef[]>([])
-  const { status: { isCustomMode } } = useGridStatus()
-  const firstOfTheMonth = new Date(year, (month - 1), 1)
-
+  const {
+    gridId,
+    year,
+    month,
+    firstOfTheMonth,
+    isCustomMode
+  } = useGridStatus()
   const { config: { weekdays } } = useConfig()
   const columnCount = isCustomMode ? 7 : weekdays.length
 
@@ -55,12 +53,17 @@ export const Calendar = ({ id, year, month }: CalendarProps): JSX.Element => {
   }
 
   return (
-    <div className="calendar" aria-labelledby={id} role="grid" aria-colcount={columnCount}>
+    <div
+      className="calendar"
+      aria-labelledby={gridId}
+      role="grid"
+      aria-colcount={columnCount}
+    >
       <Headings />
       {weeks.map((week, weekIndex) => {
         return (
           <Week
-            key={`week-${format(week, DATE_FORMATS.dateKey)}`}
+            key={`week-${format(week, DATE_FORMATS.dateKey)}-${month}`}
             weekIndex={weekIndex}
             date={week}
             activeMonth={month}
