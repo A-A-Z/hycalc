@@ -9,14 +9,20 @@ import { DayLabel } from './DayLabel'
 import '../assets/day.css'
 import '../assets/status.css'
 
-import type { ReactNode, KeyboardEventHandler } from 'react'
+import type { ReactNode, KeyboardEventHandler, MouseEventHandler } from 'react'
 import type { DateRecordStatus } from 'features/records'
 import type { DayRefFnc } from '../types'
 
-const statusIndex: Record<DateRecordStatus, DateRecordStatus> = {
+const statusIndexForward: Record<DateRecordStatus, DateRecordStatus> = {
   none: 'remote',
   remote: 'onsite',
   onsite: 'none'
+}
+
+const statusIndexBack: Record<DateRecordStatus, DateRecordStatus> = {
+  none: 'onsite',
+  remote: 'none',
+  onsite: 'remote'
 }
 
 const STATUS_LABEL: Record<DateRecordStatus, string>  = {
@@ -69,9 +75,18 @@ const Day = forwardRef<HTMLButtonElement, DayProps>(({
   const isDayToday = isToday(date)
   const { isReadOnly } = useGridStatus()
 
-  const onClick = () => {
-    setDateRecord(dayOfTheMonth, statusIndex[dateStatus])
+  const onClick: MouseEventHandler<HTMLButtonElement> = e => {
     setIsClicked(true)
+
+    // if alt or ctrl key pressed: clear the status on day
+    if (e.altKey || e.ctrlKey) {
+      e.preventDefault()
+      setDateRecord(dayOfTheMonth, 'none')
+      return
+    }
+
+    // toggle forward on click/enter/space or toggle back if holder shift key
+    setDateRecord(dayOfTheMonth, e.shiftKey ? statusIndexBack[dateStatus] : statusIndexForward[dateStatus])
   }
 
   const onKeyDown: KeyboardEventHandler<HTMLButtonElement> = e => {
