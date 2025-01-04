@@ -10,11 +10,13 @@ export interface GridStatusContextValues {
   direcction: ChangeDirection
   isReadOnly: boolean
   isCustomMode: boolean
+  isPlanMode: boolean
   dateCheck: string,
   setMonthOffset: Dispatch<SetStateAction<number>>
   navMonthBack: () => void
   navMonthForward: () => void
   toggleCustomMode: (isOn: boolean) => void
+  togglePlanMode: (isOn: boolean) => void
 }
 
 export interface GridStatusProviderProps {

@@ -14,11 +14,13 @@ const gridStatusesInit: GridStatusContextValues = {
   direcction: 'none',
   isReadOnly: false,
   isCustomMode: false,
+  isPlanMode: false,
   dateCheck: '',
   setMonthOffset: () => {},
   navMonthBack: () => {},
   navMonthForward: () => {},
-  toggleCustomMode: () => null
+  toggleCustomMode: () => null,
+  togglePlanMode: () => null
 }
 
 export const GridStatusContext = createContext<GridStatusContextValues>(gridStatusesInit)
@@ -27,6 +29,7 @@ export const GridStatusProvider: FC<GridStatusProviderProps> = ({ gridId, dateCh
   const [monthOffset, setMonthOffset] = useState(gridStatusesInit.monthOffset)
   const [isReadOnly, setIsReadOnly] = useState(gridStatusesInit.isReadOnly)
   const [isCustomMode, setIsCustomMode] = useState(gridStatusesInit.isCustomMode)
+  const [isPlanMode, setIsPlanMode] = useState(gridStatusesInit.isPlanMode)
   const [direcction, setDirection] = useState<ChangeDirection>('none')
 
   // get current year and month
@@ -59,11 +62,13 @@ export const GridStatusProvider: FC<GridStatusProviderProps> = ({ gridId, dateCh
     direcction,
     isReadOnly,
     isCustomMode,
+    isPlanMode,
     dateCheck,
     setMonthOffset,
     navMonthBack,
     navMonthForward,
-    toggleCustomMode
+    toggleCustomMode,
+    togglePlanMode: setIsPlanMode
   }), [
     gridId,
     dateCheck,
@@ -74,6 +79,7 @@ export const GridStatusProvider: FC<GridStatusProviderProps> = ({ gridId, dateCh
     direcction,
     isReadOnly,
     isCustomMode,
+    isPlanMode,
     toggleCustomMode,
     navMonthBack,
     navMonthForward,
