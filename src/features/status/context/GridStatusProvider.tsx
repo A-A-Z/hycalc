@@ -3,7 +3,11 @@ import { getYearAndMonth } from 'lib/date'
 
 import type { FC } from 'react'
 import type { ChangeDirection } from 'global/types'
-import type { GridStatusContextValues, GridStatusProviderProps } from '../types'
+import type {
+  GridStatusContextValues,
+  GridStatusProviderProps,
+  ToggleStatusFn
+} from '../types'
 
 const gridStatusesInit: GridStatusContextValues = {
   gridId: 'grid-id',
@@ -38,9 +42,30 @@ export const GridStatusProvider: FC<GridStatusProviderProps> = ({ gridId, dateCh
   // get the first day of the current month/year
   const firstOfTheMonth = useMemo(() => new Date(year, (month - 1), 1), [year, month])
 
-  const toggleCustomMode = useCallback((isOn: boolean): void => {
+  const toggleCustomMode: ToggleStatusFn = useCallback(isOn => {
+    if (isOn === undefined) {
+      // if isOn is undifined then toggle value
+      let newReadMeState = false
+      setIsCustomMode(value => {
+        newReadMeState = !value
+        return !value
+      })
+      setIsReadOnly(newReadMeState)
+      return
+    }
+
     setIsCustomMode(isOn)
     setIsReadOnly(isOn)
+  }, [])
+
+  const togglePlanMode: ToggleStatusFn = useCallback(isOn => {
+    if (isOn === undefined) {
+      // if isOn is undifined then toggle value
+      setIsPlanMode(value => !value)
+      return
+    }
+  
+    setIsPlanMode(isOn)
   }, [])
 
   const navMonthBack = useCallback(() => {
@@ -68,7 +93,7 @@ export const GridStatusProvider: FC<GridStatusProviderProps> = ({ gridId, dateCh
     navMonthBack,
     navMonthForward,
     toggleCustomMode,
-    togglePlanMode: setIsPlanMode
+    togglePlanMode
   }), [
     gridId,
     dateCheck,
@@ -81,6 +106,7 @@ export const GridStatusProvider: FC<GridStatusProviderProps> = ({ gridId, dateCh
     isCustomMode,
     isPlanMode,
     toggleCustomMode,
+    togglePlanMode,
     navMonthBack,
     navMonthForward,
     setMonthOffset
