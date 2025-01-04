@@ -44,16 +44,16 @@ export const Week = ({
     const days = Array.from({ length: 7 }).map((_, index) => addDays(start, index))
 
     return days.filter(weekday => isCustomMode || isActiveWeekday(weekday))
-  }, [date, isCustomMode])
+  }, [date, isCustomMode, isActiveWeekday])
 
   const handleDayKeyDown: DayRefFnc = useCallback((dayIndex, key) => {
     handleKeyDown(weekIndex, dayIndex, key)
-  }, [handleKeyDown])
+  }, [handleKeyDown, weekIndex])
 
   // Check if at least one day is on-month
   const hasOnMonthDays = useMemo(() =>
     daysOfTheWeek.some(day => !isOffMonth(activeMonth, day)),
-  [daysOfTheWeek])
+  [daysOfTheWeek, activeMonth])
 
   if (!hasOnMonthDays) {
     // if there are no on-month days then don't render this week

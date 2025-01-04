@@ -75,7 +75,7 @@ export const DateRecordsProvider: FC<DateRecordsProviderProps> = ({ children }) 
     if (isLoaded) {
       saveDebounced(records)
     }
-  }, [records])
+  }, [records, isLoaded, saveDebounced])
 
   /********************* Handle retruned values for hook **********************/
 
