@@ -11,6 +11,7 @@ export const useDateRecords = (dayOfTheMonth: number): UseDateRecordsReturn => {
   }
 
   const dateStatus = context.records[dayOfTheMonth] ?? 'none'
+  const dateStatusNormal = (dateStatus === 'onsite' || dateStatus === 'remote') ? dateStatus : 'none'
 
-  return { ...context, dateStatus }
+  return { ...context, dateStatus, dateStatusNormal }
 }

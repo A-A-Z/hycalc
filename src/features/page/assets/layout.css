@@ -8,6 +8,8 @@
   --status-font-size: 0.8rem;
   --status-height: 22px;
   --status-spacing: 10px;
+  --plan-height: 22px;
+  --plan-font-size: 0.9rem;
   --arrow-size: 1.1em;
   --column-count: 5;
   --num-gaps: calc(var(--column-count) - 1);
@@ -23,6 +25,8 @@
     --title-spacing: 25px;
     --title-font-size: 2rem;
     --status-font-size: 0.75rem;
+    --plan-height: 20px;
+    --plan-font-size: 0.8rem;
     --arrow-size: 0.8em;
   }
 }
@@ -34,6 +38,8 @@
     --title-spacing: 12px;
     --title-font-size: 1.8rem;
     --status-font-size: 0.68rem;
+    --plan-height: 16px;
+    --plan-font-size: 0.68rem;
     --arrow-size: 0.72em;
   }
 }

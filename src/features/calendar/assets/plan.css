@@ -1,0 +1,33 @@
+.plan {
+  --offset: 5px;
+  --icon-hiden-offset: calc((var(--plan-height) + var(--offset)) * -1);
+
+  inset: var(--offset) auto auto var(--offset);
+  position: absolute;
+}
+
+.plan__status {
+  align-items: center;
+  aspect-ratio: 1 / 1;
+  border-radius: 6px;
+  color: #000;
+  display: flex;
+  font-size: var(--plan-font-size);
+  height: var(--plan-height);
+  justify-content: center;
+  position: absolute;
+  transition: inset 0.2s ease-out;
+  width: auto;
+}
+.plan__status--remote {
+  background-color: var(--colour-status-remote);
+  inset: var(--icon-hiden-offset) auto auto 0;
+}
+.plan__status--onsite {
+  background-color: var(--colour-status-onsite);
+  inset: 0 auto auto var(--icon-hiden-offset);
+}
+.plan--p-remote .plan__status--remote,
+.plan--p-onsite .plan__status--onsite {
+  inset: 0 auto auto 0;
+}

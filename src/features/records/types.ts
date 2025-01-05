@@ -1,8 +1,18 @@
 import type { ReactNode } from 'react'
 
-export type DateRecordType = 'remote' | 'onsite'
+export type DateRecordNormalType = 'remote' | 'onsite'
 
-export type DateRecordStatus = DateRecordType | 'none'
+export type DateRecordPlanType = 'p-remote' | 'p-onsite'
+
+export type DateRecordNoneType = 'none'
+
+export type DateRecordType = DateRecordNormalType | DateRecordPlanType
+
+export type DateRecordStatus = DateRecordType | DateRecordNoneType
+
+export type DateRecordNormalStatus = DateRecordNormalType | DateRecordNoneType
+
+export type DateRecordPlanStatus = DateRecordPlanType | DateRecordNoneType
 
 export type DateRecords = Record<number, DateRecordType>
 
@@ -15,6 +25,7 @@ export interface DateRecordsContextProps {
 
 export interface UseDateRecordsReturn extends DateRecordsContextProps {
   dateStatus: DateRecordStatus
+  dateStatusNormal: DateRecordNormalStatus
 }
 
 export interface DateRecordsProviderProps {
