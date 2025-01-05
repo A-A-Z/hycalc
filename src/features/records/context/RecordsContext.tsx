@@ -1,38 +1,21 @@
-import { createContext, useContext, useMemo, useCallback, useState, useEffect } from 'react'
+import { createContext, useMemo, useCallback, useState, useEffect } from 'react'
 import { useDebounceCallback } from 'usehooks-ts'
 import { useGridStatus } from 'features/status'
 
 import type { FC, ReactNode } from 'react'
-import type { DateRecords, DateRecordType, DateRecordStatus } from '../types'
+import type {
+  DateRecordType,
+  DateRecordStatus,
+  DateRecordsContextProps
+} from '../types'
 
-interface DateRecordsContextProps {
-  records: DateRecords
-  setDateRecord: (dayOfTheMonth: number, status: DateRecordStatus) => void
-  ratio: number
-  isLoaded: boolean
-}
 
-interface useDateRecordsReturn extends DateRecordsContextProps {
-  dateStatus: DateRecordStatus
-}
-
-const DateRecordsContext = createContext<DateRecordsContextProps>({
+export const DateRecordsContext = createContext<DateRecordsContextProps>({
   records: {},
   setDateRecord: () => null,
   ratio: 0,
   isLoaded: false
 })
-
-export const useDateRecords = (dayOfTheMonth: number): useDateRecordsReturn => {
-  const context = useContext(DateRecordsContext)
-  if (context === undefined) {
-    throw new Error('useUser must be used within a UserProvider')
-  }
-
-  const dateStatus = context.records[dayOfTheMonth] ?? 'none'
-
-  return { ...context, dateStatus }
-}
 
 interface DateRecordsProviderProps {
   children: ReactNode

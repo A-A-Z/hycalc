@@ -1,7 +1,7 @@
 import { useState, useId, forwardRef } from 'react'
 import { FaBuilding, FaHouse } from 'react-icons/fa6'
 import clsx from 'clsx'
-import { format, isToday, DATE_FORMATS } from 'lib/date'
+import { format, isToday, isPast, DATE_FORMATS } from 'lib/date'
 
 import { useDateRecords } from 'features/records'
 import { useGridStatus } from 'features/status'
@@ -70,12 +70,16 @@ const Day = forwardRef<HTMLButtonElement, DayProps>(({
   const dayOfTheMonth = parseInt(format(date, DATE_FORMATS.recordDayOfMonth))
   const [isClicked, setIsClicked] = useState(false)
   const { setDateRecord, dateStatus, isLoaded } = useDateRecords(dayOfTheMonth)
+  const { isReadOnly, isPlanMode } = useGridStatus()
   const dateId = useId()
   const statusId = useId()
   const isDayToday = isToday(date)
-  const { isReadOnly } = useGridStatus()
 
-  const onClick: MouseEventHandler<HTMLButtonElement> = e => {
+  const statusOptions: DateRecordStatus[] = [
+    'none', 'remote', 'onsite'
+  ]
+
+  const handleChangeStatus: MouseEventHandler<HTMLButtonElement> = e => {
     setIsClicked(true)
 
     // if alt or ctrl key pressed: clear the status on day
@@ -89,13 +93,15 @@ const Day = forwardRef<HTMLButtonElement, DayProps>(({
     setDateRecord(dayOfTheMonth, e.shiftKey ? statusIndexBack[dateStatus] : statusIndexForward[dateStatus])
   }
 
+  const handleChangePlan: MouseEventHandler<HTMLButtonElement> = e => {
+    setIsClicked(true)
+
+    console.log('toggle plan', e)
+  }
+
   const onKeyDown: KeyboardEventHandler<HTMLButtonElement> = e => {
     handKeyDown(dayIndex, e.key)
   }
-
-  const statusOptions: DateRecordStatus[] = [
-    'none', 'remote', 'onsite'
-  ]
 
   const icons: Record<DateRecordStatus, JSX.Element> = {
     none: <span />,
@@ -103,7 +109,8 @@ const Day = forwardRef<HTMLButtonElement, DayProps>(({
     onsite: <FaBuilding aria-hidden={true} />
   }
 
-  if (isOffMonth || !isLoaded) {
+  /******* Day format: off-month *******/
+  if (isOffMonth || !isLoaded || (isPlanMode && isPast(date))) {
     return (
       <DayWrapper isOffMonth={true} isDayToday={isDayToday} dayIndex={dayIndex}>
         <span className={clsx('day__item', 'day__item--off', isDisabled && 'day__item--disabled')} >
@@ -113,6 +120,7 @@ const Day = forwardRef<HTMLButtonElement, DayProps>(({
     )
   }
 
+  /*******  Day format: read-only *******/
   if (isReadOnly) {
     return (
       <DayWrapper isOffMonth={true} isDayToday={isDayToday} dayIndex={dayIndex}>
@@ -132,6 +140,40 @@ const Day = forwardRef<HTMLButtonElement, DayProps>(({
     )
   }
 
+  /*******  Day format: plan mode *******/
+  if (isPlanMode) {
+    return (
+      <DayWrapper isOffMonth={true} isDayToday={isDayToday} dayIndex={dayIndex}>
+        <button
+          ref={ref}
+          type="button"
+          className={clsx(
+            'day__item',
+            'day__item--btn',
+            isClicked && 'day__item--active',
+            isReadOnly && 'day__item--read-only'
+          )}
+          onClick={handleChangePlan}
+          onKeyDown={onKeyDown}
+          tabIndex={isTabbed ? 0 : -1}
+          aria-controls={statusId}
+        >
+          <DayLabel id={dateId} date={date} />
+          <div className="status">
+            <div className={clsx(
+                'status__option',
+                'status__option--read-only',
+                `status__option--${dateStatus}`
+            )}>
+              {icons[dateStatus]}{STATUS_LABEL[dateStatus]}
+            </div>
+          </div>
+        </button>
+      </DayWrapper>
+    )
+  }
+
+  /*******  Day format: normal *******/
   return (
     <DayWrapper isOffMonth={false} isDayToday={isDayToday} dayIndex={dayIndex}>
       <button
@@ -143,7 +185,7 @@ const Day = forwardRef<HTMLButtonElement, DayProps>(({
           isClicked && 'day__item--active',
           isReadOnly && 'day__item--read-only'
         )}
-        onClick={onClick}
+        onClick={handleChangeStatus}
         onKeyDown={onKeyDown}
         tabIndex={isTabbed ? 0 : -1}
         aria-controls={statusId}

@@ -43,22 +43,19 @@ export const GridStatusProvider: FC<GridStatusProviderProps> = ({ gridId, dateCh
   const firstOfTheMonth = useMemo(() => new Date(year, (month - 1), 1), [year, month])
 
   const toggleCustomMode: ToggleStatusFn = useCallback(isOn => {
-    if (isOn === undefined) {
-      // if isOn is undifined then toggle value
-      let newReadMeState = false
-      setIsCustomMode(value => {
-        newReadMeState = !value
-        return !value
-      })
-      setIsReadOnly(newReadMeState)
-      return
-    }
+    // turn off other modes
+    setIsPlanMode(false)
 
-    setIsCustomMode(isOn)
-    setIsReadOnly(isOn)
-  }, [])
+    const value = isOn ?? !isCustomMode
+    setIsCustomMode(value)
+    setIsReadOnly(value)
+  }, [isCustomMode])
 
   const togglePlanMode: ToggleStatusFn = useCallback(isOn => {
+    // turn off other modes
+    setIsCustomMode(false)
+    setIsReadOnly(false)
+
     if (isOn === undefined) {
       // if isOn is undifined then toggle value
       setIsPlanMode(value => !value)
