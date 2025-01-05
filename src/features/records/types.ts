@@ -1,3 +1,4 @@
+import type { ReactNode } from 'react'
 
 export type DateRecordType = 'remote' | 'onsite'
 
@@ -14,4 +15,8 @@ export interface DateRecordsContextProps {
 
 export interface UseDateRecordsReturn extends DateRecordsContextProps {
   dateStatus: DateRecordStatus
+}
+
+export interface DateRecordsProviderProps {
+  children: ReactNode
 }
