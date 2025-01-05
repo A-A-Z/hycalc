@@ -20,6 +20,7 @@ export interface DateRecordsContextProps {
   records: DateRecords
   setDateRecord: (dayOfTheMonth: number, status: DateRecordStatus) => void
   ratio: number
+  estRatio: number
   isLoaded: boolean
 }
 

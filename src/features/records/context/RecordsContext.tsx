@@ -10,11 +10,11 @@ import type {
   DateRecordsProviderProps
 } from '../types'
 
-
 export const DateRecordsContext = createContext<DateRecordsContextProps>({
   records: {},
   setDateRecord: () => null,
   ratio: 0,
+  estRatio: 0,
   isLoaded: false
 })
 
@@ -79,7 +79,7 @@ export const DateRecordsProvider: FC<DateRecordsProviderProps> = ({ children }) 
   // get the ratio
   const ratio = useMemo(() => {
     const recordsParsed = JSON.parse(records)
-    const totalDays = Object.entries(recordsParsed).length
+    const totalDays = Object.values(recordsParsed).filter((entry) => (entry !== 'p-remote' && entry !== 'p-onsite')).length
     const daysOnSite = Object.values(recordsParsed).filter((entry) => entry === 'onsite').length
     return Math.round((daysOnSite / totalDays) * 100 || 0)
   }, [records])
@@ -88,6 +88,7 @@ export const DateRecordsProvider: FC<DateRecordsProviderProps> = ({ children }) 
   const value: DateRecordsContextProps = useMemo(() => ({
     records: JSON.parse(records),
     ratio,
+    estRatio: 0,
     isLoaded,
     setDateRecord
   }), [records, isLoaded, ratio, setDateRecord])
