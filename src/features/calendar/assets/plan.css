@@ -10,7 +10,7 @@
   align-items: center;
   aspect-ratio: 1 / 1;
   border-radius: 6px;
-  color: #000;
+  color: var(--colour-black);
   display: flex;
   font-size: var(--plan-font-size);
   height: var(--plan-height);
@@ -19,6 +19,15 @@
   transition: inset 0.2s ease-out;
   width: auto;
 }
+.day__item:not(.day__item--active) .plan__status {
+  transition: none;
+}
+@media (prefers-reduced-motion) {
+  .plan__status {
+    transition: none;
+  }
+}
+
 .plan__status--remote {
   background-color: var(--colour-status-remote);
   inset: var(--icon-hiden-offset) auto auto 0;
