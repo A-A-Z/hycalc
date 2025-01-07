@@ -62,7 +62,8 @@ const Day = forwardRef<HTMLButtonElement, DayProps>(({
   const { setDateRecord, dateStatus, dateStatusNormal, isLoaded } = useDateRecords(dayOfTheMonth)
   const { isReadOnly, isPlanMode } = useGridStatus()
   const dateId = useId()
-  const statusId = useId()
+  const statusId = dateId + '-status'
+  const planId = date + '-plan'
   const isDayToday = isToday(date)
 
   const handleChangeStatus: MouseEventHandler<HTMLButtonElement> = e => {
@@ -128,9 +129,9 @@ const Day = forwardRef<HTMLButtonElement, DayProps>(({
           onClick={handleChangePlan}
           onKeyDown={onKeyDown}
           tabIndex={isTabbed ? 0 : -1}
-          aria-controls={statusId}
+          aria-controls={planId}
         >
-          <DayPlan dateStatus={dateStatus} />
+          <DayPlan id={planId} dateStatus={dateStatus} />
           <DayLabel id={dateId} date={date} />
           <Status id={statusId} dateId={dateId} dateStatus="none" isReadOnly />
         </button>
@@ -155,7 +156,7 @@ const Day = forwardRef<HTMLButtonElement, DayProps>(({
         tabIndex={isTabbed ? 0 : -1}
         aria-controls={statusId}
       >
-        {(dateStatusNormal === 'none' && !isPast(date)) && <DayPlan dateStatus={dateStatus} />}
+        {(dateStatusNormal === 'none' && !isPast(date)) && <DayPlan id={planId} dateStatus={dateStatus} />}
         <DayLabel id={dateId} date={date} />
         <Status id={statusId} dateId={dateId} dateStatus={dateStatus} />
       </button>
