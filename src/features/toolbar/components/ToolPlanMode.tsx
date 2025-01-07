@@ -4,7 +4,7 @@ import { ToggleButton } from 'features/button'
 
 import type { ToolProps } from '../types'
 
-export const ToolPlanMode = forwardRef<HTMLButtonElement, ToolProps>(({ index }, ref): JSX.Element => {
+export const ToolPlanMode = forwardRef<HTMLButtonElement, ToolProps>(({ index, handleKeyDown }, ref): JSX.Element => {
   const { isPlanMode, togglePlanMode } = useGridStatus()
 
   return (
@@ -12,6 +12,7 @@ export const ToolPlanMode = forwardRef<HTMLButtonElement, ToolProps>(({ index },
       ref={ref}
       tabIndex={index === 0 ? 0 : -1}
       onClick={() => { togglePlanMode() }}
+      onKeyDown={e => { handleKeyDown(e.key, index) }}
       isActive={isPlanMode}
     >
       Plan mode
