@@ -4,6 +4,7 @@
   --header-gutter: 0 22px;
   --title-spacing: 25px;
   --title-font-size: 3rem;
+  --est-ratio-font-size: 1rem;
   --calendar-gap: 12px;
   --status-font-size: 0.8rem;
   --status-height: 22px;
@@ -24,6 +25,7 @@
     --cell-size: 100px;
     --title-spacing: 25px;
     --title-font-size: 2rem;
+    --est-ratio-font-size: 0.9rem;
     --status-font-size: 0.75rem;
     --plan-height: 20px;
     --plan-font-size: 0.8rem;
@@ -37,6 +39,7 @@
     --cell-size: 90px;
     --title-spacing: 12px;
     --title-font-size: 1.8rem;
+    --est-ratio-font-size: 0.8rem;
     --status-font-size: 0.68rem;
     --plan-height: 16px;
     --plan-font-size: 0.68rem;

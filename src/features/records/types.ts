@@ -16,11 +16,14 @@ export type DateRecordPlanStatus = DateRecordPlanType | DateRecordNoneType
 
 export type DateRecords = Record<number, DateRecordType>
 
+export type DateRecordEntry = [string, DateRecordType]
+
 export interface DateRecordsContextProps {
   records: DateRecords
   setDateRecord: (dayOfTheMonth: number, status: DateRecordStatus) => void
   ratio: number
   estRatio: number
+  hasPlans: boolean
   isLoaded: boolean
 }
 

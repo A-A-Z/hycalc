@@ -1,41 +1,49 @@
-import { useState, useEffect, useMemo } from 'react'
+import { useMemo } from 'react'
 import clsx from 'clsx'
+import { useRatioNumber } from '../hooks/useRatioNumber'
+import '../assets/ratio.css'
+
+import type { FC } from 'react'
 
 interface RatioProps {
   value: number
+  estValue: number
+  isEstVisible: boolean
 }
 
-export const Ratio = ({ value }: RatioProps): JSX.Element => {
-  const [currentValue, setCurrentValue] = useState(value)
-
-  useEffect(() => {
-    // Only proceed if currentValue does not equal the target value
-    if (currentValue !== value) {
-      const difference = Math.abs(value - currentValue)
-      const delay = difference > 10 ? 20 : (90 - difference * 10)
-
-      const timer = setTimeout(() => {
-        setCurrentValue(prevValue => prevValue + (value > prevValue ? 1 : -1))
-      }, delay)
-
-      // Return a cleanup function that clears the timeout
-      return () => clearTimeout(timer)
-    }
-    // If currentValue equals the target value, no cleanup function is needed.
-    // This effectively returns `undefined`, which is a valid `void` return type.
-  }, [value, currentValue])
-
-  const isUpdating = useMemo(() => currentValue !== value, [currentValue, value])
-
+export const Ratio: FC<RatioProps> = ({ value, estValue, isEstVisible }) => {
+  const currentValue = useRatioNumber(value)
+  const currentEstValue = useRatioNumber(estValue)
+  const isUpdating = useMemo(() => (currentValue !== value), [currentValue, value])
+  const isEstUpdating = useMemo(() => (currentEstValue !== estValue), [currentEstValue, estValue])
   return (
-    <div className={clsx('title__ratio', isUpdating && 'title__ratio--updating')}>
-      <span aria-hidden="true" data-testid="counter">{currentValue}</span>
-      <span aria-hidden="true">%</span>
+    <div className="ratio">
       <div
         role="status"
         className="visually-hidden"
         aria-live="polite"
-      >{`${value} percent on site`}</div>
+      >
+        {`${value} percent on site.`}
+        {isEstVisible && `Estimated ${estValue} percent on site.`}
+      </div>
+      <div className={clsx(
+        'ratio__label',
+        'ratio__label--normal',
+        isUpdating && 'ratio__label--updating'
+      )}>
+        <span className="ratio__number" aria-hidden="true" data-testid="counter">{currentValue}</span>
+        <span aria-hidden="true">%</span>
+      </div>
+      <div className={clsx(
+        'ratio__label',
+        'ratio__label--est',
+        isEstUpdating && 'ratio__label--updating',
+        !isEstVisible && 'ratio__label--hidden'
+      )}>
+        <abbr title="Estimate">EST</abbr>
+        <span className="ratio__number" aria-hidden="true" data-testid="est-counter">{currentEstValue}</span>
+        <span aria-hidden="true">%</span>
+      </div>
     </div>
   )
 }
