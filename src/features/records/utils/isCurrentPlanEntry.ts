@@ -1,4 +1,4 @@
-import { isPast } from 'lib/date'
+import { isPast, isToday } from 'lib/date'
 
 import type { DateRecordEntry } from '../types'
 
@@ -10,5 +10,5 @@ export const isCurrentPlanEntry = (record: DateRecordEntry, month: number, year:
 
   // must be in the future
   const entryDate = new Date(year, (month - 1), parseInt(day))
-  return !isPast(entryDate)
+  return (!isPast(entryDate) || isToday(entryDate))
 }

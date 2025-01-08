@@ -15,8 +15,6 @@ import {
   statusIndexPlanBack
 } from '../constants'
 import '../assets/day.css'
-import '../assets/status.css'
-import '../assets/plan.css'
 
 import type { ReactNode, KeyboardEventHandler, MouseEventHandler } from 'react'
 import type { DayRefFnc } from '../types'
@@ -91,7 +89,7 @@ const Day = forwardRef<HTMLButtonElement, DayProps>(({
   }
 
   /******* Day format: off-month *******/
-  if (isOffMonth || !isLoaded || (isPlanMode && isPast(date))) {
+  if (isOffMonth || !isLoaded || (isPlanMode && isPast(date) && !isToday(date))) {
     return (
       <DayWrapper isOffMonth={true} isDayToday={isDayToday} dayIndex={dayIndex}>
         <span className={clsx('day__item', 'day__item--off', isDisabled && 'day__item--disabled')} >
@@ -156,7 +154,7 @@ const Day = forwardRef<HTMLButtonElement, DayProps>(({
         tabIndex={isTabbed ? 0 : -1}
         aria-controls={statusId}
       >
-        {(dateStatusNormal === 'none' && !isPast(date)) && <DayPlan id={planId} dateStatus={dateStatus} />}
+        {(dateStatusNormal === 'none' && (!isPast(date) || isToday(date))) && <DayPlan id={planId} dateStatus={dateStatus} />}
         <DayLabel id={dateId} date={date} />
         <Status id={statusId} dateId={dateId} dateStatus={dateStatus} />
       </button>

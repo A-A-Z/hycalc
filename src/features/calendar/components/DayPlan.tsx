@@ -1,6 +1,7 @@
 import clsx from 'clsx'
 import { StatusIcon } from './StatusIcon'
 import { statusIndexPlanMap } from '../constants'
+import '../assets/plan.css'
 
 import type { FC } from 'react'
 import type { DateRecordStatus } from 'features/records'

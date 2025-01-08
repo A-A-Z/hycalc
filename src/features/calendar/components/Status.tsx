@@ -5,6 +5,7 @@ import {
   statusLabel,
   statusIndexNormalMap
 } from '../constants'
+import '../assets/status.css'
 
 import type { FC } from 'react'
 import type { DateRecordStatus } from 'features/records'
