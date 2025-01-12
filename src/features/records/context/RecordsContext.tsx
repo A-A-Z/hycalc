@@ -1,47 +1,30 @@
-import { createContext, useContext, useMemo, useCallback, useState, useEffect } from 'react'
+import { createContext, useMemo, useCallback, useState, useEffect } from 'react'
 import { useDebounceCallback } from 'usehooks-ts'
 import { useGridStatus } from 'features/status'
+import { isCurrentPlanEntry } from '../utils/isCurrentPlanEntry'
 
-import type { FC, ReactNode } from 'react'
-import type { DateRecords, DateRecordType, DateRecordStatus } from '../types'
+import type { FC } from 'react'
+import type {
+  DateRecordType,
+  DateRecords,
+  DateRecordStatus,
+  DateRecordsContextProps,
+  DateRecordsProviderProps
+} from '../types'
 
-interface DateRecordsContextProps {
-  records: DateRecords
-  setDateRecord: (dayOfTheMonth: number, status: DateRecordStatus) => void
-  ratio: number
-  isLoaded: boolean
-}
-
-interface useDateRecordsReturn extends DateRecordsContextProps {
-  dateStatus: DateRecordStatus
-}
-
-const DateRecordsContext = createContext<DateRecordsContextProps>({
+export const DateRecordsContext = createContext<DateRecordsContextProps>({
   records: {},
   setDateRecord: () => null,
   ratio: 0,
+  estRatio: 0,
+  hasPlans: false,
   isLoaded: false
 })
 
-export const useDateRecords = (dayOfTheMonth: number): useDateRecordsReturn => {
-  const context = useContext(DateRecordsContext)
-  if (context === undefined) {
-    throw new Error('useUser must be used within a UserProvider')
-  }
-
-  const dateStatus = context.records[dayOfTheMonth] ?? 'none'
-
-  return { ...context, dateStatus }
-}
-
-interface DateRecordsProviderProps {
-  children: ReactNode
-}
-
-const BLANK_VALUE = '{}'
-
 export const DateRecordsProvider: FC<DateRecordsProviderProps> = ({ children }) => {
+  const BLANK_VALUE = '{}'
   const { year, month } = useGridStatus()
+
   // create states
   const [records, setRecords] =  useState<string>(BLANK_VALUE)
   const [isLoaded, setIsLoaded] = useState(false)
@@ -82,7 +65,7 @@ export const DateRecordsProvider: FC<DateRecordsProviderProps> = ({ children }) 
   // callback function for updating records
   const setDateRecord = useCallback((dayOfTheMonth: number, status: DateRecordStatus) => {
     // turn records in to object so we can make changes to it
-    const newRecords = JSON.parse(records)
+    const newRecords = JSON.parse(records) as DateRecords
 
     if (status === 'none' && newRecords[dayOfTheMonth] !== undefined) {
       // records is set to 'none' or invalid date: delete record
@@ -96,21 +79,60 @@ export const DateRecordsProvider: FC<DateRecordsProviderProps> = ({ children }) 
     setRecords(JSON.stringify(newRecords))
   }, [setRecords, records])
 
-  // get the ratio
+  // get the ratio (not using plan data in total)
   const ratio = useMemo(() => {
-    const recordsParsed = JSON.parse(records)
-    const totalDays = Object.entries(recordsParsed).length
-    const daysOnSite = Object.values(recordsParsed).filter((entry) => entry === 'onsite').length
+    const recordsParsed = JSON.parse(records) as DateRecords
+
+    // get total number of enties, not counting plan enties
+    const totalDays = Object.values(recordsParsed).filter(entry => (entry !== 'p-remote' && entry !== 'p-onsite')).length
+
+    // get total number of onsite enties (not plan onsite enties)
+    const daysOnSite = Object.values(recordsParsed).filter(entry => entry === 'onsite').length
+
+    // return the percentage of enties that are onsite
     return Math.round((daysOnSite / totalDays) * 100 || 0)
   }, [records])
+
+  // get the estRatio (include plan data in total)
+  const estRatio = useMemo(() => {
+    const recordsParsed = JSON.parse(records) as DateRecords
+
+    // get total number of enties, including current plan enties
+    const totalDays = Object.entries(recordsParsed).filter(record => {
+      const [, entry] = record
+      // normal entries always count
+      if (entry === 'onsite' || entry === 'remote') return true
+      // plan enties only count if in the future
+      return isCurrentPlanEntry(record, month, year)
+    }).length
+
+    // get total number of onsite enties (not plan onsite enties)
+    const daysOnSite = Object.entries(recordsParsed).filter(record => {
+      const [, entry] = record
+      if (entry === 'onsite') return true
+      if (entry !== 'p-onsite') return false
+      return isCurrentPlanEntry(record, month, year)
+    }).length
+
+    // retturn the percentage of enties that are onsite or current planned onsite
+    return Math.round((daysOnSite / totalDays) * 100 || 0)
+  }, [records, month, year])
+
+  const hasPlans = useMemo(() => {
+    const recordsParsed = JSON.parse(records) as DateRecords
+    // plans only count if in the future
+    return Object.entries(recordsParsed).some(entry => isCurrentPlanEntry(entry, month, year))
+  }, [records, month, year])
 
   // hook returned values
   const value: DateRecordsContextProps = useMemo(() => ({
     records: JSON.parse(records),
     ratio,
+    estRatio,
+    hasPlans,
     isLoaded,
     setDateRecord
-  }), [records, isLoaded, ratio, setDateRecord])
+  }), [records, isLoaded, ratio, estRatio, hasPlans, setDateRecord])
 
   return <DateRecordsContext.Provider value={value}>{children}</DateRecordsContext.Provider>
 }

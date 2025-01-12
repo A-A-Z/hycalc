@@ -9,8 +9,8 @@ import '../assets/title.css'
 
 export const Title = (): JSX.Element => {
   // Get ratio (day of the week param is not important)
-  const { ratio } = useDateRecords(1)
-  const { firstOfTheMonth } = useGridStatus()
+  const { ratio, estRatio, hasPlans } = useDateRecords(1)
+  const { firstOfTheMonth, isPlanMode } = useGridStatus()
 
   useEffect(() => {
     // Update document title with current maonth and ratio
@@ -23,7 +23,7 @@ export const Title = (): JSX.Element => {
         <MonthSpinbutton />
         <DateLabel />
       </div>
-      <Ratio value={ratio} />
+      <Ratio value={ratio} estValue={estRatio} isEstVisible={hasPlans || isPlanMode} />
     </div>
   )
 }

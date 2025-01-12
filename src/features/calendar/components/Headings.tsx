@@ -63,7 +63,7 @@ const HeadingsSrc = (): JSX.Element => {
         btnRefs.current[6]?.focus()
 
     }
-  }, [btnRefs.current])
+  }, [])
 
   return (
     <div className="week week--header" role="row">

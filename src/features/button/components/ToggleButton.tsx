@@ -9,7 +9,11 @@ interface ToggleButtonProps extends ButtonProps {
 }
 
 export const ToggleButton = forwardRef<HTMLButtonElement, ToggleButtonProps>(({ isActive, children, ...props } , ref): JSX.Element => (
-  <Button ref={ref} className="btn--toggle" {...props} aria-pressed={isActive}>
+  <Button
+    ref={ref} className="btn--toggle"
+    {...props}
+    aria-pressed={isActive}
+  >
     {children}
     <Toggle isActive={isActive} />
   </Button>

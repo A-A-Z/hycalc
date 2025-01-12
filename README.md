@@ -41,7 +41,6 @@ Once setup you can use these commands:
 (Not in order, no promises)
 
 - [ ] Select/toggle modes
-- [ ] Plan mode
 - [ ] Language
 - [ ] Light theme
 - [ ] Config state colours/names/icons
@@ -49,6 +48,7 @@ Once setup you can use these commands:
 - [ ] Import/export
 - [ ] Multi-select
 - [ ] Stickers
+- [x] Plan mode
 - [x] Month select/stats
 - [x] Hide/show days of the week
 

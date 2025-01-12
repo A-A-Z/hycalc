@@ -81,16 +81,3 @@
 .title__label--year {
   font-weight: 100;
 }
-
-.title__ratio {
-  font-weight: 500;
-  transition: scale 0.1s ease, color 0.2s ease;
-}
-.title__ratio.title__ratio--updating {
-  color: var(--colour-text-highlight);
-  scale: 1.04;
-}
-.title__ratio span ~ span {
-  font-weight: 100;
-  margin: 0 0 0 0.1rem;
-}
