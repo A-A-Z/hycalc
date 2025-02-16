@@ -5,17 +5,19 @@ import { ToggleButton } from 'features/button'
 import { useActiveWeekdays } from '../hooks/useActiveWeekdays'
 import '../assets/weekdayHeading.css'
 
+import type { FC } from 'react'
+
 interface HeadingTitleProps {
   date: Date
 }
 
-const HeadingTitle = ({ date }: HeadingTitleProps): JSX.Element => (
+const HeadingTitle: FC<HeadingTitleProps> = ({ date })=> (
   <abbr title={format(date, DATE_FORMATS.weekdayFull)}>
     {format(date, DATE_FORMATS.weekdayAbbr)}
   </abbr>
 )
 
-const HeadingsSrc = (): JSX.Element => {
+const HeadingsSrc: FC = () => {
   const btnRefs = useRef<(HTMLButtonElement | null)[]>([])
   const start = startOfWeek(new Date)
   const days = Array.from({ length: 7 }).map((_, index) => addDays(start, index))

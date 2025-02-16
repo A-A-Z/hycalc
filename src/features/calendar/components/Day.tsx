@@ -26,7 +26,7 @@ interface DayWrapperProps {
   children: ReactNode
 }
 
-const DayWrapper = ({ isOffMonth, isDayToday, dayIndex, children }: DayWrapperProps): JSX.Element => (
+const DayWrapper: FC<DayWrapperProps> = ({ isOffMonth, isDayToday, dayIndex, children }) => (
   <div
     className={clsx(
       'day',

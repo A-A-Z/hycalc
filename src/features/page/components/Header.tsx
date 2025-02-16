@@ -1,7 +1,9 @@
 import '../assets/logo.css'
 import '../assets/header.css'
 
-export const Header = (): JSX.Element => {
+import type { FC } from 'react'
+
+export const Header: FC = () => {
   return (
     <header className="header">
       <img src="./hycalc-logo.svg" alt="HyCalc logo" />

@@ -9,9 +9,10 @@ import { Headings } from './Headings'
 import { handleGridNav } from '../utils/handleGridNav'
 import '../assets/calendar.css'
 
+import type { FC } from 'react'
 import type { WeekRef, DayRef, WeekRefFnc } from '../types'
 
-export const Calendar = (): JSX.Element => {
+export const Calendar: FC = () => {
   const dayRefs = useRef<WeekRef[]>([])
   const {
     gridId,

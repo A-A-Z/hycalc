@@ -1,1 +1,2 @@
-export { ConfigProvider, useConfig } from './context/ConfigContext'
+export { ConfigProvider } from './context/ConfigProvider'
+export { useConfig } from './hooks/useConfig'

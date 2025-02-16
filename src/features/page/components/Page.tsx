@@ -6,13 +6,13 @@ import { Footer } from './Footer'
 import '../assets/layout.css'
 import '../assets/page.css'
 
-import type { CSSProperties } from 'react'
+import type { FC, CSSProperties } from 'react'
 
 interface PageProps {
   children: React.ReactNode
 }
 
-export const Page = ({ children }: PageProps): JSX.Element => {
+export const Page: FC<PageProps> = ({ children }) => {
   const { isCustomMode } = useGridStatus()
   const { config: { weekdays } } = useConfig()
   const columnCount = isCustomMode ? 7 : weekdays.length

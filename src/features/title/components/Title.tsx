@@ -7,7 +7,9 @@ import { DateLabel } from './DateLabel'
 import { Ratio } from './Ratio'
 import '../assets/title.css'
 
-export const Title = (): JSX.Element => {
+import type { FC } from 'react'
+
+export const Title: FC = () => {
   // Get ratio (day of the week param is not important)
   const { ratio, estRatio, hasPlans } = useDateRecords(1)
   const { firstOfTheMonth, isPlanMode } = useGridStatus()

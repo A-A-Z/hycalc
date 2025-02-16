@@ -4,7 +4,9 @@ import { useGridStatus } from 'features/status'
 
 import type { ChangeDirection } from 'global/types'
 
-export const DateLabel = (): JSX.Element => {
+import type { FC } from 'react'
+
+export const DateLabel: FC = () => {
   const {
     gridId,
     firstOfTheMonth,

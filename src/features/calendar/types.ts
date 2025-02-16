@@ -1,6 +1,6 @@
 import type { RefObject } from 'react'
 
-export type DayRef = RefObject<HTMLButtonElement>
+export type DayRef = RefObject<HTMLButtonElement | null>
 export type WeekRef = DayRef[]
 
 export type WeekRefFnc = (weekIndex: number, dayIndex: number, key: string) => void

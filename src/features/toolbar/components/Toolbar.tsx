@@ -4,11 +4,12 @@ import { ToolCustom } from './ToolCustom'
 import { ToolPlanMode } from './ToolPlanMode'
 import '../assets/toolbar.css'
 
+import type { FC } from 'react'
 import type { HandleKeyDownFn } from '../types'
 
 // Ref: https://www.w3.org/WAI/ARIA/apg/patterns/toolbar/examples/toolbar/
 
-export const Toolbar = (): JSX.Element => {
+export const Toolbar: FC = () => {
   const toolRefs = useRef<(HTMLButtonElement | null)[]>([])
   const { gridId } = useGridStatus()
 

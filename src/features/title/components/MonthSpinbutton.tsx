@@ -3,9 +3,9 @@ import { format, DATE_FORMATS } from 'lib/date'
 import { useGridStatus } from 'features/status'
 import '../assets/month-spinbutton.css'
 
-import type { KeyboardEventHandler } from 'react'
+import type { FC, KeyboardEventHandler } from 'react'
 
-export const MonthSpinbutton = (): JSX.Element => {
+export const MonthSpinbutton: FC = () => {
   const {
     monthOffset,
     firstOfTheMonth,
