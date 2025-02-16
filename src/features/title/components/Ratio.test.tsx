@@ -14,13 +14,13 @@ describe('<Ratio />', () => {
   })
 
   test('render status text', () => {
-    const { getByRole } = render(<Ratio value={50} />)
+    const { getByRole } = render(<Ratio value={50} estValue={25} isEstVisible={true} />)
     expect(getByRole('status')).toHaveTextContent('50 percent on site')
   })
 
   test('updates currentValue gradually towards the target value', () => {
-    const { rerender, getByTestId } = render(<Ratio value={10} />);
-    rerender(<Ratio value={30} />)
+    const { rerender, getByTestId } = render(<Ratio value={10} estValue={25} isEstVisible={true} />);
+    rerender(<Ratio value={30} estValue={25} isEstVisible={true}  />)
 
     expect(getByTestId('counter')).toHaveTextContent('10')
 

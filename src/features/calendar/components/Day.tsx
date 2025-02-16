@@ -1,29 +1,23 @@
 import { useState, useId, forwardRef } from 'react'
-import { FaBuilding, FaHouse } from 'react-icons/fa6'
 import clsx from 'clsx'
-import { format, isToday, DATE_FORMATS } from 'lib/date'
+import { format, isToday, isPast, DATE_FORMATS } from 'lib/date'
 
 import { useDateRecords } from 'features/records'
 import { useGridStatus } from 'features/status'
 import { DayLabel } from './DayLabel'
+import { DayPlan } from './DayPlan'
+import { Status } from './Status'
+import {
+  statusIndexNormalMap,
+  statusIndexNormalForward,
+  statusIndexNormalBack,
+  statusIndexPlanForward,
+  statusIndexPlanBack
+} from '../constants'
 import '../assets/day.css'
-import '../assets/status.css'
 
-import type { ReactNode, KeyboardEventHandler } from 'react'
-import type { DateRecordStatus } from 'features/records'
+import type { ReactNode, KeyboardEventHandler, MouseEventHandler } from 'react'
 import type { DayRefFnc } from '../types'
-
-const statusIndex: Record<DateRecordStatus, DateRecordStatus> = {
-  none: 'remote',
-  remote: 'onsite',
-  onsite: 'none'
-}
-
-const STATUS_LABEL: Record<DateRecordStatus, string>  = {
-  none: 'None',
-  onsite: 'On Site',
-  remote: 'Remote'
-}
 
 interface DayWrapperProps {
   isOffMonth: boolean
@@ -63,32 +57,39 @@ const Day = forwardRef<HTMLButtonElement, DayProps>(({
 }, ref) => {
   const dayOfTheMonth = parseInt(format(date, DATE_FORMATS.recordDayOfMonth))
   const [isClicked, setIsClicked] = useState(false)
-  const { setDateRecord, dateStatus, isLoaded } = useDateRecords(dayOfTheMonth)
+  const { setDateRecord, dateStatus, dateStatusNormal, isLoaded } = useDateRecords(dayOfTheMonth)
+  const { isReadOnly, isPlanMode } = useGridStatus()
   const dateId = useId()
-  const statusId = useId()
+  const statusId = dateId + '-status'
+  const planId = date + '-plan'
   const isDayToday = isToday(date)
-  const { isReadOnly } = useGridStatus()
 
-  const onClick = () => {
-    setDateRecord(dayOfTheMonth, statusIndex[dateStatus])
+  const handleChangeStatus: MouseEventHandler<HTMLButtonElement> = e => {
     setIsClicked(true)
+
+    // if alt or ctrl key pressed: clear the status on day
+    if (e.altKey || e.ctrlKey) {
+      e.preventDefault()
+      setDateRecord(dayOfTheMonth, 'none')
+      return
+    }
+
+    // toggle forward on click/enter/space or toggle back if holder shift key
+    setDateRecord(dayOfTheMonth, e.shiftKey ? statusIndexNormalBack[dateStatus] : statusIndexNormalForward[dateStatus])
+  }
+
+  const handleChangePlan: MouseEventHandler<HTMLButtonElement> = e => {
+    setIsClicked(true)
+
+    setDateRecord(dayOfTheMonth, e.shiftKey ? statusIndexPlanBack[dateStatus] : statusIndexPlanForward[dateStatus])
   }
 
   const onKeyDown: KeyboardEventHandler<HTMLButtonElement> = e => {
     handKeyDown(dayIndex, e.key)
   }
 
-  const statusOptions: DateRecordStatus[] = [
-    'none', 'remote', 'onsite'
-  ]
-
-  const icons: Record<DateRecordStatus, JSX.Element> = {
-    none: <span />,
-    remote: <FaHouse aria-hidden={true} />,
-    onsite: <FaBuilding aria-hidden={true} />
-  }
-
-  if (isOffMonth || !isLoaded) {
+  /******* Day format: off-month *******/
+  if (isOffMonth || !isLoaded || (isPlanMode && isPast(date) && !isToday(date))) {
     return (
       <DayWrapper isOffMonth={true} isDayToday={isDayToday} dayIndex={dayIndex}>
         <span className={clsx('day__item', 'day__item--off', isDisabled && 'day__item--disabled')} >
@@ -98,25 +99,45 @@ const Day = forwardRef<HTMLButtonElement, DayProps>(({
     )
   }
 
-  if (isReadOnly) {
+  /*******  Day format: read-only *******/
+  if (isReadOnly || isPlanMode && statusIndexNormalMap[dateStatus] !== 'none') {
     return (
       <DayWrapper isOffMonth={true} isDayToday={isDayToday} dayIndex={dayIndex}>
         <div className={clsx('day__item', 'day__item--read-only', isDisabled && 'day__item--disabled')}>
           <DayLabel id={dateId} date={date} />
-          <div className="status">
-            <div className={clsx(
-                'status__option',
-                'status__option--read-only',
-                `status__option--${dateStatus}`
-            )}>
-              {icons[dateStatus]}{STATUS_LABEL[dateStatus]}
-            </div>
-          </div>
+          <Status id={statusId} dateId={dateId} dateStatus={dateStatus} isReadOnly />
         </div>
       </DayWrapper>
     )
   }
 
+  /*******  Day format: plan mode *******/
+  if (isPlanMode) {
+    return (
+      <DayWrapper isOffMonth={true} isDayToday={isDayToday} dayIndex={dayIndex}>
+        <button
+          ref={ref}
+          type="button"
+          className={clsx(
+            'day__item',
+            'day__item--btn',
+            isClicked && 'day__item--active',
+            isReadOnly && 'day__item--read-only'
+          )}
+          onClick={handleChangePlan}
+          onKeyDown={onKeyDown}
+          tabIndex={isTabbed ? 0 : -1}
+          aria-controls={planId}
+        >
+          <DayPlan id={planId} dateStatus={dateStatus} />
+          <DayLabel id={dateId} date={date} />
+          <Status id={statusId} dateId={dateId} dateStatus="none" isReadOnly />
+        </button>
+      </DayWrapper>
+    )
+  }
+
+  /*******  Day format: normal *******/
   return (
     <DayWrapper isOffMonth={false} isDayToday={isDayToday} dayIndex={dayIndex}>
       <button
@@ -128,31 +149,14 @@ const Day = forwardRef<HTMLButtonElement, DayProps>(({
           isClicked && 'day__item--active',
           isReadOnly && 'day__item--read-only'
         )}
-        onClick={onClick}
+        onClick={handleChangeStatus}
         onKeyDown={onKeyDown}
         tabIndex={isTabbed ? 0 : -1}
         aria-controls={statusId}
       >
+        {(dateStatusNormal === 'none' && (!isPast(date) || isToday(date))) && <DayPlan id={planId} dateStatus={dateStatus} />}
         <DayLabel id={dateId} date={date} />
-        <ul
-          id={statusId}
-          role="listbox" 
-          className="status"
-          aria-labelledby={dateId}
-          aria-live="polite"
-        >
-          {statusOptions.map(status => (
-            <li
-              key={status}
-              className={`status__option status__option--${status}`}
-              role="option"
-              aria-selected={status === dateStatus}
-              tabIndex={-1}
-            >
-                {icons[status]}{STATUS_LABEL[status]}
-            </li>
-          ))}
-        </ul>
+        <Status id={statusId} dateId={dateId} dateStatus={dateStatus} />
       </button>
     </DayWrapper>
   )

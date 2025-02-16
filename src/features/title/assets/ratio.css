@@ -1,0 +1,39 @@
+.ratio {
+  position: relative;
+}
+
+.ratio__label {
+  font-weight: 500;
+  display: flex;
+  gap: 0.05em;
+  transition: scale 0.1s ease, color 0.2s ease;
+}
+
+.ratio__label.ratio__label--updating {
+  color: var(--colour-text-highlight);
+  scale: 1.04;
+}
+
+.ratio__label.ratio__label--est {
+  align-items: flex-end;
+  font-size: var(--est-ratio-font-size);
+  height: var(--est-ratio-font-size);
+  inset: auto 0 auto auto;
+  margin: 3px 0 0 0;
+  overflow: hidden;
+  position: absolute;
+  transition: height 0.2s ease;
+}
+
+.ratio__label.ratio__label--hidden {
+  height: 0;
+}
+
+.ratio__label > *:not(.ratio__number) {
+  font-weight: 100;
+}
+
+.ratio__label abbr {
+  padding-right: 0.5em;
+  text-decoration: none;
+}
