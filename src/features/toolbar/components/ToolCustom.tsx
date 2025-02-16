@@ -1,10 +1,10 @@
-import { forwardRef } from 'react'
 import { useGridStatus } from 'features/status'
 import { ToggleButton } from 'features/button'
 
+import type { FC } from 'react'
 import type { ToolProps } from '../types'
 
-export const ToolCustom = forwardRef<HTMLButtonElement, ToolProps>(({ index, handleKeyDown }, ref): JSX.Element => {
+export const ToolCustom: FC<ToolProps> = ({ index, handleKeyDown, ref }) => {
   const { isCustomMode, toggleCustomMode } = useGridStatus()
 
   return (
@@ -18,4 +18,4 @@ export const ToolCustom = forwardRef<HTMLButtonElement, ToolProps>(({ index, han
       Custom
     </ToggleButton>
   )
-})
+}

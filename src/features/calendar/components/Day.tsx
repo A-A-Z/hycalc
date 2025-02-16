@@ -1,4 +1,4 @@
-import { useState, useId, forwardRef } from 'react'
+import { useState, useId } from 'react'
 import clsx from 'clsx'
 import { format, isToday, isPast, DATE_FORMATS } from 'lib/date'
 
@@ -16,7 +16,7 @@ import {
 } from '../constants'
 import '../assets/day.css'
 
-import type { ReactNode, KeyboardEventHandler, MouseEventHandler } from 'react'
+import type { FC, Ref, ReactNode, KeyboardEventHandler, MouseEventHandler } from 'react'
 import type { DayRefFnc } from '../types'
 
 interface DayWrapperProps {
@@ -44,17 +44,19 @@ interface DayProps {
   isTabbed: boolean
   isOffMonth: boolean
   isDisabled: boolean
-  handKeyDown: DayRefFnc
+  handKeyDown: DayRefFnc,
+  ref?: Ref<HTMLButtonElement>
 }
 
-const Day = forwardRef<HTMLButtonElement, DayProps>(({
+export const Day: FC<DayProps> = ({
   dayIndex,
   date,
   isTabbed,
   isOffMonth,
   isDisabled,
-  handKeyDown
-}, ref) => {
+  handKeyDown,
+  ref
+}) => {
   const dayOfTheMonth = parseInt(format(date, DATE_FORMATS.recordDayOfMonth))
   const [isClicked, setIsClicked] = useState(false)
   const { setDateRecord, dateStatus, dateStatusNormal, isLoaded } = useDateRecords(dayOfTheMonth)
@@ -160,9 +162,5 @@ const Day = forwardRef<HTMLButtonElement, DayProps>(({
       </button>
     </DayWrapper>
   )
-})
-
-Day.displayName = 'Day'
-
-export { Day }
+}
 
