@@ -24,7 +24,7 @@ import { Title } from 'features/title'
 import { Toolbar } from 'features/toolbar'
 import { ConfigProvider } from 'features/config'
 import { DateRecordsProvider } from 'features/records'
-import { GridStatusProvider } from 'features/status'
+import { StatusProvider } from 'features/status'
 
 // import themes and global styles and vars
 import 'global/assets/reset.css'
@@ -42,7 +42,7 @@ function App() {
   }, [])
 
   return (
-    <GridStatusProvider gridId={gridId} dateCheck={dateCheck}>
+    <StatusProvider gridId={gridId} dateCheck={dateCheck}>
       <ConfigProvider>
         <DateRecordsProvider>
           <div onMouseEnter={onEnterPage}>
@@ -54,7 +54,7 @@ function App() {
           </div>
         </DateRecordsProvider>
       </ConfigProvider>
-    </GridStatusProvider>
+    </StatusProvider>
   )
 }
 

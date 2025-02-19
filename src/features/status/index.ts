@@ -1,2 +1,2 @@
-export { GridStatusProvider } from './context/GridStatusProvider'
-export { useGridStatus } from './hooks/useGridStatus'
+export { StatusProvider } from './context/StatusProvider'
+export { StatusContext } from './context/StatusContext'

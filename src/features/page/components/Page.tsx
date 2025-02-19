@@ -1,6 +1,6 @@
 import { useMemo, use } from 'react'
 import { ConfigContext } from 'features/config'
-import { useGridStatus } from 'features/status'
+import { StatusContext } from 'features/status'
 import { Header } from './Header'
 import { Footer } from './Footer'
 import '../assets/layout.css'
@@ -13,7 +13,7 @@ interface PageProps {
 }
 
 export const Page: FC<PageProps> = ({ children }) => {
-  const { isCustomMode } = useGridStatus()
+  const { isCustomMode } = use(StatusContext)
   const { config: { weekdays } } = use(ConfigContext)
   const columnCount = isCustomMode ? 7 : weekdays.length
   const inlineStyle = useMemo(() => ({

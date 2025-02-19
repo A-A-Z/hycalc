@@ -2,7 +2,7 @@ import { useMemo, useRef, useCallback, createRef, use } from 'react'
 
 import { format, startOfWeek, endOfMonth, addWeeks, DATE_FORMATS } from 'lib/date'
 import { ConfigContext } from 'features/config'
-import { useGridStatus } from 'features/status'
+import { StatusContext } from 'features/status'
 
 import { Week } from './Week'
 import { Headings } from './Headings'
@@ -20,7 +20,7 @@ export const Calendar: FC = () => {
     month,
     firstOfTheMonth,
     isCustomMode
-  } = useGridStatus()
+  } = use(StatusContext)
   const { config: { weekdays } } = use(ConfigContext)
   const columnCount = isCustomMode ? 7 : weekdays.length
 

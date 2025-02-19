@@ -1,6 +1,6 @@
-import { useMemo, useCallback } from 'react'
+import { useMemo, useCallback, use } from 'react'
 import { format, DATE_FORMATS } from 'lib/date'
-import { useGridStatus } from 'features/status'
+import { StatusContext } from 'features/status'
 import '../assets/month-spinbutton.css'
 
 import type { FC, KeyboardEventHandler } from 'react'
@@ -12,7 +12,7 @@ export const MonthSpinbutton: FC = () => {
     isReadOnly,
     navMonthForward,
     navMonthBack
-  } = useGridStatus()
+  } = use(StatusContext)
 
   const valueTxt = useMemo(
     () => format(firstOfTheMonth, DATE_FORMATS.calendarTitleMonth), 

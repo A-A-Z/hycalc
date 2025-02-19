@@ -1,6 +1,6 @@
-import { createContext, useMemo, useCallback, useState, useEffect } from 'react'
+import { createContext, useMemo, useCallback, useState, useEffect, use } from 'react'
 import { useDebounceCallback } from 'usehooks-ts'
-import { useGridStatus } from 'features/status'
+import { StatusContext } from 'features/status'
 import { isCurrentPlanEntry } from '../utils/isCurrentPlanEntry'
 
 import type { FC } from 'react'
@@ -23,7 +23,7 @@ export const DateRecordsContext = createContext<DateRecordsContextProps>({
 
 export const DateRecordsProvider: FC<DateRecordsProviderProps> = ({ children }) => {
   const BLANK_VALUE = '{}'
-  const { year, month } = useGridStatus()
+  const { year, month } = use(StatusContext)
 
   // create states
   const [records, setRecords] =  useState<string>(BLANK_VALUE)

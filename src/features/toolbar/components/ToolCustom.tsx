@@ -1,11 +1,12 @@
-import { useGridStatus } from 'features/status'
+import { use } from 'react'
+import { StatusContext } from 'features/status'
 import { ToggleButton } from 'features/button'
 
 import type { FC } from 'react'
 import type { ToolProps } from '../types'
 
 export const ToolCustom: FC<ToolProps> = ({ index, handleKeyDown, ref }) => {
-  const { isCustomMode, toggleCustomMode } = useGridStatus()
+  const { isCustomMode, toggleCustomMode } = use(StatusContext)
 
   return (
     <ToggleButton

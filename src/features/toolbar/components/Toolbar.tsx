@@ -1,5 +1,5 @@
-import { useRef, useCallback } from 'react'
-import { useGridStatus } from 'features/status'
+import { useRef, useCallback, use } from 'react'
+import { StatusContext } from 'features/status'
 import { ToolCustom } from './ToolCustom'
 import { ToolPlanMode } from './ToolPlanMode'
 import '../assets/toolbar.css'
@@ -11,7 +11,7 @@ import type { HandleKeyDownFn } from '../types'
 
 export const Toolbar: FC = () => {
   const toolRefs = useRef<(HTMLButtonElement | null)[]>([])
-  const { gridId } = useGridStatus()
+  const { gridId } = use(StatusContext)
 
   const handleBtnArrowKey: HandleKeyDownFn = useCallback((key, index) => {
     switch (key) {

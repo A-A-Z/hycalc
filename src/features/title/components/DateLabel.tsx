@@ -1,6 +1,7 @@
+import { use } from 'react'
 import clsx from 'clsx'
 import { format, addMonths, DATE_FORMATS } from 'lib/date'
-import { useGridStatus } from 'features/status'
+import { StatusContext } from 'features/status'
 
 import type { ChangeDirection } from 'global/types'
 
@@ -11,7 +12,7 @@ export const DateLabel: FC = () => {
     gridId,
     firstOfTheMonth,
     direcction,
-  } = useGridStatus()
+  } = use(StatusContext)
   const DirectionMap: Record<ChangeDirection, number> = {
     back: 1,
     forward: -1,

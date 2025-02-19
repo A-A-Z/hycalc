@@ -1,9 +1,9 @@
-import { useState, useId } from 'react'
+import { useState, useId, use } from 'react'
 import clsx from 'clsx'
 import { format, isToday, isPast, DATE_FORMATS } from 'lib/date'
 
 import { useDateRecords } from 'features/records'
-import { useGridStatus } from 'features/status'
+import { StatusContext } from 'features/status'
 import { DayLabel } from './DayLabel'
 import { DayPlan } from './DayPlan'
 import { Status } from './Status'
@@ -60,7 +60,7 @@ export const Day: FC<DayProps> = ({
   const dayOfTheMonth = parseInt(format(date, DATE_FORMATS.recordDayOfMonth))
   const [isClicked, setIsClicked] = useState(false)
   const { setDateRecord, dateStatus, dateStatusNormal, isLoaded } = useDateRecords(dayOfTheMonth)
-  const { isReadOnly, isPlanMode } = useGridStatus()
+  const { isReadOnly, isPlanMode } = use(StatusContext)
   const dateId = useId()
   const statusId = dateId + '-status'
   const planId = date + '-plan'
