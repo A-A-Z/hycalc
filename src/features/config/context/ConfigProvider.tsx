@@ -40,5 +40,5 @@ export const ConfigProvider: FC<ConfigProviderProps> = ({ children }) => {
     setConfig
   }), [configState, setConfig])
 
-  return <ConfigContext.Provider value={value}>{children}</ConfigContext.Provider>
+  return <ConfigContext value={value}>{children}</ConfigContext>
 }
