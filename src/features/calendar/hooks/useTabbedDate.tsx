@@ -1,11 +1,11 @@
-import { useMemo } from 'react'
+import { useMemo, use } from 'react'
 import {
   format,
   isOffMonth,
   getDay,
   addDays
 } from 'lib/date'
-import { useConfig } from 'features/config'
+import { ConfigContext } from 'features/config'
 
 const getFirstVisibleDayOfMonth = (date: Date, weekdays: number[]): Date => {
   let firstDay = date
@@ -18,7 +18,7 @@ const getFirstVisibleDayOfMonth = (date: Date, weekdays: number[]): Date => {
 }
 
 export const useTabbedDate = (month: number, year: number): Date => {
-  const { config: { weekdays } } = useConfig()
+  const { config: { weekdays } } = use(ConfigContext)
 
   const value = useMemo(() => {
     const today = new Date()

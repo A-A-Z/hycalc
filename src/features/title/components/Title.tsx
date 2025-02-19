@@ -1,16 +1,18 @@
-import { useEffect } from 'react'
+import { useEffect, use } from 'react'
 import { format, DATE_FORMATS } from 'lib/date'
-import { useDateRecords } from 'features/records'
-import { useGridStatus } from 'features/status'
+import { DateRecordsContext } from 'features/records'
+import { StatusContext } from 'features/status'
 import { MonthSpinbutton } from './MonthSpinbutton'
 import { DateLabel } from './DateLabel'
 import { Ratio } from './Ratio'
 import '../assets/title.css'
 
-export const Title = (): JSX.Element => {
+import type { FC } from 'react'
+
+export const Title: FC = () => {
   // Get ratio (day of the week param is not important)
-  const { ratio, estRatio, hasPlans } = useDateRecords(1)
-  const { firstOfTheMonth, isPlanMode } = useGridStatus()
+  const { ratio, estRatio, hasPlans } = use(DateRecordsContext)
+  const { firstOfTheMonth, isPlanMode } = use(StatusContext)
 
   useEffect(() => {
     // Update document title with current maonth and ratio

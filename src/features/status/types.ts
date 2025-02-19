@@ -3,7 +3,7 @@ import type { ChangeDirection } from 'global/types'
 
 export type ToggleStatusFn = (isOn?: boolean) => void
 
-export interface GridStatusContextValues {
+export interface StatusContextValues {
   gridId: string
   month: number
   year: number
@@ -21,7 +21,7 @@ export interface GridStatusContextValues {
   togglePlanMode: ToggleStatusFn
 }
 
-export interface GridStatusProviderProps {
+export interface StatusProviderProps {
   gridId: string
   dateCheck: string
   children: ReactNode

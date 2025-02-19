@@ -1,7 +1,7 @@
-import { useCallback } from 'react'
+import { useCallback, use } from 'react'
 import { getWeekdayIndex } from 'lib/date'
-import { useGridStatus } from 'features/status'
-import { useConfig } from 'features/config'
+import { StatusContext } from 'features/status'
+import { ConfigContext } from 'features/config'
 
 type IsActiveWeekdayFn = (day: Date) => boolean
 
@@ -11,13 +11,13 @@ interface useActiveWeekdaysValues {
 }
 
 export const useActiveWeekdays = (): useActiveWeekdaysValues => {
-  const { isCustomMode } = useGridStatus()
-  const { config: { weekdays } } = useConfig()
+  const { isCustomMode } = use(StatusContext)
+  const { config: { weekdays } } = use(ConfigContext)
 
   const isActiveWeekday: IsActiveWeekdayFn = useCallback(day => {
     const weekdayNumber = getWeekdayIndex(day)
     return weekdays.some(day => day === weekdayNumber)
-  }, [isCustomMode, weekdays])
+  }, [weekdays])
 
   return {
     isCustomMode,

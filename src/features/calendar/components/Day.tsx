@@ -1,9 +1,9 @@
-import { useState, useId, forwardRef } from 'react'
+import { useState, useId, use } from 'react'
 import clsx from 'clsx'
 import { format, isToday, isPast, DATE_FORMATS } from 'lib/date'
 
 import { useDateRecords } from 'features/records'
-import { useGridStatus } from 'features/status'
+import { StatusContext } from 'features/status'
 import { DayLabel } from './DayLabel'
 import { DayPlan } from './DayPlan'
 import { Status } from './Status'
@@ -16,7 +16,7 @@ import {
 } from '../constants'
 import '../assets/day.css'
 
-import type { ReactNode, KeyboardEventHandler, MouseEventHandler } from 'react'
+import type { FC, Ref, ReactNode, KeyboardEventHandler, MouseEventHandler } from 'react'
 import type { DayRefFnc } from '../types'
 
 interface DayWrapperProps {
@@ -26,7 +26,7 @@ interface DayWrapperProps {
   children: ReactNode
 }
 
-const DayWrapper = ({ isOffMonth, isDayToday, dayIndex, children }: DayWrapperProps): JSX.Element => (
+const DayWrapper: FC<DayWrapperProps> = ({ isOffMonth, isDayToday, dayIndex, children }) => (
   <div
     className={clsx(
       'day',
@@ -44,21 +44,23 @@ interface DayProps {
   isTabbed: boolean
   isOffMonth: boolean
   isDisabled: boolean
-  handKeyDown: DayRefFnc
+  handKeyDown: DayRefFnc,
+  ref?: Ref<HTMLButtonElement>
 }
 
-const Day = forwardRef<HTMLButtonElement, DayProps>(({
+export const Day: FC<DayProps> = ({
   dayIndex,
   date,
   isTabbed,
   isOffMonth,
   isDisabled,
-  handKeyDown
-}, ref) => {
+  handKeyDown,
+  ref
+}) => {
   const dayOfTheMonth = parseInt(format(date, DATE_FORMATS.recordDayOfMonth))
   const [isClicked, setIsClicked] = useState(false)
   const { setDateRecord, dateStatus, dateStatusNormal, isLoaded } = useDateRecords(dayOfTheMonth)
-  const { isReadOnly, isPlanMode } = useGridStatus()
+  const { isReadOnly, isPlanMode } = use(StatusContext)
   const dateId = useId()
   const statusId = dateId + '-status'
   const planId = date + '-plan'
@@ -160,9 +162,5 @@ const Day = forwardRef<HTMLButtonElement, DayProps>(({
       </button>
     </DayWrapper>
   )
-})
-
-Day.displayName = 'Day'
-
-export { Day }
+}
 

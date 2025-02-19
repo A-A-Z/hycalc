@@ -1,6 +1,6 @@
 import { FaBuilding, FaHouse } from 'react-icons/fa6'
 
-import type { FC } from 'react'
+import type { FC, ReactNode } from 'react'
 import type { DateRecordStatus } from 'features/records'
 
 interface StatusIconProps {
@@ -8,7 +8,7 @@ interface StatusIconProps {
 }
 
 export const StatusIcon: FC<StatusIconProps> = ({ status }) => {
-  const icons: Record<DateRecordStatus, JSX.Element> = {
+  const icons: Record<DateRecordStatus, ReactNode> = {
     none: <span />,
     remote: <FaHouse aria-hidden={true} />,
     onsite: <FaBuilding aria-hidden={true} />,

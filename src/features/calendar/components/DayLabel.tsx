@@ -1,11 +1,13 @@
 import { format, dayOfMonthSplit, DATE_FORMATS } from 'lib/date'
 
+import type { FC } from 'react'
+
 interface DaylabelProps {
   id: string
   date: Date
 }
 
-export const DayLabel = ({ id, date }: DaylabelProps): JSX.Element => (
+export const DayLabel: FC<DaylabelProps> = ({ id, date }) => (
   <time
     id={id}
     dateTime={format(date, DATE_FORMATS.dateTimeAttr)}

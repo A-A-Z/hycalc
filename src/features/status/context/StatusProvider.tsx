@@ -1,39 +1,21 @@
-import { createContext, useMemo, useState, useCallback } from 'react'
+import { useMemo, useState, useCallback } from 'react'
 import { getYearAndMonth } from 'lib/date'
+import { StatusContext } from './StatusContext'
+import { StatusesInit } from '../constaints'
 
 import type { FC } from 'react'
 import type { ChangeDirection } from 'global/types'
 import type {
-  GridStatusContextValues,
-  GridStatusProviderProps,
+  StatusContextValues,
+  StatusProviderProps,
   ToggleStatusFn
 } from '../types'
 
-const gridStatusesInit: GridStatusContextValues = {
-  gridId: 'grid-id',
-  month: 1,
-  year: 1970,
-  monthOffset: 0,
-  firstOfTheMonth: new Date(1970, 0, 1),
-  direcction: 'none',
-  isReadOnly: false,
-  isCustomMode: false,
-  isPlanMode: false,
-  dateCheck: '',
-  setMonthOffset: () => {},
-  navMonthBack: () => {},
-  navMonthForward: () => {},
-  toggleCustomMode: () => null,
-  togglePlanMode: () => null
-}
-
-export const GridStatusContext = createContext<GridStatusContextValues>(gridStatusesInit)
-
-export const GridStatusProvider: FC<GridStatusProviderProps> = ({ gridId, dateCheck, children }) => {
-  const [monthOffset, setMonthOffset] = useState(gridStatusesInit.monthOffset)
-  const [isReadOnly, setIsReadOnly] = useState(gridStatusesInit.isReadOnly)
-  const [isCustomMode, setIsCustomMode] = useState(gridStatusesInit.isCustomMode)
-  const [isPlanMode, setIsPlanMode] = useState(gridStatusesInit.isPlanMode)
+export const StatusProvider: FC<StatusProviderProps> = ({ gridId, dateCheck, children }) => {
+  const [monthOffset, setMonthOffset] = useState(StatusesInit.monthOffset)
+  const [isReadOnly, setIsReadOnly] = useState(StatusesInit.isReadOnly)
+  const [isCustomMode, setIsCustomMode] = useState(StatusesInit.isCustomMode)
+  const [isPlanMode, setIsPlanMode] = useState(StatusesInit.isPlanMode)
   const [direcction, setDirection] = useState<ChangeDirection>('none')
 
   // get current year and month
@@ -75,7 +57,7 @@ export const GridStatusProvider: FC<GridStatusProviderProps> = ({ gridId, dateCh
     setDirection('forward')
   }, [])
 
-  const value: GridStatusContextValues = useMemo(() => ({
+  const value: StatusContextValues = useMemo(() => ({
     gridId,
     year,
     month,
@@ -109,5 +91,5 @@ export const GridStatusProvider: FC<GridStatusProviderProps> = ({ gridId, dateCh
     setMonthOffset
   ])
 
-  return <GridStatusContext.Provider value={value}>{children}</GridStatusContext.Provider>
+  return <StatusContext value={value}>{children}</StatusContext>
 }

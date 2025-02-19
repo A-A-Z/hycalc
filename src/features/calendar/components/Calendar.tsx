@@ -1,17 +1,18 @@
-import { useMemo, useRef, useCallback, createRef } from 'react'
+import { useMemo, useRef, useCallback, createRef, use } from 'react'
 
 import { format, startOfWeek, endOfMonth, addWeeks, DATE_FORMATS } from 'lib/date'
-import { useConfig } from 'features/config'
-import { useGridStatus } from 'features/status'
+import { ConfigContext } from 'features/config'
+import { StatusContext } from 'features/status'
 
 import { Week } from './Week'
 import { Headings } from './Headings'
 import { handleGridNav } from '../utils/handleGridNav'
 import '../assets/calendar.css'
 
+import type { FC } from 'react'
 import type { WeekRef, DayRef, WeekRefFnc } from '../types'
 
-export const Calendar = (): JSX.Element => {
+export const Calendar: FC = () => {
   const dayRefs = useRef<WeekRef[]>([])
   const {
     gridId,
@@ -19,8 +20,8 @@ export const Calendar = (): JSX.Element => {
     month,
     firstOfTheMonth,
     isCustomMode
-  } = useGridStatus()
-  const { config: { weekdays } } = useConfig()
+  } = use(StatusContext)
+  const { config: { weekdays } } = use(ConfigContext)
   const columnCount = isCustomMode ? 7 : weekdays.length
 
   const weeks = useMemo(() => {

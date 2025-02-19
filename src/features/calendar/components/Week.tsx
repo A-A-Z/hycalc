@@ -14,6 +14,7 @@ import { useTabbedDate } from '../hooks/useTabbedDate'
 import { Day } from './Day'
 import '../assets/week.css'
 
+import type { FC } from 'react'
 import type { WeekRef, WeekRefFnc, DayRefFnc } from '../types'
 
 interface WeekProps {
@@ -25,14 +26,14 @@ interface WeekProps {
   handleKeyDown: WeekRefFnc
 }
 
-export const Week = ({
+export const Week: FC<WeekProps> = ({
   weekIndex,
   date,
   activeMonth,
   activeYear,
   weekdayRefs,
   handleKeyDown
-}: WeekProps): JSX.Element | null => {
+}) => {
   const isCurrentWeek = isThisWeek(date)
   const { isCustomMode, isActiveWeekday } = useActiveWeekdays()
   const tabbedDay = useTabbedDate(activeMonth, activeYear)
