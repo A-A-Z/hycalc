@@ -1,6 +1,6 @@
 import { useEffect, use } from 'react'
 import { format, DATE_FORMATS } from 'lib/date'
-import { useDateRecords } from 'features/records'
+import { DateRecordsContext } from 'features/records'
 import { StatusContext } from 'features/status'
 import { MonthSpinbutton } from './MonthSpinbutton'
 import { DateLabel } from './DateLabel'
@@ -11,7 +11,7 @@ import type { FC } from 'react'
 
 export const Title: FC = () => {
   // Get ratio (day of the week param is not important)
-  const { ratio, estRatio, hasPlans } = useDateRecords(1)
+  const { ratio, estRatio, hasPlans } = use(DateRecordsContext)
   const { firstOfTheMonth, isPlanMode } = use(StatusContext)
 
   useEffect(() => {

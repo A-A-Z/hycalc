@@ -1,11 +1,11 @@
-import { useContext } from 'react'
+import { use } from 'react'
 
-import { DateRecordsContext } from '../context/RecordsContext'
+import { DateRecordsContext } from '../context/DateRecordsContext'
 
 import type { UseDateRecordsReturn } from '../types'
 
 export const useDateRecords = (dayOfTheMonth: number): UseDateRecordsReturn => {
-  const context = useContext(DateRecordsContext)
+  const context = use(DateRecordsContext)
   if (context === undefined) {
     throw new Error('useUser must be used within a UserProvider')
   }

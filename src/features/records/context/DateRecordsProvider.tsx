@@ -1,7 +1,8 @@
-import { createContext, useMemo, useCallback, useState, useEffect, use } from 'react'
+import { useMemo, useCallback, useState, useEffect, use } from 'react'
 import { useDebounceCallback } from 'usehooks-ts'
 import { StatusContext } from 'features/status'
 import { isCurrentPlanEntry } from '../utils/isCurrentPlanEntry'
+import { DateRecordsContext } from './DateRecordsContext'
 
 import type { FC } from 'react'
 import type {
@@ -11,15 +12,6 @@ import type {
   DateRecordsContextProps,
   DateRecordsProviderProps
 } from '../types'
-
-export const DateRecordsContext = createContext<DateRecordsContextProps>({
-  records: {},
-  setDateRecord: () => null,
-  ratio: 0,
-  estRatio: 0,
-  hasPlans: false,
-  isLoaded: false
-})
 
 export const DateRecordsProvider: FC<DateRecordsProviderProps> = ({ children }) => {
   const BLANK_VALUE = '{}'
@@ -134,5 +126,5 @@ export const DateRecordsProvider: FC<DateRecordsProviderProps> = ({ children }) 
     setDateRecord
   }), [records, isLoaded, ratio, estRatio, hasPlans, setDateRecord])
 
-  return <DateRecordsContext.Provider value={value}>{children}</DateRecordsContext.Provider>
+  return <DateRecordsContext value={value}>{children}</DateRecordsContext>
 }
