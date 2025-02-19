@@ -1,6 +1,6 @@
-import { memo, useCallback, useRef } from 'react'
+import { memo, useCallback, useRef, use } from 'react'
 import { format, startOfWeek, addDays, DATE_FORMATS } from 'lib/date'
-import { useConfig } from 'features/config'
+import { ConfigContext } from 'features/config'
 import { ToggleButton } from 'features/button'
 import { useActiveWeekdays } from '../hooks/useActiveWeekdays'
 import '../assets/weekdayHeading.css'
@@ -21,7 +21,7 @@ const HeadingsSrc: FC = () => {
   const btnRefs = useRef<(HTMLButtonElement | null)[]>([])
   const start = startOfWeek(new Date)
   const days = Array.from({ length: 7 }).map((_, index) => addDays(start, index))
-  const { config: { weekdays }, setConfig } = useConfig()
+  const { config: { weekdays }, setConfig } = use(ConfigContext)
 
   const { isCustomMode, isActiveWeekday } = useActiveWeekdays()
 
