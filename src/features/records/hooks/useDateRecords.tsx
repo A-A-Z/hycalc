@@ -6,6 +6,7 @@ import type { UseDateRecordsReturn } from '../types'
 
 export const useDateRecords = (dayOfTheMonth: number): UseDateRecordsReturn => {
   const context = use(DateRecordsContext)
+
   if (context === undefined) {
     throw new Error('useUser must be used within a UserProvider')
   }
