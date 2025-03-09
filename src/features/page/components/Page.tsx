@@ -1,6 +1,7 @@
 import { useMemo, use } from 'react'
 import { ConfigContext } from 'features/config'
 import { StatusContext } from 'features/status'
+import { Tooltip } from 'features/tooltip'
 import { Header } from './Header'
 import { Footer } from './Footer'
 import '../assets/layout.css'
@@ -25,7 +26,7 @@ export const Page: FC<PageProps> = ({ children }) => {
       <Header />
         <main className="page__body">{children}</main>
       <Footer />
+      <Tooltip />
     </div>
   )
 }
-

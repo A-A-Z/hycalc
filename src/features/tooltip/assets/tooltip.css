@@ -1,0 +1,19 @@
+.tooltip {
+  background-color: var(--colour-status-onsite);
+  border-radius: 23px;
+  /* box-shadow: 5px 5px 3px var(--colour-status-remote); */
+  /* box-shadow: 6px 6px 2px color-mix(in srgb, var(--colour-status-remote) 30%, transparent); */
+  box-shadow: 6px 6px 2px rgba(0 0 0 / 0.3);
+  color: #000;
+  display: flex;
+  flex-direction: column;
+  gap: 0.5rem;
+  inset: auto 25px 25px auto;
+  padding: 1.3rem;
+  position: fixed;
+}
+
+.tooltip__footer {
+  display: flex;
+  gap: 1rem;
+}

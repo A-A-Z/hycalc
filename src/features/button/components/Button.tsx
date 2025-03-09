@@ -5,8 +5,13 @@ import type { FC, Ref, ButtonHTMLAttributes } from 'react'
 
 export interface ButtonProps extends ButtonHTMLAttributes<HTMLButtonElement> {
   ref?: Ref<HTMLButtonElement>
+  variant?: 'default' | 'light'
 }
 
-export const Button: FC<ButtonProps> = ({ children, className, ref, ...props }) => (
-  <button ref={ref} className={clsx('btn', className)} type="button" {...props}>{children}</button>
+const variantMap = {
+  light: 'btn--colour-light'
+}
+
+export const Button: FC<ButtonProps> = ({ children, className, ref, variant = 'default', ...props }) => (
+  <button ref={ref} className={clsx('btn', variant !== 'default' && variantMap[variant], className)} type="button" {...props}>{children}</button>
 )

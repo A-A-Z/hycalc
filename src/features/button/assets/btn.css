@@ -29,6 +29,10 @@
   --bg-colour: var(--colour-status-onsite);
 }
 
+.btn--colour-light {
+  --bg-colour: var(--colour-white);
+}
+
 .btn svg {
   font-size: 1rem;
 }
