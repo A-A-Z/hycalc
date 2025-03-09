@@ -2,6 +2,8 @@ import { useRef, useCallback, use } from 'react'
 import { StatusContext } from 'features/status'
 import { ToolCustom } from './ToolCustom'
 import { ToolPlanMode } from './ToolPlanMode'
+import { ToolExport } from './ToolExport'
+import { ToolImport } from './ToolImport'
 import '../assets/toolbar.css'
 
 import type { FC } from 'react'
@@ -47,6 +49,12 @@ export const Toolbar: FC = () => {
       </li>
       <li className="toolbar__tool">
         <ToolCustom ref={el => { toolRefs.current[1] = el }} handleKeyDown={handleBtnArrowKey} index={1} />
+      </li>
+      <li className="toolbar__tool">
+        <ToolExport ref={el => { toolRefs.current[2] = el }} handleKeyDown={handleBtnArrowKey} index={2} />
+      </li>
+      <li className="toolbar__tool">
+        <ToolImport ref={el => { toolRefs.current[3] = el }} handleKeyDown={handleBtnArrowKey} index={3} />
       </li>
     </ul>
   )
