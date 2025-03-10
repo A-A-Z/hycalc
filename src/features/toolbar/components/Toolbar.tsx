@@ -7,7 +7,7 @@ import { ToolImport } from './ToolImport'
 import '../assets/toolbar.css'
 
 import type { FC } from 'react'
-import type { HandleKeyDownFn } from '../types'
+import type { ToolProps, HandleKeyDownFn } from '../types'
 
 // Ref: https://www.w3.org/WAI/ARIA/apg/patterns/toolbar/examples/toolbar/
 
@@ -36,6 +36,13 @@ export const Toolbar: FC = () => {
     }
   }, [])
 
+  const tools: Array<FC<ToolProps>> = [
+    ToolPlanMode,
+    ToolCustom,
+    ToolExport,
+    ToolImport
+  ]
+
   return (
     <ul
       role="toolbar"
@@ -44,18 +51,15 @@ export const Toolbar: FC = () => {
       aria-controls={gridId}
       aria-orientation="horizontal"
     >
-      <li className="toolbar__tool">
-        <ToolPlanMode ref={el => { toolRefs.current[0] = el }} handleKeyDown={handleBtnArrowKey} index={0} />
-      </li>
-      <li className="toolbar__tool">
-        <ToolCustom ref={el => { toolRefs.current[1] = el }} handleKeyDown={handleBtnArrowKey} index={1} />
-      </li>
-      <li className="toolbar__tool">
-        <ToolExport ref={el => { toolRefs.current[2] = el }} handleKeyDown={handleBtnArrowKey} index={2} />
-      </li>
-      <li className="toolbar__tool">
-        <ToolImport ref={el => { toolRefs.current[3] = el }} handleKeyDown={handleBtnArrowKey} index={3} />
-      </li>
+      {tools.map((Tool, index) => (
+        <li key={index} className="toolbar__tool">
+          <Tool
+            ref={el => { toolRefs.current[index] = el }}
+            handleKeyDown={handleBtnArrowKey}
+            index={index}
+          />
+        </li>
+      ))}
     </ul>
   )
 }

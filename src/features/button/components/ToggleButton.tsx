@@ -1,12 +1,11 @@
 import { Button } from './Button'
 import { Toggle } from './Toggle'
 
-import type { FC, Ref } from 'react'
-import type { ButtonProps } from './Button'
+import type { FC } from 'react'
+import type { ButtonProps } from '../types'
 
 interface ToggleButtonProps extends ButtonProps {
   isActive: boolean
-  ref?: Ref<HTMLButtonElement>
 }
 
 export const ToggleButton: FC<ToggleButtonProps> = (({ isActive, children, ref, ...props }) => (
