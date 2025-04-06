@@ -2,7 +2,7 @@
 import { format } from 'lib/date'
 // import { StatusContext } from 'features/status'
 import { Button } from 'features/button'
-// import { useDateRecords } from 'features/records'
+import { getAllRecords } from 'features/records'
 
 import type { FC } from 'react'
 import type { ToolProps } from '../types'
@@ -11,9 +11,10 @@ export const ToolExport: FC<ToolProps> = ({ index, handleKeyDown, ref }) => {
   // const { } = useDateRecords(2)
 
   const downloadJSON = () => {
-    const data = localStorage.getItem('2025-2')
+    const data = getAllRecords()
+
     // Convert the data object to a JSON string
-    const jsonString = JSON.stringify(data, null, 2)
+    const jsonString = JSON.stringify(data)
     // Create a blob with the JSON string and the appropriate MIME type
     const blob = new Blob([jsonString], { type: 'application/json' })
     // Create an object URL for the blob
