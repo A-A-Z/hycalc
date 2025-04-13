@@ -1,9 +1,14 @@
-import type { Ref, ButtonHTMLAttributes, LabelHTMLAttributes } from 'react'
+import type {
+  Ref,
+  ButtonHTMLAttributes,
+  InputHTMLAttributes
+} from 'react'
 
 export interface ButtonProps extends ButtonHTMLAttributes<HTMLButtonElement> {
   ref?: Ref<HTMLButtonElement>
 }
 
-export interface ButtonFileProps extends LabelHTMLAttributes<HTMLLabelElement> {
+export interface ButtonFileProps extends InputHTMLAttributes<HTMLInputElement> {
   ref?: Ref<HTMLButtonElement>
+  isLoading?: boolean
 }

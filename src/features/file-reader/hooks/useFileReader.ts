@@ -1,15 +1,6 @@
 import { useState, useEffect, useCallback } from 'react'
 import type { ChangeEventHandler } from 'react'
-
-interface UseFileReaderProps {
-  onFileLoad: (data: string) => void
-}
-
-interface UseFileReaderReturn {
-  isLoading: boolean
-  isError: boolean
-  onChange: ChangeEventHandler<HTMLInputElement>
-}
+import type { UseFileReaderProps, UseFileReaderReturn} from  '../types'
 
 export const useFileReader = ({ onFileLoad }: UseFileReaderProps): UseFileReaderReturn => {
   const [file, setFile] = useState<Blob | null>(null)

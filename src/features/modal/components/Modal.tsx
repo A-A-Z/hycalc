@@ -1,19 +1,22 @@
+import { useId } from 'react'
 import '../assets/modal.css'
 import type { FC, Ref, ReactNode } from 'react'
 
 interface ModalProps {
   ref?: Ref<HTMLDivElement>
-  id: string
+  id?: string
   children: ReactNode
 }
 
 export const Modal: FC<ModalProps> = ({ id, children, ref }) => {
-  const titleId = id + '-title'
-  console.log('ref', ref)
+  const defaultId = useId()
+  const modalId = id ?? defaultId
+  const titleId = modalId + '-title'
+
   return (
     <div
       ref={ref}
-      id={id}
+      id={modalId}
       className="popover"
       popover="manual"
       role="dialog"
