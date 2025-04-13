@@ -1,9 +1,6 @@
-export const getAllRecords = () => {
-  // const recordsJson = localStorage.getItem(recordKey)
-  // return localStorage.map(record => {
-  //   console.log(record)
-  //   return record
-  // })
+import type { DateRecords } from '../types'
+
+export const getAllRecords = (): DateRecords[] => {
   return Object.entries(localStorage)
     .filter(([, value]) => value !== '{}')
 }

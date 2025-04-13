@@ -5,10 +5,11 @@ import type { FC, Ref, ReactNode } from 'react'
 interface ModalProps {
   ref?: Ref<HTMLDivElement>
   id?: string
+  title: string
   children: ReactNode
 }
 
-export const Modal: FC<ModalProps> = ({ id, children, ref }) => {
+export const Modal: FC<ModalProps> = ({ id, title, children, ref }) => {
   const defaultId = useId()
   const modalId = id ?? defaultId
   const titleId = modalId + '-title'
@@ -17,14 +18,14 @@ export const Modal: FC<ModalProps> = ({ id, children, ref }) => {
     <div
       ref={ref}
       id={modalId}
-      className="popover"
+      className="modal"
       popover="manual"
       role="dialog"
       aria-labelledby={titleId}
       aria-modal={true}
     >
-      <h2 id={titleId}>Hello</h2>
-      <div>
+      <h2 id={titleId} className="modal__title">{title}</h2>
+      <div className="modal__body">
        {children} 
       </div>
     </div>
