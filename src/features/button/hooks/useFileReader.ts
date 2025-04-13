@@ -36,7 +36,7 @@ export const useFileReader = ({ onFileLoad }: UseFileReaderProps): UseFileReader
 
     reader.onload = event => {
       if (typeof event.target?.result === 'string') {
-        onFileLoad(event.target?.result)
+        onFileLoad(event.target.result)
         return
       }
 

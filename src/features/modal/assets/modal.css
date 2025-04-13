@@ -1,0 +1,19 @@
+@keyframes zoom {
+  from { scale: 0.1; }
+  to { scale: 1; }
+}
+
+[popover] {
+  background-color: #f00;
+  border-radius: 14px;
+  padding: 1rem;
+  
+  &:popover-open {
+    animation-duration: 1.2s;
+    animation-name: zoom;
+  }
+}
+
+::backdrop {
+  background-color: rgb(0 0 0 / 0.5);
+}
