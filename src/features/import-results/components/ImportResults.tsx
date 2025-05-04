@@ -1,10 +1,12 @@
 // import { useState, useEffect } from 'react'
-import { useMemo } from 'react'
+import { useMemo, useState, useCallback } from 'react'
 
 import { Button } from 'features/button'
 import { getAllRecords, flattenRecords } from 'features/records'
+import { RadioField } from 'features/radio-field'
 
 import type { FC } from 'react'
+import type { Option } from 'features/radio-field'
 import type { ImportResultsProps } from '../types'
 
 // interface ImportCount {
@@ -13,14 +15,18 @@ import type { ImportResultsProps } from '../types'
 //   conflict: number
 // }
 
+// TODO: move
 interface ImportResult {
   new: number
   match: number
   conflict: number
   total: number
 }
+type MergeOption = 'merge' | 'overwrite' | 'keep' | 'flush'
 
 export const ImportResults: FC<ImportResultsProps> = ({ data }) => {
+  const [selectedMergeOption, setSelectedMergeOption] = useState<MergeOption | null>(null)
+
   const results: ImportResult = useMemo(() => {
     const currentData = flattenRecords(getAllRecords())
     const newData = flattenRecords(data)
@@ -57,8 +63,21 @@ export const ImportResults: FC<ImportResultsProps> = ({ data }) => {
     return resultCount
   }, [data])
 
+  const mergeOptions: Array<Option<MergeOption>> = [
+    { id: 'm1', label: 'Merge data', value: 'merge' },
+    { id: 'm2', label: 'Merge data, overwrite old enties', value: 'overwrite' },
+    { id: 'm3', label: 'Merge data, keep old enties', value: 'keep' },
+    { id: 'm4', label: 'Delete all old data, add new enties', value: 'flush' }
+  ]
+
+  // TODO: can't click on modal
+  const handleMergeOptionChagne = useCallback((value: MergeOption | null) => {
+    console.log('click')
+    setSelectedMergeOption(value)
+  }, [])
+
   return (
-    <div>
+    <form>
       <h3 id="grid-title">Imported entries</h3>
       <div role="grid" aria-labelledby="grid-title">
         <div role="row">
@@ -83,14 +102,18 @@ export const ImportResults: FC<ImportResultsProps> = ({ data }) => {
         </div>
       </div>
 
-      <ul>
-        <li><Button>Import enties</Button></li>
+      <RadioField<MergeOption>
+        label="Select merge method"
+        name="merge-method"
+        options={mergeOptions}
+        value={selectedMergeOption}
+        updateValue={handleMergeOptionChagne}
+      />
 
-        <li><Button>Overwrite old enties</Button></li>
-        <li><Button>Keep old enties</Button></li>
-        
-        <li><Button>Cancel</Button></li>
+      <ul>
+        <li><Button type="submit" onClick={() => { console.log('click') }}>Comfirm</Button></li>
+        <li><Button type="reset">Cancel</Button></li>
       </ul>
-    </div>
+    </form>
   )
 }
