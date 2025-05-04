@@ -18,6 +18,8 @@ export type DateRecords = Record<number, DateRecordType>
 
 export type DateRecordEntry = [string, DateRecordType]
 
+export type DateRecordEntryFlat = Record<string, DateRecordType>
+
 export interface DateRecordsContextProps {
   records: DateRecords
   setDateRecord: (dayOfTheMonth: number, status: DateRecordStatus) => void

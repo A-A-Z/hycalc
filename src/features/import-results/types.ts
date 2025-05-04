@@ -1,5 +1,5 @@
-import type { DateRecords } from 'features/records'
+import type { DateRecordEntry } from 'features/records'
 
 export interface ImportResultsProps {
-  data: DateRecords[]
+  data: DateRecordEntry[]
 }

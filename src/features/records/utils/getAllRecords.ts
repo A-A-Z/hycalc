@@ -1,6 +1,6 @@
-import type { DateRecords } from '../types'
+import type { DateRecordEntry } from '../types'
 
-export const getAllRecords = (): DateRecords[] => {
+export const getAllRecords = (): DateRecordEntry[] => {
   return Object.entries(localStorage)
     .filter(([, value]) => value !== '{}')
 }
