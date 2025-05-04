@@ -3,8 +3,9 @@
   to { scale: 1; }
 }
 
-[popover] {
+.modal {
   background-color: var(--modal-background);
+  border: 0;
   border-radius: 40px;
   box-shadow: 8px 8px 3px rgb(0 0 0 / 0.5);
   box-sizing: border-box;

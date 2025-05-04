@@ -5,12 +5,12 @@ import { ImportResults } from 'features/import-results'
 import { useFileReader } from 'features/file-reader'
 
 import type { FC } from 'react'
-import type { DateRecords } from 'features/records'
+import type { DateRecordEntry } from 'features/records'
 import type { ToolProps } from '../types'
 
 export const ToolImport: FC<ToolProps> = ({ index, handleKeyDown, ref, ...props }) => {
-  const modalRef = useRef<HTMLDivElement>(null)
-  const [data, setData] = useState<DateRecords[] | null>(null)
+  const modalRef = useRef<HTMLDialogElement>(null)
+  const [data, setData] = useState<DateRecordEntry[] | null>(null)
 
   const onFileLoad = useCallback((data: string) => {
     console.log('loaded', data, modalRef.current)
@@ -25,7 +25,8 @@ export const ToolImport: FC<ToolProps> = ({ index, handleKeyDown, ref, ...props 
       console.error(error)
     }
 
-    modalRef.current?.showPopover()
+    // modalRef.current?.showPopover()
+    modalRef.current?.showModal()
   }, [])
 
   const { isLoading, onChange } = useFileReader({ onFileLoad })
