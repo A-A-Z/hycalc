@@ -4,6 +4,7 @@ import { useMemo, useState, useCallback } from 'react'
 import { Button } from 'features/button'
 import { getAllRecords, flattenRecords } from 'features/records'
 import { RadioField } from 'features/radio-field'
+import { ActionList } from 'features/action-list'
 
 import type { FC } from 'react'
 import type { Option } from 'features/radio-field'
@@ -70,9 +71,7 @@ export const ImportResults: FC<ImportResultsProps> = ({ data }) => {
     { id: 'm4', label: 'Delete all old data, add new enties', value: 'flush' }
   ]
 
-  // TODO: can't click on modal
   const handleMergeOptionChagne = useCallback((value: MergeOption | null) => {
-    console.log('click')
     setSelectedMergeOption(value)
   }, [])
 
@@ -110,10 +109,10 @@ export const ImportResults: FC<ImportResultsProps> = ({ data }) => {
         updateValue={handleMergeOptionChagne}
       />
 
-      <ul>
-        <li><Button type="submit" onClick={() => { console.log('click') }}>Comfirm</Button></li>
-        <li><Button type="reset">Cancel</Button></li>
-      </ul>
+      <ActionList actions={[
+        { id: 'confirm', content: <Button type="submit">Comfirm</Button> },
+        { id: 'concel', content: <Button type="reset">Cancel</Button> }
+      ]} />
     </form>
   )
 }

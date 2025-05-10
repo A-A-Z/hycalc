@@ -17,7 +17,7 @@ export const RadioInput = <T extends OptionValue>({ id, label, name, value, isSe
       tabIndex={0}
     />
     <label htmlFor={id} className="radio__label">
-      <span className="radio__check" />
+      <span className="radio__check" role="presentation" />
       {label}
     </label>
   </li>
