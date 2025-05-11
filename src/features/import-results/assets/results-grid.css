@@ -1,12 +1,11 @@
 .results-grid {
-  --colour-new: #0f0;
+  --colour-new: #68eb82;
   --colour-match: #fff;
-  --colour-conflict: #f00;
+  --colour-conflict: #ff877a;
 
   display: flex;
   flex-wrap: wrap;
   gap: 4px;
-  /* grid-template-columns: 1fr 1fr; */
 }
 
 .results-grid__cell {

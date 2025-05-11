@@ -9,7 +9,7 @@ export const ResultsGrid: FC<ImportResult> = props => {
   console.log('test', RESULT_TYPES, props[RESULT_TYPES[0]])
   return (
     <>
-      <div className="results-grid">
+      <div className="results-grid" role="presentation">
         {RESULT_TYPES.map(resultType => (
           <ResultGroup
             key={resultType}

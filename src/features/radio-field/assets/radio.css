@@ -9,7 +9,7 @@
   color: var(--colour-black);
   display: flex;
   font-size: 0.9rem;
-  height: 2rem;
+  height: 1.7rem;
   transition: background-color 0.2s ease;
 
   &:focus-visible {
@@ -27,9 +27,9 @@
   align-items: center;
   display: flex;
   cursor: pointer;
-  height: 2rem;
+  height: 1.7rem;
   justify-content: flex-start;
-  padding-inline: 0.5rem 1rem;
+  padding-inline: 0.3rem 1rem;
   width: 100%;
 }
 

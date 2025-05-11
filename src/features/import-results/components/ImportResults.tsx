@@ -5,7 +5,9 @@ import { Button } from 'features/button'
 import { getAllRecords, flattenRecords } from 'features/records'
 import { RadioField } from 'features/radio-field'
 import { ActionList } from 'features/action-list'
+import { ResulstList } from './ResultsList'
 import { ResultsGrid } from './ResultsGrid'
+import '../assets/import-results.css'
 
 import type { FC } from 'react'
 import type { Option } from 'features/radio-field'
@@ -15,28 +17,13 @@ import type {
   MergeOption
 } from '../types'
 
-// interface ImportCount {
-//   new: number
-//   match: number
-//   conflict: number
-// }
-
-// TODO: move
-// interface ImportResult {
-//   new: number
-//   match: number
-//   conflict: number
-//   total: number
-// }
-// type MergeOption = 'merge' | 'overwrite' | 'keep' | 'flush'
-
 export const ImportResults: FC<ImportResultsProps> = ({ data }) => {
   const [selectedMergeOption, setSelectedMergeOption] = useState<MergeOption | null>(null)
 
   const results: ImportResult = useMemo(() => {
     const currentData = flattenRecords(getAllRecords())
     const newData = flattenRecords(data)
-    console.log('imports', { currentData, newData })
+    // console.log('imports', { currentData, newData })
 
     // run over all the new entries and check them
     const resultCount = Object.entries(newData).reduce((acc: ImportResult, [date, value]) => {
@@ -78,18 +65,25 @@ export const ImportResults: FC<ImportResultsProps> = ({ data }) => {
   }, [])
 
   return (
-    <form>
+    <form className="import-results">
       <h3 id="grid-title">Imported entries</h3>
-
-      <ResultsGrid {...results} />
       
+      <div className="import-results__columns">
+        <div>
+          <ResulstList {...results} />
+        </div>
+        <div>
+          <ResultsGrid {...results} />
+        </div>
+      </div>
+
       <RadioField<MergeOption>
-        label="Select merge method"
-        name="merge-method"
-        options={mergeOptions}
-        value={selectedMergeOption}
-        updateValue={handleMergeOptionChagne}
-      />
+            label="Select merge method"
+            name="merge-method"
+            options={mergeOptions}
+            value={selectedMergeOption}
+            updateValue={handleMergeOptionChagne}
+          />
 
       <ActionList actions={[
         { id: 'confirm', content: <Button type="submit">Comfirm</Button> },

@@ -1,0 +1,6 @@
+.import-results__columns {
+  display: grid;
+  gap: 3rem;
+  grid-template-columns: auto auto;
+  margin-block: 1rem;
+}
