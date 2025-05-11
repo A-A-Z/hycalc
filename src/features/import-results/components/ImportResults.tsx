@@ -44,8 +44,7 @@ export const ImportResults: FC<ImportResultsProps> = ({ data }) => {
       if (currentData[date] === undefined) {
         return {
           ...acc,
-          new: acc.new + 1,
-          total: acc.total + 1
+          new: acc.new + 1
         }
       }
 
@@ -53,18 +52,16 @@ export const ImportResults: FC<ImportResultsProps> = ({ data }) => {
       if (currentData[date] === value) {
         return {
           ...acc,
-          match: acc.match + 1,
-          total: acc.total + 1
+          match: acc.match + 1
         }
       }
 
       // conflict
       return {
         ...acc,
-        conflict: acc.conflict + 1,
-        total: acc.total + 1
+        conflict: acc.conflict + 1
       }
-    }, { new: 0, match: 0, conflict: 0, total: 0 } as ImportResult)
+    }, { new: 0, match: 0, conflict: 0 } as ImportResult)
 
     return resultCount
   }, [data])
@@ -83,7 +80,7 @@ export const ImportResults: FC<ImportResultsProps> = ({ data }) => {
   return (
     <form>
       <h3 id="grid-title">Imported entries</h3>
-      
+
       <ResultsGrid {...results} />
       
       <RadioField<MergeOption>

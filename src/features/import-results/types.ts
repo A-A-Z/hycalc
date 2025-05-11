@@ -4,10 +4,17 @@ export interface ImportResultsProps {
   data: DateRecordEntry[]
 }
 
-export interface ImportResult {
-  new: number
-  match: number
-  conflict: number
-  total: number
-}
+export type ResultType = 'new' | 'match' | 'conflict'
+
+export type ImportResult = Record<ResultType, number>
+
 export type MergeOption = 'merge' | 'overwrite' | 'keep' | 'flush'
+
+export interface ResultGroupProps {
+  groupType: ResultType
+  count: number
+}
+
+export interface ResultCellProp {
+  groupType: ResultType
+}

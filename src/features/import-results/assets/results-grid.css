@@ -1,4 +1,27 @@
 .results-grid {
-  display: grid;
+  --colour-new: #0f0;
+  --colour-match: #fff;
+  --colour-conflict: #f00;
+
+  display: flex;
+  flex-wrap: wrap;
+  gap: 4px;
   /* grid-template-columns: 1fr 1fr; */
+}
+
+.results-grid__cell {
+  aspect-ratio: 1 / 1;
+  border-radius: 4px;
+  height: auto;
+  width: 16px;
+}
+
+.results-grid__cell--new {
+  background-color: var(--colour-new);
+}
+.results-grid__cell--match {
+  background-color: var(--colour-match);
+}
+.results-grid__cell--conflict {
+  background-color: var(--colour-conflict);
 }
