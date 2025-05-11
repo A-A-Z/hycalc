@@ -2,3 +2,11 @@
   display: flex;
   gap: 1rem;
 }
+
+.action-list--align-right {
+  justify-content: end;
+}
+
+.action-list--align-left {
+  justify-content: start;
+}

@@ -1,3 +1,4 @@
+import clsx from 'clsx'
 import '../assets/action-list.css'
 import type { FC, ReactNode } from 'react'
 
@@ -8,16 +9,13 @@ interface Action {
 
 interface ActionListProps {
   actions: Action[]
-  // children: ReactNode
+  align?: 'right' | 'left'
 }
 
-export const ActionList: FC<ActionListProps> = ({ actions }) => {
-  // console.log({ children })
-  return (
-    <ul className="action-list">
-      {actions.map(({ id, content }) => (
-        <li key={id}>{content}</li>
-      ))}
-    </ul>
-  )
-}
+export const ActionList: FC<ActionListProps> = ({ actions, align = 'right' }) => (
+  <ul className={clsx('action-list', `action-list--align-${align}`)}>
+    {actions.map(({ id, content }) => (
+      <li key={id}>{content}</li>
+    ))}
+  </ul>
+)

@@ -5,10 +5,15 @@ import { Button } from 'features/button'
 import { getAllRecords, flattenRecords } from 'features/records'
 import { RadioField } from 'features/radio-field'
 import { ActionList } from 'features/action-list'
+import { ResultsGrid } from './ResultsGrid'
 
 import type { FC } from 'react'
 import type { Option } from 'features/radio-field'
-import type { ImportResultsProps } from '../types'
+import type {
+  ImportResultsProps,
+  ImportResult,
+  MergeOption
+} from '../types'
 
 // interface ImportCount {
 //   new: number
@@ -17,13 +22,13 @@ import type { ImportResultsProps } from '../types'
 // }
 
 // TODO: move
-interface ImportResult {
-  new: number
-  match: number
-  conflict: number
-  total: number
-}
-type MergeOption = 'merge' | 'overwrite' | 'keep' | 'flush'
+// interface ImportResult {
+//   new: number
+//   match: number
+//   conflict: number
+//   total: number
+// }
+// type MergeOption = 'merge' | 'overwrite' | 'keep' | 'flush'
 
 export const ImportResults: FC<ImportResultsProps> = ({ data }) => {
   const [selectedMergeOption, setSelectedMergeOption] = useState<MergeOption | null>(null)
@@ -78,29 +83,9 @@ export const ImportResults: FC<ImportResultsProps> = ({ data }) => {
   return (
     <form>
       <h3 id="grid-title">Imported entries</h3>
-      <div role="grid" aria-labelledby="grid-title">
-        <div role="row">
-          <div role="rowheader">Range</div>
-          <div role="cell">x - y</div>
-        </div>
-        <div role="row">
-          <div role="rowheader">New enties</div>
-          <div role="cell">{results.new}</div>
-        </div>
-        <div role="row">
-          <div role="rowheader">Match enties</div>
-          <div role="cell">{results.match}</div>
-        </div>
-        <div role="row">
-          <div role="rowheader">Conflicting enties</div>
-          <div role="cell">{results.conflict}</div>
-        </div>
-        <div role="row">
-          <div role="rowheader">Total</div>
-          <div role="cell">{results.total}</div>
-        </div>
-      </div>
-
+      
+      <ResultsGrid {...results} />
+      
       <RadioField<MergeOption>
         label="Select merge method"
         name="merge-method"
