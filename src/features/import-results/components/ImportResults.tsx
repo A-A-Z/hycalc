@@ -1,4 +1,3 @@
-// import { useState, useEffect } from 'react'
 import { useMemo, useState, useCallback } from 'react'
 
 import { Button } from 'features/button'
@@ -23,7 +22,6 @@ export const ImportResults: FC<ImportResultsProps> = ({ data }) => {
   const results: ImportResult = useMemo(() => {
     const currentData = flattenRecords(getAllRecords())
     const newData = flattenRecords(data)
-    // console.log('imports', { currentData, newData })
 
     // run over all the new entries and check them
     const resultCount = Object.entries(newData).reduce((acc: ImportResult, [date, value]) => {
@@ -64,31 +62,40 @@ export const ImportResults: FC<ImportResultsProps> = ({ data }) => {
     setSelectedMergeOption(value)
   }, [])
 
+  // TODO: deal with all matches
+  // TODO: deal with zero results
+
   return (
     <form className="import-results">
-      <h3 id="grid-title">Imported entries</h3>
-      
-      <div className="import-results__columns">
-        <div>
-          <ResulstList {...results} />
+      <section>
+        <h3 id="grid-title">Imported entries</h3>
+        
+        <div className="import-results__columns">
+          <div>
+            <ResulstList {...results} />
+          </div>
+          <div>
+            <ResultsGrid {...results} />
+          </div>
         </div>
-        <div>
-          <ResultsGrid {...results} />
-        </div>
-      </div>
+      </section>
 
-      <RadioField<MergeOption>
-            label="Select merge method"
-            name="merge-method"
-            options={mergeOptions}
-            value={selectedMergeOption}
-            updateValue={handleMergeOptionChagne}
-          />
+      <section>
+        <RadioField<MergeOption>
+          label="Select merge method"
+          name="merge-method"
+          options={mergeOptions}
+          value={selectedMergeOption}
+          updateValue={handleMergeOptionChagne}
+        />
+      </section>
 
-      <ActionList actions={[
-        { id: 'confirm', content: <Button type="submit">Comfirm</Button> },
-        { id: 'concel', content: <Button type="reset">Cancel</Button> }
-      ]} />
+      <section>
+        <ActionList actions={[
+          { id: 'confirm', content: <Button type="submit">Comfirm</Button> },
+          { id: 'concel', content: <Button type="reset">Cancel</Button> }
+        ]} />
+      </section>
     </form>
   )
 }

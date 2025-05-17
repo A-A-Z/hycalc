@@ -1,20 +1,31 @@
+import { Fragment, useMemo } from 'react'
+import clsx from 'clsx'
+import { RESULT_TYPE_LABELS } from '../constants'
 import '../assets/results-list.css'
 
 import type { FC } from 'react'
-import type { ImportResult } from '../types'
+import type { ImportResult, ResultTypeWithTotal } from '../types'
 
-export const ResulstList: FC<ImportResult> = props => (
-  <dl className="results-list">
-    <dt>New entries</dt>
-    <dd>{props.new}</dd>
-
-    <dt>Matching</dt>
-    <dd>{props.match}</dd>
-
-    <dt>Conficts</dt>
-    <dd>{props.conflict}</dd>
-
-    <dt>Tolal</dt>
-    <dd>{props.new + props.match + props.conflict}</dd>
-  </dl>
-)
+export const ResulstList: FC<ImportResult> = props => {
+  const groups: Array<[string, number]> = useMemo(() => [
+    ...Object.entries(props),
+    ['total', (props.new + props.match + props.conflict)]
+  ], [props])
+  return (
+    <dl className="results-list">
+      {groups.map(([group, value]) => (
+        <Fragment key={group}>
+          <dt className="results-list__label">
+            {RESULT_TYPE_LABELS[group as ResultTypeWithTotal]}
+          </dt>
+          <dd className={clsx(
+            'results-list__value',
+            value > 0 && `results-list__value--${group}`
+          )} data-value={value}>
+            {value}
+          </dd>
+        </Fragment>
+      ))}
+    </dl>
+  )
+}

@@ -15,6 +15,10 @@ body {
   --colour-status-remote: #b556ff;
   --colour-status-onsite: #00d2d0;
 
+  --colour-new: #68eb82;
+  --colour-match: #fff;
+  --colour-conflict: #ff877a;
+
   /* 🎟️ Tokens 🎟️ */
 
   --colour-background-primary: var(--colour-dark-200);

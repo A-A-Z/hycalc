@@ -5,6 +5,7 @@ export interface ImportResultsProps {
 }
 
 export type ResultType = 'new' | 'match' | 'conflict'
+export type ResultTypeWithTotal = ResultType | 'total'
 
 export type ImportResult = Record<ResultType, number>
 
