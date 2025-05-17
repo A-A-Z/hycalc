@@ -5,7 +5,8 @@ import type {
 } from 'react'
 
 export interface ButtonProps extends ButtonHTMLAttributes<HTMLButtonElement> {
-  ref?: Ref<HTMLButtonElement>
+  ref?: Ref<HTMLButtonElement>,
+  size?: 'normal' | 'large'
 }
 
 export interface ButtonFileProps extends InputHTMLAttributes<HTMLInputElement> {

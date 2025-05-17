@@ -16,19 +16,32 @@
   padding: 0 8px;
   transition: background-color 0.2s ease, box-shadow 0.2s ease;
   width: auto;
+
+  &:hover {
+    box-shadow: 0 0 0 1px var(--bg-colour);
+  }
+
+  &:focus-visible {
+    outline-color: var(--bg-colour);
+    outline-offset: 3px;
+    outline-style: solid;
+    outline-width: 2px;
+  }
+
+  &:disabled {
+    cursor: default;
+    opacity: 0.5;
+  }
 }
-.btn:hover {
-  box-shadow: 0 0 0 1px var(--bg-colour);
-}
-.btn:focus-visible {
-  outline-color: var(--bg-colour);
-  outline-offset: 3px;
-  outline-style: solid;
-  outline-width: 2px;
-}
+
 .btn--active,
 .btn:is([aria-pressed="true"]) {
   --bg-colour: var(--colour-status-onsite);
+}
+
+.btn--large {
+  font-size: 0.9rem;
+  height: 2rem;
 }
 
 .btn svg {

@@ -92,8 +92,21 @@ export const ImportResults: FC<ImportResultsProps> = ({ data }) => {
 
       <section>
         <ActionList actions={[
-          { id: 'confirm', content: <Button type="submit">Comfirm</Button> },
-          { id: 'concel', content: <Button type="reset">Cancel</Button> }
+          {
+            id: 'confirm',
+            content: <Button
+              type="submit"
+              size="large"
+              disabled={selectedMergeOption === null}
+            >Comfirm</Button>
+          },
+          {
+            id: 'concel',
+            content: <Button
+              type="reset"
+              size="large"
+            >Cancel</Button>
+          }
         ]} />
       </section>
     </form>
