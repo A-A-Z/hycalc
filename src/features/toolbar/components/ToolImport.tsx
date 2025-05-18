@@ -13,7 +13,7 @@ export const ToolImport: FC<ToolProps> = ({ index, handleKeyDown, ref, ...props 
   const [data, setData] = useState<DateRecordEntry[] | null>(null)
 
   const onFileLoad = useCallback((data: string) => {
-    console.log('loaded', data, modalRef.current)
+    // console.log('loaded', data, modalRef.current)
 
     try {
       const json = JSON.parse(data)
@@ -25,11 +25,15 @@ export const ToolImport: FC<ToolProps> = ({ index, handleKeyDown, ref, ...props 
       console.error(error)
     }
 
-    // modalRef.current?.showPopover()
     modalRef.current?.showModal()
   }, [])
 
   const { isLoading, onChange } = useFileReader({ onFileLoad })
+
+  const handleModalClose = useCallback(() => {
+    console.log('close')
+    modalRef.current?.close()
+  }, [])
 
   return (
     <>
@@ -41,7 +45,7 @@ export const ToolImport: FC<ToolProps> = ({ index, handleKeyDown, ref, ...props 
         onChange={onChange}
         {...props}
       >Import</FileButton>
-      <Modal ref={modalRef} title="Uploaded data">
+      <Modal ref={modalRef} title="Uploaded data" onClose={handleModalClose}>
         {data !== null
           ? <ImportResults data={data} />
           : <span>No data</span>

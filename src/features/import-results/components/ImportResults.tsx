@@ -1,14 +1,15 @@
-import { useMemo, useState, useCallback } from 'react'
+import { useMemo, useState, useCallback, use } from 'react'
 
 import { Button } from 'features/button'
 import { getAllRecords, flattenRecords } from 'features/records'
 import { RadioField } from 'features/radio-field'
 import { ActionList } from 'features/action-list'
+import { ModalContext } from 'features/modal'
 import { ResulstList } from './ResultsList'
 import { ResultsGrid } from './ResultsGrid'
 import '../assets/import-results.css'
 
-import type { FC } from 'react'
+import type { FC, FormEventHandler } from 'react'
 import type { Option } from 'features/radio-field'
 import type {
   ImportResultsProps,
@@ -18,6 +19,7 @@ import type {
 
 export const ImportResults: FC<ImportResultsProps> = ({ data }) => {
   const [selectedMergeOption, setSelectedMergeOption] = useState<MergeOption | null>(null)
+  const { onClose } = use(ModalContext)
 
   const results: ImportResult = useMemo(() => {
     const currentData = flattenRecords(getAllRecords())
@@ -62,11 +64,20 @@ export const ImportResults: FC<ImportResultsProps> = ({ data }) => {
     setSelectedMergeOption(value)
   }, [])
 
+  const onSubmit: FormEventHandler<HTMLFormElement> = useCallback(() => {
+    console.log('submit')
+  }, [])
+
+  const onCancel = () => {
+    console.log('cencel')
+    if (onClose !== undefined) onClose()
+  }
+
   // TODO: deal with all matches
   // TODO: deal with zero results
 
   return (
-    <form className="import-results">
+    <form className="import-results" onSubmit={onSubmit}>
       <section>
         <h3 id="grid-title">Imported entries</h3>
         
@@ -103,8 +114,9 @@ export const ImportResults: FC<ImportResultsProps> = ({ data }) => {
           {
             id: 'concel',
             content: <Button
-              type="reset"
+              type="button"
               size="large"
+              onClick={onCancel}
             >Cancel</Button>
           }
         ]} />

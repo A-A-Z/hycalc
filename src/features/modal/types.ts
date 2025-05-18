@@ -5,5 +5,14 @@ export interface ModalProps {
   id?: string
   title: string
   children: ReactNode
-  actions?: ReactNode[]
+  onClose?: () => void
+  actions?: ReactNode[] // TODO: kill?
+}
+
+export interface ModalContextValues {
+  onClose?: () => void
+}
+
+export interface ModalProviderProps extends ModalContextValues {
+  children: ReactNode
 }
