@@ -65,10 +65,12 @@ export const ImportResults: FC<ImportResultsProps> = ({ data }) => {
   }, [])
 
   const onSubmit: FormEventHandler<HTMLFormElement> = useCallback(() => {
+    setSelectedMergeOption(null)
     console.log('submit')
   }, [])
 
   const onCancel = () => {
+    setSelectedMergeOption(null)
     console.log('cencel')
     if (onClose !== undefined) onClose()
   }
@@ -77,9 +79,9 @@ export const ImportResults: FC<ImportResultsProps> = ({ data }) => {
   // TODO: deal with zero results
 
   return (
-    <form className="import-results" onSubmit={onSubmit}>
+    <form className="import-results sections" onSubmit={onSubmit}>
       <section>
-        <h3 id="grid-title">Imported entries</h3>
+        <h3 id="grid-title" className="sections__title">Imported entries</h3>
         
         <div className="import-results__columns">
           <div>

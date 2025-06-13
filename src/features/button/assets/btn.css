@@ -17,7 +17,7 @@
   transition: background-color 0.2s ease, box-shadow 0.2s ease;
   width: auto;
 
-  &:hover {
+  &:hover:not(:disabled) {
     box-shadow: 0 0 0 1px var(--bg-colour);
   }
 
@@ -29,8 +29,11 @@
   }
 
   &:disabled {
+    background-color: transparent;
+    border: 1px solid var(--bg-colour);
+    color: var(--bg-colour);
     cursor: default;
-    opacity: 0.5;
+    /* opacity: 0.5; */
   }
 }
 
