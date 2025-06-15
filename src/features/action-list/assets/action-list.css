@@ -10,3 +10,7 @@
 .action-list--align-left {
   justify-content: start;
 }
+
+.action-list--align-center {
+  justify-content: center;
+}

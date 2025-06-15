@@ -7,10 +7,10 @@ import { ActionList } from 'features/action-list'
 import { ModalContext } from 'features/modal'
 import { ResulstList } from './ResultsList'
 import { ResultsGrid } from './ResultsGrid'
+import { MERGE_OPTIONS, MERGE_OPTION_LABELS } from '../constants'
 import '../assets/import-results.css'
 
 import type { FC, FormEventHandler } from 'react'
-import type { Option } from 'features/radio-field'
 import type {
   ImportResultsProps,
   ImportResult,
@@ -19,6 +19,7 @@ import type {
 
 export const ImportResults: FC<ImportResultsProps> = ({ data }) => {
   const [selectedMergeOption, setSelectedMergeOption] = useState<MergeOption | null>(null)
+  const [isConfirming, setIsConfiming] = useState(false)
   const { onClose } = use(ModalContext)
 
   const results: ImportResult = useMemo(() => {
@@ -53,30 +54,74 @@ export const ImportResults: FC<ImportResultsProps> = ({ data }) => {
     return resultCount
   }, [data])
 
-  const mergeOptions: Array<Option<MergeOption>> = [
-    { id: 'm1', label: 'Merge data', value: 'merge' },
-    { id: 'm2', label: 'Merge data, overwrite old enties', value: 'overwrite' },
-    { id: 'm3', label: 'Merge data, keep old enties', value: 'keep' },
-    { id: 'm4', label: 'Delete all old data, add new enties', value: 'flush' }
-  ]
+  // const hasExisitingData = true
+  const hasConflicts = results.conflict > 0
+  const hasChanges = hasConflicts || results.new > 0
+  const mergeOptions = useMemo(() => MERGE_OPTIONS
+    .filter(({ value }) => {
+      if (value === 'overwrite' && !hasConflicts) return false
+      // TODO: add more rules
+      return true
+    })
+  , [hasConflicts])
 
   const handleMergeOptionChagne = useCallback((value: MergeOption | null) => {
     setSelectedMergeOption(value)
   }, [])
 
-  const onSubmit: FormEventHandler<HTMLFormElement> = useCallback(() => {
-    setSelectedMergeOption(null)
-    console.log('submit')
+  const onSubmit: FormEventHandler<HTMLFormElement> = useCallback(event => {
+    event.preventDefault()
+    setIsConfiming(true)
+    // setSelectedMergeOption(null)
+    // console.log('submit')
   }, [])
 
-  const onCancel = () => {
+  const onCancel = useCallback(() => {
     setSelectedMergeOption(null)
-    console.log('cencel')
     if (onClose !== undefined) onClose()
-  }
+  }, [onClose])
+
+  const onBack = useCallback(() => {
+    setSelectedMergeOption(null)
+    setIsConfiming(false)
+  }, [])
+
+  const onConfirm = useCallback(() => {
+    console.log('run merge')
+    onCancel()
+  }, [onCancel])
 
   // TODO: deal with all matches
   // TODO: deal with zero results
+
+  if (isConfirming && selectedMergeOption !== null) {
+    return (
+      <section className="import-results import-results--confirm">
+        <p><strong>{MERGE_OPTION_LABELS[selectedMergeOption]}</strong></p>
+        <p>Are you sure?  This action can not be undone.</p>
+        <ActionList align="center" actions={[
+          {
+            id: 'yes',
+            content: <Button
+              type="button"
+              size="large"
+              highlight="onsite"
+              onClick={onConfirm}
+            >Yes</Button>
+          },
+          {
+            id: 'no',
+            content: <Button
+              type="button"
+              size="large"
+              highlight="remote"
+              onClick={onBack}
+            >No</Button>
+          }
+        ]} />
+      </section>
+    )
+  }
 
   return (
     <form className="import-results sections" onSubmit={onSubmit}>
@@ -94,30 +139,36 @@ export const ImportResults: FC<ImportResultsProps> = ({ data }) => {
       </section>
 
       <section>
-        <RadioField<MergeOption>
-          label="Select merge method"
-          name="merge-method"
-          options={mergeOptions}
-          value={selectedMergeOption}
-          updateValue={handleMergeOptionChagne}
-        />
+        {hasChanges
+          ? <RadioField<MergeOption>
+            label="Select merge method"
+            name="merge-method"
+            options={mergeOptions}
+            value={selectedMergeOption}
+            updateValue={handleMergeOptionChagne}
+          />
+          : <p>No changes in imported data.</p>
+        }
       </section>
 
       <section>
         <ActionList actions={[
           {
             id: 'confirm',
+            isActive: hasChanges,
             content: <Button
               type="submit"
               size="large"
+              highlight="onsite"
               disabled={selectedMergeOption === null}
-            >Comfirm</Button>
+            >Import</Button>
           },
           {
             id: 'concel',
             content: <Button
               type="button"
               size="large"
+              highlight="remote"
               onClick={onCancel}
             >Cancel</Button>
           }

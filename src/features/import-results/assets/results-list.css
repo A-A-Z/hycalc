@@ -1,12 +1,16 @@
 .results-list {
   display: grid;
-  gap: 0.5rem 1rem;
+  gap: 0.5rem 1.75rem;
   grid-template-columns: auto auto;
   width: fit-content;
 }
 
+.results-list__label {
+  color: var(--colour-text-primary);
+}
+
 .results-list__value[data-value="0"] {
-  opacity: 0.5;
+  color: var(--colour-text-primary);
 }
 
 .results-list__value--new {

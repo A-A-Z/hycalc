@@ -6,7 +6,8 @@ import type {
 
 export interface ButtonProps extends ButtonHTMLAttributes<HTMLButtonElement> {
   ref?: Ref<HTMLButtonElement>,
-  size?: 'normal' | 'large'
+  size?: 'normal' | 'large',
+  highlight?: 'onsite' | 'remote'
 }
 
 export interface ButtonFileProps extends InputHTMLAttributes<HTMLInputElement> {
