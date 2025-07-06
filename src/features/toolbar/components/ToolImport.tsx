@@ -1,7 +1,7 @@
 import { useRef, useCallback, useState } from 'react'
 import { FileButton } from 'features/button'
 import { Modal } from 'features/modal'
-import { ImportResults } from 'features/import-results'
+import { ImportResults, ResultsError } from 'features/import-results'
 import { useFileReader } from 'features/file-reader'
 
 import type { FC } from 'react'
@@ -22,7 +22,9 @@ export const ToolImport: FC<ToolProps> = ({ index, handleKeyDown, ref, ...props 
       setData(json)
     } catch (error) {
       // TODO: How to hanlde errors?
+      console.log('ERROR HERE')
       console.error(error)
+      setData(null)
     }
 
     modalRef.current?.showModal()
@@ -48,7 +50,7 @@ export const ToolImport: FC<ToolProps> = ({ index, handleKeyDown, ref, ...props 
       <Modal ref={modalRef} title="Uploaded data" onClose={handleModalClose}>
         {data !== null
           ? <ImportResults data={data} />
-          : <span>No data</span>
+          : <ResultsError />
         }
       </Modal>
     </>

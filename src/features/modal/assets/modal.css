@@ -16,14 +16,8 @@
   box-sizing: border-box;
   color: var(--modal-text);
   margin: auto;
-  min-height: 300px;
   padding: 40px;
-  width: 600px;
-  
-  /* &:popover-open {
-    animation-duration: 0.9s;
-    animation-name: zoom;
-  } */
+  width: 600px; /* TODO: vars */
 }
 
 ::backdrop {
@@ -32,14 +26,13 @@
   pointer-events: none;
 }
 
-/* body:has(:popover-open) {
-  overflow: hidden;
-  user-select: none;
-  pointer-events: none;
-} */
+.modal__wrapper {
+  display: grid;
+  gap: 1.5rem;
+  grid-template-rows: 1.8rem 1fr;
+}
 
 .modal__title {
   font-size: 1.8rem;
   font-weight: 600;
-  margin-block-end: 1.5rem;
 }

@@ -6,7 +6,6 @@ export interface ModalProps {
   title: string
   children: ReactNode
   onClose?: () => void
-  actions?: ReactNode[] // TODO: kill?
 }
 
 export interface ModalContextValues {

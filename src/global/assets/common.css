@@ -19,3 +19,8 @@
   font-weight: 500;
   margin-block-end: 1rem;
 }
+
+.sections > section p {
+  line-height: 1.4;
+  padding-block-end: 0.5rem;
+}

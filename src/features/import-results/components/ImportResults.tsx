@@ -21,9 +21,11 @@ export const ImportResults: FC<ImportResultsProps> = ({ data }) => {
   const [selectedMergeOption, setSelectedMergeOption] = useState<MergeOption | null>(null)
   const [isConfirming, setIsConfiming] = useState(false)
   const { onClose } = use(ModalContext)
+  console.log({ data })
+
+  const currentData = useMemo(() => flattenRecords(getAllRecords()), [])
 
   const results: ImportResult = useMemo(() => {
-    const currentData = flattenRecords(getAllRecords())
     const newData = flattenRecords(data)
 
     // run over all the new entries and check them
@@ -52,15 +54,16 @@ export const ImportResults: FC<ImportResultsProps> = ({ data }) => {
     }, { new: 0, match: 0, conflict: 0 } as ImportResult)
 
     return resultCount
-  }, [data])
+  }, [data, currentData])
 
-  // const hasExisitingData = true
+  const hasExisitingData = useMemo(() => Object.keys(currentData).length > 0, [currentData])
   const hasConflicts = results.conflict > 0
   const hasChanges = hasConflicts || results.new > 0
   const mergeOptions = useMemo(() => MERGE_OPTIONS
     .filter(({ value }) => {
       if (value === 'overwrite' && !hasConflicts) return false
-      // TODO: add more rules
+      if (value === 'keep' && !hasConflicts) return false
+      // TODO: add more rules?
       return true
     })
   , [hasConflicts])
@@ -69,15 +72,9 @@ export const ImportResults: FC<ImportResultsProps> = ({ data }) => {
     setSelectedMergeOption(value)
   }, [])
 
-  const onSubmit: FormEventHandler<HTMLFormElement> = useCallback(event => {
-    event.preventDefault()
-    setIsConfiming(true)
-    // setSelectedMergeOption(null)
-    // console.log('submit')
-  }, [])
-
   const onCancel = useCallback(() => {
     setSelectedMergeOption(null)
+    setIsConfiming(false)
     if (onClose !== undefined) onClose()
   }, [onClose])
 
@@ -91,10 +88,20 @@ export const ImportResults: FC<ImportResultsProps> = ({ data }) => {
     onCancel()
   }, [onCancel])
 
-  // TODO: deal with all matches
-  // TODO: deal with zero results
+  const onSubmit: FormEventHandler<HTMLFormElement> = useCallback(event => {
+    event.preventDefault()
+
+    if (!hasExisitingData) {
+      onConfirm()
+      return
+    }
+  
+    setIsConfiming(true)
+    // setSelectedMergeOption(null)
+  }, [hasExisitingData, onConfirm])
 
   if (isConfirming && selectedMergeOption !== null) {
+    // show confirm message
     return (
       <section className="import-results import-results--confirm">
         <p><strong>{MERGE_OPTION_LABELS[selectedMergeOption]}</strong></p>
@@ -139,15 +146,22 @@ export const ImportResults: FC<ImportResultsProps> = ({ data }) => {
       </section>
 
       <section>
-        {hasChanges
-          ? <RadioField<MergeOption>
+        {(hasChanges && hasExisitingData) &&
+          <RadioField<MergeOption>
             label="Select merge method"
             name="merge-method"
             options={mergeOptions}
             value={selectedMergeOption}
             updateValue={handleMergeOptionChagne}
           />
-          : <p>No changes in imported data.</p>
+        }
+        {(hasChanges && !hasExisitingData) &&
+          // TODO: add copy
+          <p>Add items now test</p>
+        }
+        {!hasChanges &&
+          // TODO: add copy
+          <p>No changes in imported data.</p>
         }
       </section>
 
@@ -160,7 +174,7 @@ export const ImportResults: FC<ImportResultsProps> = ({ data }) => {
               type="submit"
               size="large"
               highlight="onsite"
-              disabled={selectedMergeOption === null}
+              disabled={selectedMergeOption === null && hasExisitingData}
             >Import</Button>
           },
           {

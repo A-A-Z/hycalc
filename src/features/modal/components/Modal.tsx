@@ -5,7 +5,13 @@ import '../assets/modal.css'
 import type { FC } from 'react'
 import type { ModalProps } from '../types'
 
-export const Modal: FC<ModalProps> = ({ ref, id, title, children, onClose, actions = [] }) => {
+export const Modal: FC<ModalProps> = ({
+  ref,
+  id,
+  title,
+  children,
+  onClose
+}) => {
   const defaultId = useId()
   const modalId = id ?? defaultId
   const titleId = modalId + '-title'
@@ -19,9 +25,10 @@ export const Modal: FC<ModalProps> = ({ ref, id, title, children, onClose, actio
       aria-modal={true}
     >
       <ModalProvider onClose={onClose}>
-        <h2 id={titleId} className="modal__title">{title}</h2>
-        <div className="modal__body">{children}</div>
-        {actions.length > 0 && <div className="modal__actions">action here</div>/* TODO: kill? */}
+        <div className="modal__wrapper">
+          <h2 id={titleId} className="modal__title">{title}</h2>
+          <div className="modal__body">{children}</div>
+        </div>
       </ModalProvider>
     </dialog>
   )
