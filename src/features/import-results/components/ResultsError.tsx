@@ -8,14 +8,11 @@ import type { FC } from 'react'
 
 export const ResultsError: FC = () => {
   const { onClose } = use(ModalContext)
-  // const onCancel = useCallback(() => {
-  //   if (onClose !== undefined) onClose()
-  // }, [onClose])
   return (
     <div className="sections">
       <section>
         <p><strong>There was an error with the selected file.</strong></p>
-        <p>The either contained not valid entries or the file was incorrectly formatted.</p>
+        <p>The either contained no valid entries or the file was incorrectly formatted.</p>
       </section>
 
       <section>

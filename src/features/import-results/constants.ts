@@ -1,7 +1,7 @@
 import type { Option } from 'features/radio-field'
 import type { ResultType, ResultTypeWithTotal, MergeOption } from './types'
 
-export const RESULT_TYPES: ResultType[]  = ['new', 'match', 'conflict']
+export const RESULT_TYPES: ResultType[]  = ['new', 'match', 'conflict'] as const
 
 export const RESULT_TYPE_LABELS: Record<ResultTypeWithTotal, string> = {
   new: 'New entries',
