@@ -1,3 +1,4 @@
+import { getCappedTotals } from '../utils/getCappedTotals'
 import { ResultGroup } from './ResultGroup'
 import { RESULT_TYPES } from '../constants'
 import '../assets/results-grid.css'
@@ -13,19 +14,16 @@ export const ResultsGrid: FC<ImportResult> = props => {
   //   match: 52,
   //   conflict: 15
   // }
+  // console.log(getCappedTotals(props, 20))
   props = {
-    new: 105,
-    match: 0,
-    conflict: 0
+    new: 210,
+    match: 230,
+    conflict: 15
   }
-  // TODO:
-  // If total is over X amount, switch to summary mode
-  // Would be good if only summary of some types
-  // so total still equals X
-  // X = 105
+  
+  const cappedTotal = getCappedTotals(props, 152)
+  console.log({ cappedTotal })
 
-  // order types from smallest to largest
-  // check each type if over?
   return (
     <>
       <div className="results-grid" role="presentation">
@@ -33,7 +31,8 @@ export const ResultsGrid: FC<ImportResult> = props => {
           <ResultGroup
             key={resultType}
             groupType={resultType}
-            count={props[resultType]}
+            count={cappedTotal[resultType]}
+            isCapped={cappedTotal[resultType] !== props[resultType]}
           />
         ))}
       </div>

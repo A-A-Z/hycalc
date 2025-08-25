@@ -10,9 +10,9 @@
 
 .results-grid__cell {
   aspect-ratio: 1 / 1;
-  border-radius: 4px;
+  border-radius: 3px;
   height: auto;
-  width: 16px;
+  width: 12px;
 }
 
 .results-grid__cell--new {
@@ -23,4 +23,10 @@
 }
 .results-grid__cell--conflict {
   background-color: var(--colour-conflict);
+}
+.results-grid__cell--cap {
+  &:after {
+    color: #000;
+    content: "+";
+  }
 }

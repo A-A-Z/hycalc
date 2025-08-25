@@ -14,8 +14,10 @@ export type MergeOption = 'merge' | 'overwrite' | 'keep' | 'flush'
 export interface ResultGroupProps {
   groupType: ResultType
   count: number
+  isCapped: boolean
 }
 
 export interface ResultCellProp {
   groupType: ResultType
+  isLastCap: boolean
 }
