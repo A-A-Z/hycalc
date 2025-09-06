@@ -2,6 +2,9 @@
   --colour-new: #68eb82;
   --colour-match: #fff;
   --colour-conflict: #ff877a;
+  --cell-size: 12px;
+  --plus-size: 8px;
+  --plus-thinkness: 2px;
 
   display: flex;
   flex-wrap: wrap;
@@ -12,7 +15,7 @@
   aspect-ratio: 1 / 1;
   border-radius: 3px;
   height: auto;
-  width: 12px;
+  width: var(--cell-size);
 }
 
 .results-grid__cell--new {
@@ -25,8 +28,24 @@
   background-color: var(--colour-conflict);
 }
 .results-grid__cell--cap {
+  position: relative;
+
+  &:before,
   &:after {
-    color: #000;
-    content: "+";
+    background-color: var(--colour-background-primary);
+    content: "";
+    inset: 0;
+    margin: auto;
+    position: absolute;
+  }
+
+  &:before {
+    height: var(--plus-thinkness);
+    width: var(--plus-size);
+  }
+
+  &:after {
+    height: var(--plus-size);
+    width: var(--plus-thinkness);
   }
 }
