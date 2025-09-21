@@ -8,7 +8,7 @@
 
 .import-results__columns {
   display: grid;
-  gap: 4rem;
+  gap: 1rem;
   grid-template-columns: 1fr 300px;
   margin-block: 1rem;
 }

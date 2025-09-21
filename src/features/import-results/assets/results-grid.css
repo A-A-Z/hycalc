@@ -1,7 +1,4 @@
 .results-grid {
-  --colour-new: #68eb82;
-  --colour-match: #fff;
-  --colour-conflict: #ff877a;
   --cell-size: 12px;
   --plus-size: 8px;
   --plus-thinkness: 2px;
@@ -23,6 +20,7 @@
 }
 .results-grid__cell--match {
   background-color: var(--colour-match);
+  /* box-shadow: inset 0 0  0 1px #ffff; */
 }
 .results-grid__cell--conflict {
   background-color: var(--colour-conflict);

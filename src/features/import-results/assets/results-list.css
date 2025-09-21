@@ -9,16 +9,29 @@
   color: var(--colour-text-primary);
 }
 
+.results-list__value {
+  border-radius: 3px;
+  display: inline-block;
+  color: var(--colour-black);
+  font-weight: 600;
+  height: fit-content;
+  min-width: 4ch;
+  padding-block: 2px;
+  text-align: center;
+}
+
 .results-list__value[data-value="0"] {
   color: var(--colour-text-primary);
 }
-
 .results-list__value--new {
-  color: var(--colour-new)
+  background-color: var(--colour-new);
 }
 .results-list__value--match {
-  color: var(--colour-match)
+  background-color: var(--colour-match);
 }
 .results-list__value--conflict {
-  color: var(--colour-conflict)
+  background-color: var(--colour-conflict);
+}
+.results-list__value--total {
+  color: var(--colour-text-highlight);
 }
