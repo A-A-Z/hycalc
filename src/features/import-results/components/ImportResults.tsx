@@ -105,7 +105,7 @@ export const ImportResults: FC<ImportResultsProps> = ({ data }) => {
     return (
       <section className="import-results import-results--confirm">
         <p><strong>{MERGE_OPTION_LABELS[selectedMergeOption]}</strong></p>
-        <p>Are you sure?  This action can not be undone.</p>
+        <p>Are you sure? This action can not be undone.</p>
         <ActionList align="center" actions={[
           {
             id: 'yes',

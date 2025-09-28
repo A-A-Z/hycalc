@@ -1,5 +1,5 @@
 import { describe, test, expect, vi } from 'vitest'
-import { render } from '@testing-library/react'
+import { render, fireEvent } from '@testing-library/react'
 import * as records from 'features/records'
 import { ImportResults } from './ImportResults'
 import { MERGE_OPTION_LABELS } from '../constants'
@@ -160,6 +160,43 @@ describe('<ImportResults />', () => {
     expect(getByRole('button', { name: 'Cancel' })).toBeInTheDocument()
     expect(getByRole('button', { name: 'Import' })).toBeDisabled()
   })
+
+  test('shows confirming message if mergining data', () => {
+    const spy = vi.spyOn(records, 'getAllRecords')
+    spy.mockReturnValue([['2025-4', '{ "1": "remote" }']])
+    const data: Array<[string, string]> = [['2025-4', '{ "1": "onsite" }']]
+    const { getByRole, getByLabelText, getByText } = render(<ImportResults data={data} />)
+
+    const importBtn = getByRole('button', { name: 'Import' })
+    const radioOption = getByLabelText(MERGE_OPTION_LABELS.overwrite)
+
+    // import button starts disabled
+    expect(importBtn).toBeDisabled()
+    
+    // select overwrite option
+    fireEvent.click(radioOption)
+
+    // import button now active
+    expect(importBtn).not.toBeDisabled()
+
+    // click on import button
+    fireEvent.click(importBtn)
+
+    // shows confirm message
+    expect(getByText(MERGE_OPTION_LABELS.overwrite)).toBeInTheDocument()
+    expect(getByText('Are you sure? This action can not be undone.')).toBeInTheDocument()
+    const yesBtn = getByRole('button', { name: 'Yes' })
+    const noBtn = getByRole('button', { name: 'No' })
+    expect(yesBtn).toBeInTheDocument()
+    expect(noBtn).toBeInTheDocument()
+
+    // click No to cancel
+    fireEvent.click(noBtn)
+
+    // returned to form
+    expect(getByRole('heading', { name: 'Imported entries' })).toBeInTheDocument()
+  })
+
 
   // TODO: more tests
 })
