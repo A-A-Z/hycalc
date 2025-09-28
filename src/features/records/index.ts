@@ -5,12 +5,13 @@ export { useDateRecords } from './hooks/useDateRecords'
 export { getAllRecords } from './utils/getAllRecords'
 
 export type {
-  DateRecords,
   DateRecordEntry,
-  DateRecordType,
-  DateRecordNormalType,
-  DateRecordPlanType,
-  DateRecordStatus,
+  DateRecordJson,
   DateRecordNormalStatus,
-  DateRecordPlanStatus
+  DateRecordNormalType,
+  DateRecordPlanStatus,
+  DateRecordPlanType,
+  DateRecords,
+  DateRecordStatus,
+  DateRecordType
 } from './types'

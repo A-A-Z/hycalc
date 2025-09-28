@@ -1,7 +1,7 @@
-import type { DateRecordEntry } from 'features/records'
+import type { DateRecordJson } from 'features/records'
 
 export interface ImportResultsProps {
-  data: DateRecordEntry[]
+  data: DateRecordJson[]
 }
 
 export type ResultType = 'new' | 'match' | 'conflict'

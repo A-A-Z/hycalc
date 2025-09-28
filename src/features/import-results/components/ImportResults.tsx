@@ -21,12 +21,14 @@ export const ImportResults: FC<ImportResultsProps> = ({ data }) => {
   const [selectedMergeOption, setSelectedMergeOption] = useState<MergeOption | null>(null)
   const [isConfirming, setIsConfiming] = useState(false)
   const { onClose } = use(ModalContext)
-  console.log({ data })
+  console.log('ImportResults', data)
 
   const currentData = useMemo(() => flattenRecords(getAllRecords()), [])
+  console.log({ currentData })
 
   const results: ImportResult = useMemo(() => {
     const newData = flattenRecords(data)
+    console.log({ newData })
 
     // run over all the new entries and check them
     const resultCount = Object.entries(newData).reduce((acc: ImportResult, [date, value]) => {
@@ -64,8 +66,6 @@ export const ImportResults: FC<ImportResultsProps> = ({ data }) => {
       if (value === 'merge' && hasConflicts) return false
       if (value === 'overwrite' && !hasConflicts) return false
       if (value === 'keep' && !hasConflicts) return false
-      // if (value === 'flush' && !hasExisitingData) return false
-      // TODO: add more rules?
       return true
     })
   , [hasConflicts])

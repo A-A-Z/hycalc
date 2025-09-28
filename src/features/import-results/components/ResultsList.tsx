@@ -15,7 +15,7 @@ export const ResulstList: FC<ImportResult> = props => {
     <dl className="results-list" aria-label="Results">
       {groups.map(([group, value]) => (
         <Fragment key={group}>
-          <dt className="results-list__label">
+          <dt className="results-list__label" data-group-key={group}>
             {RESULT_TYPE_LABELS[group as ResultTypeWithTotal]}
           </dt>
           <dd className={clsx(
