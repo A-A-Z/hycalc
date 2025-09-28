@@ -1,6 +1,8 @@
-import { describe, test, expect } from 'vitest'
+import { describe, test, expect, vi } from 'vitest'
 import { render } from '@testing-library/react'
+import * as records from 'features/records'
 import { ImportResults } from './ImportResults'
+import { MERGE_OPTION_LABELS } from '../constants'
 
 import type { ByRoleMatcher, ByRoleOptions } from '@testing-library/react'
 import type { ResultTypeWithTotal } from '../types'
@@ -42,11 +44,11 @@ describe('<ImportResults />', () => {
     expect(queryByRole('button', { name: 'Import' })).not.toBeInTheDocument()
   })
 
-  test('will handle new entries', () => {
+  test('will handle new entries with no current data', () => {
     const data: Array<[string, string]> = [['2025-4', '{ "1": "remote" }']] 
     const { getAllByRole, queryByRole, getByText } = render(<ImportResults data={data} />)
     
-    // all totals should be at 0
+    // totals with one new entry
     const totals = getTotals(getAllByRole)
     expect(totals.new).toBe(1)
     expect(totals.match).toBe(0)
@@ -59,7 +61,104 @@ describe('<ImportResults />', () => {
 
     // show the cancel and import button
     expect(queryByRole('button', { name: 'Cancel' })).toBeInTheDocument()
-    expect(queryByRole('button', { name: 'Import' })).toBeInTheDocument()
+    expect(queryByRole('button', { name: 'Import' })).not.toBeDisabled()
+  })
+
+  test('will handle new entries with current data', () => {
+    const spy = vi.spyOn(records, 'getAllRecords')
+    spy.mockReturnValue([['2025-5', '{ "2": "remote" }']])
+    const data: Array<[string, string]> = [['2025-4', '{ "1": "remote" }']]
+    const { getAllByRole, getByRole, getByLabelText } = render(<ImportResults data={data} />)
+    
+    // totals with one new entry
+    const totals = getTotals(getAllByRole)
+    expect(totals.new).toBe(1)
+    expect(totals.match).toBe(0)
+    expect(totals.conflict).toBe(0)
+    expect(totals.total).toBe(1)
+
+    // show radio fields with correct options
+    expect(getByRole('group', { name: 'Select merge method' })).toBeInTheDocument()
+    expect(getAllByRole('radio').length).toBe(2)
+    expect(getByLabelText(MERGE_OPTION_LABELS.merge)).toBeInTheDocument()
+    expect(getByLabelText(MERGE_OPTION_LABELS.flush)).toBeInTheDocument()
+
+    // show the cancel and import button
+    expect(getByRole('button', { name: 'Cancel' })).toBeInTheDocument()
+    expect(getByRole('button', { name: 'Import' })).toBeDisabled()
+  })
+
+  test('will handle only matching entries', () => {
+    const spy = vi.spyOn(records, 'getAllRecords')
+    spy.mockReturnValue([['2025-4', '{ "1": "remote" }']])
+    const data: Array<[string, string]> = [['2025-4', '{ "1": "remote" }']]
+    const { getAllByRole, getByRole, queryByRole, getByText } = render(<ImportResults data={data} />)
+    
+    // totals with one matching entry
+    const totals = getTotals(getAllByRole)
+    expect(totals.new).toBe(0)
+    expect(totals.match).toBe(1)
+    expect(totals.conflict).toBe(0)
+    expect(totals.total).toBe(1)
+
+    // no radio fields, just the warning text
+    expect(queryByRole('radiogroup')).not.toBeInTheDocument()
+    expect(getByText('No changes in imported data.')).toBeInTheDocument() // TODO: change text
+
+    // show the cancel and import button
+    expect(getByRole('button', { name: 'Cancel' })).toBeInTheDocument()
+    expect(queryByRole('button', { name: 'Import' })).not.toBeInTheDocument()
+  })
+
+  test('will handle only conflicting entries', () => {
+    const spy = vi.spyOn(records, 'getAllRecords')
+    spy.mockReturnValue([['2025-4', '{ "1": "remote" }']])
+    const data: Array<[string, string]> = [['2025-4', '{ "1": "onsite" }']]
+    const { getAllByRole, getByRole, getByLabelText } = render(<ImportResults data={data} />)
+    
+    // totals with one conflicting entry
+    const totals = getTotals(getAllByRole)
+    expect(totals.new).toBe(0)
+    expect(totals.match).toBe(0)
+    expect(totals.conflict).toBe(1)
+    expect(totals.total).toBe(1)
+
+    // show radio fields with correct options
+    expect(getByRole('group', { name: 'Select merge method' })).toBeInTheDocument()
+    expect(getAllByRole('radio').length).toBe(3)
+    expect(getByLabelText(MERGE_OPTION_LABELS.keep)).toBeInTheDocument()
+    expect(getByLabelText(MERGE_OPTION_LABELS.overwrite)).toBeInTheDocument()
+    expect(getByLabelText(MERGE_OPTION_LABELS.flush)).toBeInTheDocument()
+
+    // show the cancel and import button
+    expect(getByRole('button', { name: 'Cancel' })).toBeInTheDocument()
+    expect(getByRole('button', { name: 'Import' })).toBeDisabled()
+  })
+
+  test('will handle mixed types', () => {
+    const spy = vi.spyOn(records, 'getAllRecords')
+    spy.mockReturnValue([['2025-4', '{ "1": "remote", "2": "remote" }']])
+    const data: Array<[string, string]> = [['2025-4', '{ "1": "onsite", "2": "remote", "3": "onsite" }']]
+    const { getAllByRole, getByRole, getByLabelText } = render(<ImportResults data={data} />)
+    
+    // totals with mixed results
+    const totals = getTotals(getAllByRole)
+    console.log({ totals })
+    expect(totals.new).toBe(1)
+    expect(totals.match).toBe(1)
+    expect(totals.conflict).toBe(1)
+    expect(totals.total).toBe(3)
+
+    // show radio fields with correct options
+    expect(getByRole('group', { name: 'Select merge method' })).toBeInTheDocument()
+    expect(getAllByRole('radio').length).toBe(3)
+    expect(getByLabelText(MERGE_OPTION_LABELS.keep)).toBeInTheDocument()
+    expect(getByLabelText(MERGE_OPTION_LABELS.overwrite)).toBeInTheDocument()
+    expect(getByLabelText(MERGE_OPTION_LABELS.flush)).toBeInTheDocument()
+
+    // show the cancel and import button
+    expect(getByRole('button', { name: 'Cancel' })).toBeInTheDocument()
+    expect(getByRole('button', { name: 'Import' })).toBeDisabled()
   })
 
   // TODO: more tests

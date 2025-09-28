@@ -21,7 +21,6 @@ export const ImportResults: FC<ImportResultsProps> = ({ data }) => {
   const [selectedMergeOption, setSelectedMergeOption] = useState<MergeOption | null>(null)
   const [isConfirming, setIsConfiming] = useState(false)
   const { onClose } = use(ModalContext)
-  console.log('ImportResults', data)
 
   const currentData = useMemo(() => flattenRecords(getAllRecords()), [])
   console.log({ currentData })
@@ -99,7 +98,6 @@ export const ImportResults: FC<ImportResultsProps> = ({ data }) => {
     }
   
     setIsConfiming(true)
-    // setSelectedMergeOption(null)
   }, [hasExisitingData, onConfirm])
 
   if (isConfirming && selectedMergeOption !== null) {
