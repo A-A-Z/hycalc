@@ -12,7 +12,7 @@ export const ResulstList: FC<ImportResult> = props => {
     ['total', (props.new + props.match + props.conflict)]
   ], [props])
   return (
-    <dl className="results-list">
+    <dl className="results-list" aria-label="Results">
       {groups.map(([group, value]) => (
         <Fragment key={group}>
           <dt className="results-list__label">

@@ -7,23 +7,8 @@ import type { FC } from 'react'
 import type { ImportResult } from '../types'
 
 export const ResultsGrid: FC<ImportResult> = props => {
-  // console.log('test', RESULT_TYPES, props[RESULT_TYPES[0]])
-  console.log({ props })
-  // props = {
-  //   new: 56,
-  //   match: 52,
-  //   conflict: 15
-  // }
-  // console.log(getCappedTotals(props, 20))
-  props = {
-    new: 210,
-    match: 230,
-    conflict: 15
-  }
-  
+  // cap all the totals so they fit nicely in the grid
   const cappedTotal = getCappedTotals(props, 152)
-  console.log({ cappedTotal })
-
   return (
     <>
       <div className="results-grid" role="presentation">

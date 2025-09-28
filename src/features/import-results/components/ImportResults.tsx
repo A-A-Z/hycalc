@@ -61,8 +61,10 @@ export const ImportResults: FC<ImportResultsProps> = ({ data }) => {
   const hasChanges = hasConflicts || results.new > 0
   const mergeOptions = useMemo(() => MERGE_OPTIONS
     .filter(({ value }) => {
+      if (value === 'merge' && hasConflicts) return false
       if (value === 'overwrite' && !hasConflicts) return false
       if (value === 'keep' && !hasConflicts) return false
+      // if (value === 'flush' && !hasExisitingData) return false
       // TODO: add more rules?
       return true
     })
