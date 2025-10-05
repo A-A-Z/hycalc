@@ -13,8 +13,6 @@ export const ToolImport: FC<ToolProps> = ({ index, handleKeyDown, ref, ...props 
   const [data, setData] = useState<DateRecordEntry[] | null>(null)
 
   const onFileLoad = useCallback((data: string) => {
-    // console.log('loaded', data, modalRef.current)
-
     try {
       const json = JSON.parse(data)
       // TODO: validate json data

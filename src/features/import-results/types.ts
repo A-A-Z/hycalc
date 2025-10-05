@@ -21,3 +21,9 @@ export interface ResultCellProp {
   groupType: ResultType
   isLastCap: boolean
 }
+
+export interface MergeConfirmProps {
+  selectedMergeOption: MergeOption
+  onConfirm: () => void
+  onBack: () => void
+}

@@ -7,7 +7,8 @@ import { ActionList } from 'features/action-list'
 import { ModalContext } from 'features/modal'
 import { ResulstList } from './ResultsList'
 import { ResultsGrid } from './ResultsGrid'
-import { MERGE_OPTIONS, MERGE_OPTION_LABELS } from '../constants'
+import { MergeConfirm } from './MergeConfirm'
+import { MERGE_OPTIONS } from '../constants'
 import '../assets/import-results.css'
 
 import type { FC, FormEventHandler } from 'react'
@@ -23,11 +24,9 @@ export const ImportResults: FC<ImportResultsProps> = ({ data }) => {
   const { onClose } = use(ModalContext)
 
   const currentData = useMemo(() => flattenRecords(getAllRecords()), [])
-  console.log({ currentData })
 
   const results: ImportResult = useMemo(() => {
     const newData = flattenRecords(data)
-    console.log({ newData })
 
     // run over all the new entries and check them
     const resultCount = Object.entries(newData).reduce((acc: ImportResult, [date, value]) => {
@@ -85,6 +84,7 @@ export const ImportResults: FC<ImportResultsProps> = ({ data }) => {
   }, [])
 
   const onConfirm = useCallback(() => {
+    // TODO: run me
     console.log('run merge')
     onCancel()
   }, [onCancel])
@@ -103,30 +103,11 @@ export const ImportResults: FC<ImportResultsProps> = ({ data }) => {
   if (isConfirming && selectedMergeOption !== null) {
     // show confirm message
     return (
-      <section className="import-results import-results--confirm">
-        <p><strong>{MERGE_OPTION_LABELS[selectedMergeOption]}</strong></p>
-        <p>Are you sure? This action can not be undone.</p>
-        <ActionList align="center" actions={[
-          {
-            id: 'yes',
-            content: <Button
-              type="button"
-              size="large"
-              highlight="onsite"
-              onClick={onConfirm}
-            >Yes</Button>
-          },
-          {
-            id: 'no',
-            content: <Button
-              type="button"
-              size="large"
-              highlight="remote"
-              onClick={onBack}
-            >No</Button>
-          }
-        ]} />
-      </section>
+      <MergeConfirm
+        selectedMergeOption={selectedMergeOption}
+        onConfirm={onConfirm}
+        onBack={onBack}
+      />
     )
   }
 
