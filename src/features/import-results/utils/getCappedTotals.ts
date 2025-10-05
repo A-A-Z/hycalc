@@ -1,15 +1,10 @@
 import { RESULT_TYPES } from '../constants'
-import type { ResultType } from '../types'
-// type ResultType = 'foo' | 'bar' | 'baz'
+import type { ResultType, ImportResult } from '../types'
 
-// const RESULT_TYPES: ResultType[] = ['foo', 'bar', 'baz']
-
-// export const getCappedTotals = (groups: Record<ResultType, number>,, maxTotal: number): Record<ResultType, number> => {
-  
 export const getCappedTotals = (
-    groups: Record<ResultType, number>,
+    groups: ImportResult,
     maxTotal: number
-  ): Record<ResultType, number> => {
+  ): ImportResult => {
     const target = Math.max(0, Math.floor(maxTotal))
     const rawTotal = RESULT_TYPES.reduce((sum, g) => sum + groups[g], 0)
   
