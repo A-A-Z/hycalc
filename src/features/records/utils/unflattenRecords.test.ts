@@ -3,7 +3,7 @@ import { unflattenRecords } from './unflattenRecords'
 
 import { DateRecordJson, DateRecordEntryFlat } from '../types'
 
-describe.skip('unflattenRecords()', () => {
+describe('unflattenRecords()', () => {
   test('will handle empty results', () => {
     expect(unflattenRecords({})).toStrictEqual([])
   })
