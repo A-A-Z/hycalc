@@ -1,17 +1,23 @@
 import type { DateRecordEntryFlat, DateRecordType, DateRecordJson } from '../types'
 
-  export const flattenRecords = (data: DateRecordJson[]): DateRecordEntryFlat => {
-  return data
-    .filter(([ entry ]) => /[0-9]{4}-[0-9]{1,2}/.test(entry))
-    .reduce((acc1: DateRecordEntryFlat, record) => {
-      const [month, daysJson] = record
-      const days = JSON.parse(daysJson)
-      const bar = Object.entries(days)
-        .reduce((acc2: DateRecordEntryFlat, [index, value]) => {
-          acc2[`${month}-${index}`] = value as DateRecordType
-          return acc2
-        }, {})
+export const flattenRecords = (data: DateRecordJson[]): DateRecordEntryFlat => data
+  .reduce<DateRecordEntryFlat>((acc, record) => {
+    const [yearMonth, daysJson] = record
 
-      return { ...acc1, ...bar }
-    }, {})
-}
+    // valid date records only
+    if (!/[0-9]{4}-[0-9]{1,2}/.test(yearMonth)) return acc
+
+    try {
+      // parse day JSON data into object
+      const days = JSON.parse(daysJson)
+
+      // flatten the data into a yyyy-m-d format
+      for (const [index, value] of Object.entries(days)) {
+        acc[`${yearMonth}-${index}`] = value as DateRecordType
+      }
+    } catch {
+      // ignore malformed JSON
+    }
+
+    return acc
+  }, {})

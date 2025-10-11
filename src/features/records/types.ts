@@ -20,6 +20,7 @@ export type DateRecordEntry = [string, DateRecordType]
 
 export type DateRecordEntryFlat = Record<string, DateRecordType>
 
+// year-month with day recods in JSON string
 export type DateRecordJson = [string, string]
 
 export interface DateRecordsContextProps {
