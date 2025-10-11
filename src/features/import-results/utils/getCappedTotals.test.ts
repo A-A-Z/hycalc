@@ -1,11 +1,9 @@
 import { describe, test, expect } from 'vitest'
-// import { render, fireEvent } from '@testing-library/react'
 import { getCappedTotals } from './getCappedTotals'
 
 import type { ImportResult } from '../types'
 
 describe('getCappedTotals()', () => {
-
   test('will handle empty results', () => {
     const groups: ImportResult = {
       new: 0,

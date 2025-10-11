@@ -9,6 +9,7 @@ import { ResulstList } from './ResultsList'
 import { ResultsGrid } from './ResultsGrid'
 import { MergeConfirm } from './MergeConfirm'
 import { MERGE_OPTIONS } from '../constants'
+import { getMergedData } from '../utils/getMergedData'
 import '../assets/import-results.css'
 
 import type { FC, FormEventHandler } from 'react'
@@ -23,7 +24,10 @@ export const ImportResults: FC<ImportResultsProps> = ({ data }) => {
   const [isConfirming, setIsConfiming] = useState(false)
   const { onClose } = use(ModalContext)
 
-  const currentData = useMemo(() => flattenRecords(getAllRecords()), [])
+  // TODO: BUG doesn't get latest, just on mounted
+  const currentData = useMemo(() => getAllRecords(), [])
+  const currentDataFlat = useMemo(() => flattenRecords(currentData), [currentData])
+  console.log({ currentDataFlat })
 
   const results: ImportResult = useMemo(() => {
     const newData = flattenRecords(data)
@@ -31,7 +35,7 @@ export const ImportResults: FC<ImportResultsProps> = ({ data }) => {
     // run over all the new entries and check them
     const resultCount = Object.entries(newData).reduce((acc: ImportResult, [date, value]) => {
       // new
-      if (currentData[date] === undefined) {
+      if (currentDataFlat[date] === undefined) {
         return {
           ...acc,
           new: acc.new + 1
@@ -39,7 +43,7 @@ export const ImportResults: FC<ImportResultsProps> = ({ data }) => {
       }
 
       // match
-      if (currentData[date] === value) {
+      if (currentDataFlat[date] === value) {
         return {
           ...acc,
           match: acc.match + 1
@@ -54,9 +58,9 @@ export const ImportResults: FC<ImportResultsProps> = ({ data }) => {
     }, { new: 0, match: 0, conflict: 0 } as ImportResult)
 
     return resultCount
-  }, [data, currentData])
+  }, [data, currentDataFlat])
 
-  const hasExisitingData = useMemo(() => Object.keys(currentData).length > 0, [currentData])
+  const hasExisitingData = useMemo(() => Object.keys(currentDataFlat).length > 0, [currentDataFlat])
   const hasConflicts = results.conflict > 0
   const hasChanges = hasConflicts || results.new > 0
   const mergeOptions = useMemo(() => MERGE_OPTIONS
@@ -86,8 +90,11 @@ export const ImportResults: FC<ImportResultsProps> = ({ data }) => {
   const onConfirm = useCallback(() => {
     // TODO: run me
     console.log('run merge')
+    const mergedData = getMergedData(currentData, data, selectedMergeOption!)
+    console.log('merged', { mergedData })
+
     onCancel()
-  }, [onCancel])
+  }, [currentData, data, onCancel, selectedMergeOption])
 
   const onSubmit: FormEventHandler<HTMLFormElement> = useCallback(event => {
     event.preventDefault()
