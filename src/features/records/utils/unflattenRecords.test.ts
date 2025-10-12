@@ -8,7 +8,7 @@ describe('unflattenRecords()', () => {
     expect(unflattenRecords({})).toStrictEqual([])
   })
 
-  test('will do the thing', () => {
+  test('convert DateRecordEntryFlat into DateRecordJson array', () => {
     const flatData: DateRecordEntryFlat = {
       '2025-5-1': 'remote',
       '2025-5-2': 'remote',
@@ -18,6 +18,18 @@ describe('unflattenRecords()', () => {
     const expected: DateRecordJson[] = [
       [ '2025-5', '{"1":"remote","2":"remote"}' ],
       [ '2025-6', '{"1":"onsite","2":"onsite"}' ]
+    ] 
+    expect(unflattenRecords(flatData)).toStrictEqual(expected)
+  })
+
+  test('will skip bad dates', () => {
+    const flatData: DateRecordEntryFlat = {
+      '2025-5-1': 'remote',
+      '2025-5-x': 'remote',
+      '2025-5-3': 'onsite',
+    }
+    const expected: DateRecordJson[] = [
+      [ '2025-5', '{"1":"remote","3":"onsite"}' ]
     ] 
     expect(unflattenRecords(flatData)).toStrictEqual(expected)
   })

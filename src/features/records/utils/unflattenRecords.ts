@@ -1,11 +1,7 @@
 import type { DateRecordEntryFlat, DateRecordJson } from '../types'
 
 export const unflattenRecords = (data: DateRecordEntryFlat): DateRecordJson[] => {
-  // TODO: make this function
-  console.log({ data })
-  const foo = Object.entries(data).reduce<Record<string, Record<string, string>>>((acc, [date, state]) => {
-    // const grouped = new Map<string, Map<number, DateRecordType>>()
-
+  const entiesObj = Object.entries(data).reduce<Record<string, Record<string, string>>>((acc, [date, state]) => {
     // format dates
     const dates = date.match(/([0-9]{4}-[0-9]{1,2})-([0-9]{1,2})/)
     if (dates === null) return acc
@@ -17,15 +13,13 @@ export const unflattenRecords = (data: DateRecordEntryFlat): DateRecordJson[] =>
     }
 
     // add new day to year-month
-    acc[yearMonth] = { ...acc[yearMonth], [day]: state }
+    acc[yearMonth][day] = state
 
     return acc
   }, {})
 
-  const bar = Object.entries(foo).map(([index, enties]) => {
-    // console.log({ baz })
-    return [index, JSON.stringify(enties)] as DateRecordJson
-  })
-  console.log({ foo, bar })
-  return bar
+  // convert to an array of JSON data
+  return Object.entries(entiesObj).map(([index, enties]) =>
+    [index, JSON.stringify(enties)] as DateRecordJson
+  )
 }
