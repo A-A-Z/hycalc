@@ -18,6 +18,8 @@ export const unflattenRecords = (data: DateRecordEntryFlat): DateRecordJson[] =>
     return acc
   }, {})
 
+  // TODO: handle ordering of dates
+
   // convert to an array of JSON data
   return Object.entries(entiesObj).map(([index, enties]) =>
     [index, JSON.stringify(enties)] as DateRecordJson
