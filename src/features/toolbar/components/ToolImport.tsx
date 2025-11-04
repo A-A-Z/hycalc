@@ -41,7 +41,7 @@ export const ToolImport: FC<ToolProps> = ({ index, handleKeyDown, ref, ...props 
         ref={ref}
         isLoading={isLoading}
         tabIndex={index === 0 ? 0 : -1} // TODO
-        onKeyDown={e => { handleKeyDown(e.key, index) }} // TODO
+        onKeyDown={({ key }) => { handleKeyDown(key, index) }} // TODO (what?)
         onChange={onChange}
         {...props}
       >Import</FileButton>

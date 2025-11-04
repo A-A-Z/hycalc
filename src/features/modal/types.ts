@@ -4,6 +4,8 @@ export interface ModalProps {
   ref?: Ref<HTMLDialogElement>
   id?: string
   title: string
+  /** Use showModalshowModal over isOpen.  Just needed here for unit testing */
+  isOpen?: boolean
   children: ReactNode
   onClose?: () => void
 }

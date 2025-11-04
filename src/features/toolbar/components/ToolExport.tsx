@@ -1,6 +1,4 @@
-// import { use } from 'react'
 import { format } from 'lib/date'
-// import { StatusContext } from 'features/status'
 import { Button } from 'features/button'
 import { getAllRecords } from 'features/records'
 
@@ -8,7 +6,6 @@ import type { FC } from 'react'
 import type { ToolProps } from '../types'
 
 export const ToolExport: FC<ToolProps> = ({ index, handleKeyDown, ref }) => {
-  // const { } = useDateRecords(2)
 
   const downloadJSON = () => {
     const data = getAllRecords()

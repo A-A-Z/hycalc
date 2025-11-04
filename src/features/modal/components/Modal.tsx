@@ -9,6 +9,7 @@ export const Modal: FC<ModalProps> = ({
   ref,
   id,
   title,
+  isOpen = false,
   children,
   onClose
 }) => {
@@ -19,6 +20,7 @@ export const Modal: FC<ModalProps> = ({
   return (
     <dialog
       ref={ref}
+      open={isOpen}
       id={modalId}
       className="modal"
       aria-labelledby={titleId}

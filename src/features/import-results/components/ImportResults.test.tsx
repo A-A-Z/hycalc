@@ -197,6 +197,5 @@ describe('<ImportResults />', () => {
     expect(getByRole('heading', { name: 'Imported entries' })).toBeInTheDocument()
   })
 
-
   // TODO: more tests
 })
