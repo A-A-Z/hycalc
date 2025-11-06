@@ -3,6 +3,7 @@ import { FileButton } from 'features/button'
 import { Modal } from 'features/modal'
 import { ImportResults, ResultsError } from 'features/import-results'
 import { useFileReader } from 'features/file-reader'
+import { isDataValid } from 'features/records'
 
 import type { FC } from 'react'
 import type { DateRecordEntry } from 'features/records'
@@ -15,23 +16,20 @@ export const ToolImport: FC<ToolProps> = ({ index, handleKeyDown, ref, ...props 
   const onFileLoad = useCallback((data: string) => {
     try {
       const json = JSON.parse(data)
-      // TODO: validate json data
-      console.log(json)
-      setData(json)
+      // set parsed data (or null if not valid)
+      setData(isDataValid(json) ? json : null)
     } catch (error) {
-      // TODO: How to hanlde errors?
-      console.log('ERROR HERE')
-      console.error(error)
+      // failed to parse JSON show error
       setData(null)
     }
 
+    // show the current modal
     modalRef.current?.showModal()
   }, [])
 
   const { isLoading, onChange } = useFileReader({ onFileLoad })
 
   const handleModalClose = useCallback(() => {
-    console.log('close')
     modalRef.current?.close()
   }, [])
 
@@ -40,8 +38,8 @@ export const ToolImport: FC<ToolProps> = ({ index, handleKeyDown, ref, ...props 
       <FileButton
         ref={ref}
         isLoading={isLoading}
-        tabIndex={index === 0 ? 0 : -1} // TODO
-        onKeyDown={({ key }) => { handleKeyDown(key, index) }} // TODO (what?)
+        tabIndex={index === 0 ? 0 : -1}
+        onKeyDown={({ key }) => { handleKeyDown(key, index) }}
         onChange={onChange}
         {...props}
       >Import</FileButton>

@@ -21,7 +21,7 @@
     box-shadow: 0 0 0 1px var(--bg-colour);
   }
 
-  &:focus-visible {
+  &:is(:focus-visible, :focus-within) {
     outline-color: var(--bg-colour);
     outline-offset: 3px;
     outline-style: solid;
