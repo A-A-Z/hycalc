@@ -1,4 +1,3 @@
-// TODO: unit test me
 export const isDataValid = (data: unknown): boolean => {
   // data must be an array
   if (!Array.isArray(data)) return false
