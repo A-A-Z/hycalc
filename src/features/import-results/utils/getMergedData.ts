@@ -8,11 +8,16 @@ export const getMergedData = (
   importData: DateRecordJson[],
   mergedOption: MergeOption
 ): DateRecordJson[] => {
-  console.log('getMergedData', { currentData })
-  // TODO: include config
-  // ['config', '{"weekdays":[0,1,2,3,4],"theme":"dark"}']
-  if (mergedOption === 'flush') return importData
+  // break off the config data for later
+  const configEntry = currentData.find(([index]) => index === 'config' )
+  console.log({ configEntry })
 
+  // if flush then just use the import data
+  if (mergedOption === 'flush') {
+    return configEntry === undefined ? importData : [configEntry, ...importData]
+  }
+
+  // flatten all data
   const currentDataFlat = flattenRecords(currentData)
   const importDataFlat = flattenRecords(importData)
 
@@ -29,5 +34,7 @@ export const getMergedData = (
     return acc
   }, currentDataFlat)
 
-  return unflattenRecords(mergedFlat)
+  // unflatten and return merged data
+  const mergedData = unflattenRecords(mergedFlat)
+  return configEntry === undefined ? mergedData : [configEntry, ...mergedData]
 }

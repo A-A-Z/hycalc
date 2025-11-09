@@ -30,6 +30,21 @@ describe('getMergedData()', () => {
       ]
       expect(getMergedData(currentData, importData, 'flush')).toStrictEqual(importData)
     })
+
+    test('keep current config data', () => {
+      const currentData: DateRecordJson[] = [
+        [ '2025-5', '{"1":"remote","2":"remote","3":"remote"}' ],
+        [ 'config', '{"weekdays":[0,1,2,3,4],"theme":"dark"}' ]
+      ]
+      const importData: DateRecordJson[] = [
+        [ '2025-6', '{"1":"remote","2":"onsite","3":"remote"}' ]
+      ]
+      const result: DateRecordJson[] = [
+        [ 'config', '{"weekdays":[0,1,2,3,4],"theme":"dark"}' ],
+        [ '2025-6', '{"1":"remote","2":"onsite","3":"remote"}' ]
+      ]
+      expect(getMergedData(currentData, importData, 'flush')).toStrictEqual(result)
+    })
   })
 
   describe('merge', () => {
@@ -58,6 +73,22 @@ describe('getMergedData()', () => {
         [ '2025-6', '{"1":"remote"}' ],
       ]
       const result: DateRecordJson[] = [
+        [ '2025-5', '{"1":"remote"}' ],
+        [ '2025-6', '{"1":"remote"}' ],
+      ]
+      expect(getMergedData(currentData, importData, 'merge')).toStrictEqual(result)
+    })
+
+    test('keep current config data', () => {
+      const currentData: DateRecordJson[] = [
+        [ '2025-5', '{"1":"remote"}' ],
+        [ 'config', '{"weekdays":[0,1,2,3,4],"theme":"dark"}' ]
+      ]
+      const importData: DateRecordJson[] = [
+        [ '2025-6', '{"1":"remote"}' ],
+      ]
+      const result: DateRecordJson[] = [
+        [ 'config', '{"weekdays":[0,1,2,3,4],"theme":"dark"}' ],
         [ '2025-5', '{"1":"remote"}' ],
         [ '2025-6', '{"1":"remote"}' ],
       ]
@@ -122,6 +153,21 @@ describe('getMergedData()', () => {
       ]
       expect(getMergedData(currentData, importData, 'keep')).toStrictEqual(result)
     })
+
+    test('keep current config data', () => {
+      const currentData: DateRecordJson[] = [
+        [ '2025-5', '{"1":"remote","2":"remote","4":"remote"}' ],
+        [ 'config', '{"weekdays":[0,1,2,3,4],"theme":"dark"}' ],
+      ]
+      const importData: DateRecordJson[] = [
+        [ '2025-5', '{"2":"onsite","3":"onsite","5":"onsite"}' ],
+      ]
+      const result: DateRecordJson[] = [
+        [ 'config', '{"weekdays":[0,1,2,3,4],"theme":"dark"}' ],
+        [ '2025-5', '{"1":"remote","2":"remote","3":"onsite","4":"remote","5":"onsite"}' ],
+      ]
+      expect(getMergedData(currentData, importData, 'merge')).toStrictEqual(result)
+    })
   })
 
   describe('overwrite', () => {
@@ -177,6 +223,21 @@ describe('getMergedData()', () => {
         [ '2025-5', '{"2":"onsite","3":"onsite","5":"onsite"}' ],
       ]
       const result: DateRecordJson[] = [
+        [ '2025-5', '{"1":"remote","2":"onsite","3":"onsite","4":"remote","5":"onsite"}' ],
+      ]
+      expect(getMergedData(currentData, importData, 'overwrite')).toStrictEqual(result)
+    })
+
+    test('keep current config data', () => {
+      const currentData: DateRecordJson[] = [
+        [ '2025-5', '{"1":"remote","2":"remote","4":"remote"}' ],
+        [ 'config', '{"weekdays":[0,1,2,3,4],"theme":"dark"}' ]
+      ]
+      const importData: DateRecordJson[] = [
+        [ '2025-5', '{"2":"onsite","3":"onsite","5":"onsite"}' ],
+      ]
+      const result: DateRecordJson[] = [
+        [ 'config', '{"weekdays":[0,1,2,3,4],"theme":"dark"}' ],
         [ '2025-5', '{"1":"remote","2":"onsite","3":"onsite","4":"remote","5":"onsite"}' ],
       ]
       expect(getMergedData(currentData, importData, 'overwrite')).toStrictEqual(result)
