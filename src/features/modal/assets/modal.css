@@ -1,12 +1,20 @@
-@keyframes zoom {
-  0% { scale: 0.1 0.1; opacity: 0; }
-  75% { scale: 0.75 1; }
+@keyframes modalZoom {
+  0% { scale: 0.01 0.01; opacity: 0.5; }
+  75% { scale: 0.1 1; }
   100% { scale: 1 1; opacity: 1; }
 }
 
+/* Motion safe version */
+@keyframes modalFadeIn {
+  0% { opacity: 0; }
+  100% { opacity: 1; }
+}
+
 .modal {
-  animation-duration: 0.3s;
-  animation-name: zoom;
+  --modal-width: 600px;
+
+  animation-duration: 0.4s;
+  animation-name: modalZoom;
   animation-timing-function: ease-in;
 
   background-color: var(--modal-background);
@@ -17,7 +25,12 @@
   color: var(--modal-text);
   margin: auto;
   padding: 40px;
-  width: 600px; /* TODO: vars */
+  transition: height 2s ease;
+  width: var(--modal-width);
+
+  @media (prefers-reduced-motion: reduce) {
+    animation-name: modalFadeIn;
+  }
 }
 
 ::backdrop {
@@ -30,6 +43,7 @@
   display: grid;
   gap: 1.5rem;
   grid-template-rows: 1.8rem 1fr;
+  transition: height 2s ease;
 }
 
 .modal__title {

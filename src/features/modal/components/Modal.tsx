@@ -16,7 +16,6 @@ export const Modal: FC<ModalProps> = ({
   const defaultId = useId()
   const modalId = id ?? defaultId
   const titleId = modalId + '-title'
-
   return (
     <dialog
       ref={ref}
