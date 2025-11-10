@@ -8,7 +8,7 @@ import { ModalContext } from 'features/modal'
 import { ResulstList } from './ResultsList'
 import { ResultsGrid } from './ResultsGrid'
 import { MergeConfirm } from './MergeConfirm'
-import { MERGE_OPTIONS } from '../constants'
+import { MERGE_OPTIONS, IMPORT_NO_CHANGE_COPY, IMPORT_NO_CURRENT_DATA_COPY } from '../constants'
 import { getMergedData } from '../utils/getMergedData'
 import '../assets/import-results.css'
 
@@ -142,12 +142,10 @@ export const ImportResults: FC<ImportResultsProps> = ({ data }) => {
           />
         }
         {(hasChanges && !hasExisitingData) &&
-          // TODO: add copy
-          <p>Add items now test</p>
+          <p>{IMPORT_NO_CURRENT_DATA_COPY}</p>
         }
         {!hasChanges &&
-          // TODO: add copy
-          <p>No changes in imported data.</p>
+          <p>{IMPORT_NO_CHANGE_COPY}</p>
         }
       </section>
 

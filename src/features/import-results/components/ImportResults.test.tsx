@@ -2,7 +2,11 @@ import { describe, test, expect, vi } from 'vitest'
 import { render, fireEvent } from '@testing-library/react'
 import * as records from 'features/records'
 import { ImportResults } from './ImportResults'
-import { MERGE_OPTION_LABELS } from '../constants'
+import {
+  MERGE_OPTION_LABELS,
+  IMPORT_NO_CHANGE_COPY,
+  IMPORT_NO_CURRENT_DATA_COPY
+} from '../constants'
 
 import type { ByRoleMatcher, ByRoleOptions } from '@testing-library/react'
 import type { ResultTypeWithTotal } from '../types'
@@ -37,7 +41,7 @@ describe('<ImportResults />', () => {
 
     // no radio fields, just the warning text
     expect(queryByRole('radiogroup')).not.toBeInTheDocument()
-    expect(getByText('No changes in imported data.')).toBeInTheDocument()
+    expect(getByText(IMPORT_NO_CHANGE_COPY)).toBeInTheDocument()
 
     // show the cancel button but not import
     expect(queryByRole('button', { name: 'Cancel' })).toBeInTheDocument()
@@ -57,7 +61,7 @@ describe('<ImportResults />', () => {
 
     // no radio fields, just the warning text
     expect(queryByRole('radiogroup')).not.toBeInTheDocument()
-    expect(getByText('Add items now test')).toBeInTheDocument() // TODO: change text
+    expect(getByText(IMPORT_NO_CURRENT_DATA_COPY)).toBeInTheDocument()
 
     // show the cancel and import button
     expect(queryByRole('button', { name: 'Cancel' })).toBeInTheDocument()
@@ -103,7 +107,7 @@ describe('<ImportResults />', () => {
 
     // no radio fields, just the warning text
     expect(queryByRole('radiogroup')).not.toBeInTheDocument()
-    expect(getByText('No changes in imported data.')).toBeInTheDocument() // TODO: change text
+    expect(getByText(IMPORT_NO_CHANGE_COPY)).toBeInTheDocument()
 
     // show the cancel and import button
     expect(getByRole('button', { name: 'Cancel' })).toBeInTheDocument()

@@ -23,3 +23,7 @@ export const MERGE_OPTIONS: Array<Option<MergeOption>> = [
   { id: 'm3', label: MERGE_OPTION_LABELS.keep, value: 'keep' },
   { id: 'm4', label: MERGE_OPTION_LABELS.flush, value: 'flush' }
 ]
+
+export const IMPORT_NO_CHANGE_COPY = 'The selected file has no changes to the current data.'
+
+export const IMPORT_NO_CURRENT_DATA_COPY = 'There are no exisiting data to conflict with.'
