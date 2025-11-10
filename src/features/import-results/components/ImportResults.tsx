@@ -23,11 +23,8 @@ export const ImportResults: FC<ImportResultsProps> = ({ data }) => {
   const [selectedMergeOption, setSelectedMergeOption] = useState<MergeOption | null>(null)
   const [isConfirming, setIsConfiming] = useState(false)
   const { onClose } = use(ModalContext)
-
-  // TODO: BUG doesn't get latest, just on mounted
-  const currentData = useMemo(() => getAllRecords(), [])
+  const currentData = getAllRecords()
   const currentDataFlat = useMemo(() => flattenRecords(currentData), [currentData])
-  console.log({ currentDataFlat })
 
   const results: ImportResult = useMemo(() => {
     const newData = flattenRecords(data)
@@ -93,6 +90,7 @@ export const ImportResults: FC<ImportResultsProps> = ({ data }) => {
     const mergedData = getMergedData(currentData, data, selectedMergeOption!)
     console.log('merged', { mergedData })
 
+    // close modal
     onCancel()
   }, [currentData, data, onCancel, selectedMergeOption])
 

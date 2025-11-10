@@ -10,7 +10,6 @@ export const getMergedData = (
 ): DateRecordJson[] => {
   // break off the config data for later
   const configEntry = currentData.find(([index]) => index === 'config' )
-  console.log({ configEntry })
 
   // if flush then just use the import data
   if (mergedOption === 'flush') {
