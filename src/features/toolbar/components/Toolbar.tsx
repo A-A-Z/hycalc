@@ -16,7 +16,6 @@ export const Toolbar: FC = () => {
   const { gridId } = use(StatusContext)
 
   const handleBtnArrowKey: HandleKeyDownFn = useCallback((key, index) => {
-    console.log('arrow', { key, toolRefs })
     switch (key) {
       case 'ArrowRight':
         toolRefs.current[index + 1]?.focus()

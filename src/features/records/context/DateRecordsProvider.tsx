@@ -10,7 +10,8 @@ import type {
   DateRecords,
   DateRecordStatus,
   DateRecordsContextProps,
-  DateRecordsProviderProps
+  DateRecordsProviderProps,
+  DateRecordJson
 } from '../types'
 
 export const DateRecordsProvider: FC<DateRecordsProviderProps> = ({ children }) => {
@@ -71,6 +72,23 @@ export const DateRecordsProvider: FC<DateRecordsProviderProps> = ({ children }) 
     setRecords(JSON.stringify(newRecords))
   }, [setRecords, records])
 
+  const replaceRecords = useCallback((data: DateRecordJson[]) => {
+    // Delete all old data (scary!)
+    localStorage.clear()
+
+    // set current month as blank (in case of flush)
+    setRecords('{}')
+
+    // Add each month into local storge
+    data.forEach(([key, value]) => {
+      localStorage.setItem(key, value)
+      if (key === recordKey) {
+        // if new record is also the current month then update state
+        setRecords(value)
+      }
+    })
+  }, [recordKey])
+
   // get the ratio (not using plan data in total)
   const ratio = useMemo(() => {
     const recordsParsed = JSON.parse(records) as DateRecords
@@ -123,8 +141,9 @@ export const DateRecordsProvider: FC<DateRecordsProviderProps> = ({ children }) 
     estRatio,
     hasPlans,
     isLoaded,
-    setDateRecord
-  }), [records, isLoaded, ratio, estRatio, hasPlans, setDateRecord])
+    setDateRecord,
+    replaceRecords
+  }), [records, isLoaded, ratio, estRatio, hasPlans, setDateRecord, replaceRecords])
 
   return <DateRecordsContext value={value}>{children}</DateRecordsContext>
 }

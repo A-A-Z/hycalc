@@ -39,7 +39,7 @@ export const useTabbedDate = (month: number, year: number): Date => {
     // otherwise retrn the first visible day of the month
     return getFirstVisibleDayOfMonth(activeDate, weekdays)
 
-    // TODO: handle plan mode when "today" falls on a hidden weekday
+    // FIXME: handle plan mode when "today" falls on a hidden weekday
   }, [month, year, weekdays])
 
   return value

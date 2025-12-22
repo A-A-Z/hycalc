@@ -1,7 +1,7 @@
 import { useMemo, useState, useCallback, use } from 'react'
 
 import { Button } from 'features/button'
-import { getAllRecords, flattenRecords } from 'features/records'
+import { getAllRecords, flattenRecords, DateRecordsContext } from 'features/records'
 import { RadioField } from 'features/radio-field'
 import { ActionList } from 'features/action-list'
 import { ModalContext } from 'features/modal'
@@ -23,6 +23,7 @@ export const ImportResults: FC<ImportResultsProps> = ({ data }) => {
   const [selectedMergeOption, setSelectedMergeOption] = useState<MergeOption | null>(null)
   const [isConfirming, setIsConfiming] = useState(false)
   const { onClose } = use(ModalContext)
+  const { replaceRecords } = use(DateRecordsContext)
   const currentData = getAllRecords()
   const currentDataFlat = useMemo(() => flattenRecords(currentData), [currentData])
 
@@ -85,14 +86,15 @@ export const ImportResults: FC<ImportResultsProps> = ({ data }) => {
   }, [])
 
   const onConfirm = useCallback(() => {
-    // TODO: run me
-    console.log('run merge')
+    // get merged data
     const mergedData = getMergedData(currentData, data, selectedMergeOption!)
-    console.log('merged', { mergedData })
+
+    // replace current data with new data
+    replaceRecords(mergedData)
 
     // close modal
     onCancel()
-  }, [currentData, data, onCancel, selectedMergeOption])
+  }, [currentData, data, onCancel, replaceRecords, selectedMergeOption])
 
   const onSubmit: FormEventHandler<HTMLFormElement> = useCallback(event => {
     event.preventDefault()

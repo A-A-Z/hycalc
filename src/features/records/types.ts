@@ -26,6 +26,7 @@ export type DateRecordJson = [string, string]
 export interface DateRecordsContextProps {
   records: DateRecords
   setDateRecord: (dayOfTheMonth: number, status: DateRecordStatus) => void
+  replaceRecords: (data: DateRecordJson[]) => void
   ratio: number
   estRatio: number
   hasPlans: boolean

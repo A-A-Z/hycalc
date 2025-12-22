@@ -147,7 +147,6 @@ describe('<ImportResults />', () => {
     
     // totals with mixed results
     const totals = getTotals(getAllByRole)
-    console.log({ totals })
     expect(totals.new).toBe(1)
     expect(totals.match).toBe(1)
     expect(totals.conflict).toBe(1)
