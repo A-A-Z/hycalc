@@ -14,3 +14,7 @@ export interface ButtonFileProps extends InputHTMLAttributes<HTMLInputElement> {
   ref?: Ref<HTMLButtonElement>
   isLoading?: boolean
 }
+
+export interface ToggleButtonProps extends ButtonProps {
+  isActive: boolean
+}

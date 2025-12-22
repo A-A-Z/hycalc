@@ -15,5 +15,8 @@ describe('<Button />', () => {
     expect(getByRole('button', { name: content })).toHaveClass('btn--large')
   })
 
-  // TODO: test highlight
+  test('will render with highlight', () => {
+    const { getByRole } = render(<Button highlight="onsite">{content}</Button>)
+    expect(getByRole('button', { name: content })).toHaveClass('btn--hightligh-onsite')
+  })
 })
