@@ -1,6 +1,7 @@
-import { describe, test, expect, vi } from 'vitest'
+import { describe, test, expect, vi, beforeAll, afterAll } from 'vitest'
 import { render, fireEvent } from '@testing-library/react'
 import * as records from 'features/records'
+import { mockLocalStorage } from 'global/test-utils/mockLocalStorage'
 import { ImportResults } from './ImportResults'
 import {
   MERGE_OPTION_LABELS,
@@ -29,6 +30,17 @@ const getTotals = (getAllByRole: GetAllByRoleFn): Record<ResultTypeWithTotal, nu
 }
 
 describe('<ImportResults />', () => {
+  let originalLocalStorage: Storage
+
+  beforeAll(() => {
+    originalLocalStorage = window.localStorage
+    window.localStorage = mockLocalStorage
+  })
+
+  afterAll(() => {
+    window.localStorage = originalLocalStorage
+  })
+
   test('will handle no data', () => {
     const { getAllByRole, queryByRole, getByText } = render(<ImportResults data={[]} />)
     
