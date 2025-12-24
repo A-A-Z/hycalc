@@ -85,7 +85,6 @@ export const ImportResults: FC<ImportResultsProps> = ({ data }) => {
   }, [])
 
   const onConfirm = useCallback(() => {
-    console.log('onConfirm')
     // get merged data
     const mergedData = getMergedData(currentData, data, selectedMergeOption!)
 
