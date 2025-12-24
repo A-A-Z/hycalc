@@ -1,7 +1,7 @@
-import { describe, test, expect, vi, beforeAll, afterAll } from 'vitest'
+import { describe, test, expect, vi, afterEach } from 'vitest'
 import { render, fireEvent } from '@testing-library/react'
+import { createContext } from 'react'
 import * as records from 'features/records'
-import { mockLocalStorage } from 'global/test-utils/mockLocalStorage'
 import { ImportResults } from './ImportResults'
 import {
   MERGE_OPTION_LABELS,
@@ -10,7 +10,25 @@ import {
 } from '../constants'
 
 import type { ByRoleMatcher, ByRoleOptions } from '@testing-library/react'
+import type { DateRecordsProviderProps, DateRecordsContextProps } from 'features/records'
 import type { ResultTypeWithTotal } from '../types'
+
+const mocks = vi.hoisted(() => ({
+  replaceRecords: vi.fn()
+}))
+
+vi.mock('features/records', async (importActual) => ({
+  ...(await importActual<typeof import('features/modal')>()),
+  DateRecordsContext: createContext<DateRecordsContextProps>({
+    records: {},
+    setDateRecord: vi.fn(),
+    replaceRecords: mocks.replaceRecords,
+    ratio: 0,
+    estRatio: 0,
+    hasPlans: false,
+    isLoaded: false
+  })
+}))
 
 type GetAllByRoleFn = (role: ByRoleMatcher, options?: ByRoleOptions | undefined) => HTMLElement[]
 
@@ -30,15 +48,10 @@ const getTotals = (getAllByRole: GetAllByRoleFn): Record<ResultTypeWithTotal, nu
 }
 
 describe('<ImportResults />', () => {
-  let originalLocalStorage: Storage
+  const confirmTxt = 'Are you sure? This action can not be undone.'
 
-  beforeAll(() => {
-    originalLocalStorage = window.localStorage
-    window.localStorage = mockLocalStorage
-  })
-
-  afterAll(() => {
-    window.localStorage = originalLocalStorage
+  afterEach(() => {
+    vi.restoreAllMocks()
   })
 
   test('will handle no data', () => {
@@ -180,7 +193,10 @@ describe('<ImportResults />', () => {
     const spy = vi.spyOn(records, 'getAllRecords')
     spy.mockReturnValue([['2025-4', '{ "1": "remote" }']])
     const data: Array<[string, string]> = [['2025-4', '{ "1": "onsite" }']]
-    const { getByRole, getByLabelText, getByText } = render(<ImportResults data={data} />)
+    const { getByRole, getByLabelText, getByText, queryByText } = render(<ImportResults data={data} />)
+
+    // no confirm message yet
+    expect(queryByText(confirmTxt)).not.toBeInTheDocument()
 
     const importBtn = getByRole('button', { name: 'Import' })
     const radioOption = getByLabelText(MERGE_OPTION_LABELS.overwrite)
@@ -199,7 +215,7 @@ describe('<ImportResults />', () => {
 
     // shows confirm message
     expect(getByText(MERGE_OPTION_LABELS.overwrite)).toBeInTheDocument()
-    expect(getByText('Are you sure? This action can not be undone.')).toBeInTheDocument()
+    expect(getByText(confirmTxt)).toBeInTheDocument()
     const yesBtn = getByRole('button', { name: 'Yes' })
     const noBtn = getByRole('button', { name: 'No' })
     expect(yesBtn).toBeInTheDocument()
@@ -209,8 +225,35 @@ describe('<ImportResults />', () => {
     fireEvent.click(noBtn)
 
     // returned to form
+    expect(queryByText(confirmTxt)).not.toBeInTheDocument()
     expect(getByRole('heading', { name: 'Imported entries' })).toBeInTheDocument()
   })
 
-  // TODO: more tests
+  test('can confirm to update records', async () => {
+    const wrapper = ({ children }: DateRecordsProviderProps) =>
+          <records.DateRecordsProvider>{children}</records.DateRecordsProvider>
+    const spy = vi.spyOn(records, 'getAllRecords')
+    spy.mockReturnValue([['2025-4', '{ "1": "remote" }']])
+    const data: Array<[string, string]> = [['2025-4', '{ "1": "onsite" }']]
+    const { getByRole, getByLabelText } = render(<ImportResults data={data} />, { wrapper })
+
+    const importBtn = getByRole('button', { name: 'Import' })
+    const radioOption = getByLabelText(MERGE_OPTION_LABELS.overwrite)
+    
+    // select overwrite option
+    fireEvent.click(radioOption)
+
+    // click on import button
+    fireEvent.click(importBtn)
+
+    // shows confirm message
+    const yesBtn = getByRole('button', { name: 'Yes' })
+    expect(yesBtn).toBeInTheDocument()
+
+    // click No to cancel
+    fireEvent.click(yesBtn)
+
+    // calls replaceRecord with new data
+    expect(mocks.replaceRecords).toHaveBeenCalledWith([['2025-4', '{"1":"onsite"}']])
+  })
 })

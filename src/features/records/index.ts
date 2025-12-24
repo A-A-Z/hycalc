@@ -14,6 +14,8 @@ export type {
   DateRecordPlanStatus,
   DateRecordPlanType,
   DateRecords,
+  DateRecordsContextProps,
+  DateRecordsProviderProps,
   DateRecordStatus,
   DateRecordType
 } from './types'

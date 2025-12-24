@@ -1,5 +1,4 @@
 import { useMemo, useState, useCallback, use } from 'react'
-
 import { Button } from 'features/button'
 import { getAllRecords, flattenRecords, DateRecordsContext } from 'features/records'
 import { RadioField } from 'features/radio-field'
@@ -86,6 +85,7 @@ export const ImportResults: FC<ImportResultsProps> = ({ data }) => {
   }, [])
 
   const onConfirm = useCallback(() => {
+    console.log('onConfirm')
     // get merged data
     const mergedData = getMergedData(currentData, data, selectedMergeOption!)
 
