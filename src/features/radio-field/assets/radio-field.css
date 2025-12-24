@@ -1,0 +1,5 @@
+.radio-field__list {
+  display: grid;
+  gap: 0.6rem;
+  width: fit-content;
+}

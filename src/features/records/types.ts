@@ -18,9 +18,15 @@ export type DateRecords = Record<number, DateRecordType>
 
 export type DateRecordEntry = [string, DateRecordType]
 
+export type DateRecordEntryFlat = Record<string, DateRecordType>
+
+// year-month with day recods in JSON string
+export type DateRecordJson = [string, string]
+
 export interface DateRecordsContextProps {
   records: DateRecords
   setDateRecord: (dayOfTheMonth: number, status: DateRecordStatus) => void
+  replaceRecords: (data: DateRecordJson[]) => void
   ratio: number
   estRatio: number
   hasPlans: boolean

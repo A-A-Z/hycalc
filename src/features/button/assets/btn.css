@@ -5,8 +5,10 @@
   background-color: var(--bg-colour);
   border: 0;
   border-radius: 8px;
+  color: var(--colour-black);
   cursor: pointer;
   display: flex;
+  font-size: var(--status-font-size);
   font-weight: 600;
   gap: 1em;
   height: 1.3rem;
@@ -14,19 +16,48 @@
   padding: 0 8px;
   transition: background-color 0.2s ease, box-shadow 0.2s ease;
   width: auto;
+
+  &:hover:not(:disabled) {
+    box-shadow: 0 0 0 1px var(--bg-colour);
+  }
+
+  &:is(:focus-visible, :focus-within) {
+    outline-color: var(--bg-colour);
+    outline-offset: 3px;
+    outline-style: solid;
+    outline-width: 2px;
+  }
+
+  &:disabled {
+    background-color: transparent;
+    border: 1px solid var(--bg-colour);
+    color: var(--bg-colour);
+    cursor: default;
+  }
 }
-.btn:hover {
-  box-shadow: 0 0 0 1px var(--bg-colour);
-}
-.btn:focus-visible {
-  outline-color: var(--bg-colour);
-  outline-offset: 3px;
-  outline-style: solid;
-  outline-width: 2px;
-}
+
 .btn--active,
 .btn:is([aria-pressed="true"]) {
   --bg-colour: var(--colour-status-onsite);
+}
+
+.btn--large {
+  font-size: 0.9rem;
+  height: 2rem;
+  justify-content: center;
+  min-width: 6rem;
+}
+
+.btn--hightligh-onsite {
+  &:is(:hover, :focus-visible):not(:disabled) {
+    --bg-colour: var(--colour-status-onsite);
+  }
+}
+
+.btn--hightligh-remote {
+  &:is(:hover, :focus-visible):not(:disabled) {
+    --bg-colour: var(--colour-status-remote);
+  }
 }
 
 .btn svg {

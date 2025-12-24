@@ -1,12 +1,28 @@
 import clsx from 'clsx'
 import '../assets/btn.css'
 
-import type { FC, Ref, ButtonHTMLAttributes } from 'react'
+import type { FC } from 'react'
+import type { ButtonProps } from '../types'
 
-export interface ButtonProps extends ButtonHTMLAttributes<HTMLButtonElement> {
-  ref?: Ref<HTMLButtonElement>
-}
-
-export const Button: FC<ButtonProps> = ({ children, className, ref, ...props }) => (
-  <button ref={ref} className={clsx('btn', className)} type="button" {...props}>{children}</button>
+export const Button: FC<ButtonProps> = ({
+  children,
+  className,
+  ref,
+  size = 'normal',
+  highlight,
+  ...props
+}) => (
+  <button
+    ref={ref}
+    className={clsx(
+      'btn',
+      `btn--${size}`,
+      highlight !== undefined && `btn--hightligh-${highlight}`,
+      className
+    )}
+    type="button"
+    {...props}
+  >
+    {children}
+  </button>
 )

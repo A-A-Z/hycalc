@@ -1,0 +1,16 @@
+.action-list {
+  display: flex;
+  gap: 1rem;
+}
+
+.action-list--align-right {
+  justify-content: end;
+}
+
+.action-list--align-left {
+  justify-content: start;
+}
+
+.action-list--align-center {
+  justify-content: center;
+}

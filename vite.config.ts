@@ -70,6 +70,10 @@ export default defineConfig({
       provider: 'v8',
       reporter: ['cobertura', 'html'],
       exclude: [
+        '**/dev-dist/**',
+        '**/*.cjs',
+        '**/index.ts',
+        '**/constants.ts',
         ...configDefaults.exclude
       ]
     }

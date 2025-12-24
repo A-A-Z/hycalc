@@ -1,0 +1,14 @@
+.import-results--confirm {
+  align-items: center;
+  display: flex;
+  flex-direction: column;
+  gap: 1.5rem;
+  padding-block: 1.5rem;
+}
+
+.import-results__columns {
+  display: grid;
+  gap: 1rem;
+  grid-template-columns: 1fr 300px;
+  margin-block: 1rem;
+}
