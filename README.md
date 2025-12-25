@@ -40,14 +40,16 @@ Once setup you can use these commands:
 
 (Not in order, no promises)
 
+- [ ] Summery panel
+- [ ] Tooltips
 - [ ] Select/toggle modes
 - [ ] Language
 - [ ] Light theme
 - [ ] Config state colours/names/icons
 - [ ] Mobile support
-- [ ] Import/export
 - [ ] Multi-select
 - [ ] Stickers
+- [x] Import/export
 - [x] Plan mode
 - [x] Month select/stats
 - [x] Hide/show days of the week
