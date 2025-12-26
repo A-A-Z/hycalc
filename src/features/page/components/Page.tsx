@@ -5,10 +5,10 @@ import { Header } from './Header'
 import '../assets/layout.css'
 import '../assets/page.css'
 
-import type { FC, CSSProperties } from 'react'
+import type { FC, CSSProperties, ReactNode } from 'react'
 
 interface PageProps {
-  children: React.ReactNode
+  children: ReactNode
 }
 
 export const Page: FC<PageProps> = ({ children }) => {

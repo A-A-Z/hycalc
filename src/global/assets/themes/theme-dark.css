@@ -35,4 +35,21 @@ body {
   --modal-background: var(--colour-dark-300);
   --modal-text: var(--colour-white);
   --modal-backdrop: rgb(0 0 0 / 0.5);
+
+  --page-bg: linear-gradient(
+    0deg,
+    hsl(256deg 15% 20%) 0%,
+    hsl(256deg 15% 19%) 4%,
+    hsl(256deg 16% 18%) 29%,
+    hsl(256deg 17% 18%) 59%,
+    hsl(256deg 17% 17%) 74%,
+    hsl(256deg 18% 16%) 84%,
+    hsl(256deg 19% 16%) 90%,
+    hsl(256deg 20% 15%) 94%,
+    hsl(256deg 21% 14%) 97%,
+    hsl(256deg 22% 14%) 99%,
+    hsl(256deg 23% 13%) 100%,
+    hsl(256deg 24% 12%) 100%,
+    hsl(256deg 25% 12%) 100%
+  );
 }
