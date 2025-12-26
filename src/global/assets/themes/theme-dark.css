@@ -30,8 +30,6 @@ body {
   --colour-border-hover: var(--colour-dark-600);
   --colour-border-disabled: var(--colour-dark-400);
 
-  --banner-bg: var(--colour-dark-100);
-
   --modal-background: var(--colour-dark-300);
   --modal-text: var(--colour-white);
   --modal-backdrop: rgb(0 0 0 / 0.5);

@@ -6,7 +6,7 @@
   display: flex;
   inset: 0 0 auto 0;
   justify-content: space-between;
-  margin: 16px;
+  margin: var(--header-gutter);
   position: fixed;
   z-index: 10;
 }
