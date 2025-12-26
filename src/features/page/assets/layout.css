@@ -1,7 +1,7 @@
 .page {
   --body-width-small: 800px;
-  --header-height: 35px;
-  --header-gutter: 0 22px;
+  --header-gutter: 16px 16px 0 16px;
+  --header-height: 16px;
   --title-spacing: 25px;
   --title-font-size: 3rem;
   --est-ratio-font-size: 1rem;
@@ -37,7 +37,7 @@
   .page {
     --calendar-gap: 8px;
     --cell-size: 90px;
-    --title-spacing: 12px;
+    --title-spacing: 16px;
     --title-font-size: 1.8rem;
     --est-ratio-font-size: 0.8rem;
     --status-font-size: 0.68rem;

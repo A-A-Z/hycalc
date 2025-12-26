@@ -2,14 +2,13 @@ import { useMemo, use } from 'react'
 import { ConfigContext } from 'features/config'
 import { StatusContext } from 'features/status'
 import { Header } from './Header'
-import { Footer } from './Footer'
 import '../assets/layout.css'
 import '../assets/page.css'
 
-import type { FC, CSSProperties } from 'react'
+import type { FC, CSSProperties, ReactNode } from 'react'
 
 interface PageProps {
-  children: React.ReactNode
+  children: ReactNode
 }
 
 export const Page: FC<PageProps> = ({ children }) => {
@@ -23,8 +22,7 @@ export const Page: FC<PageProps> = ({ children }) => {
   return (
     <div className="page" style={inlineStyle}>
       <Header />
-        <main className="page__body">{children}</main>
-      <Footer />
+      <main className="page__body">{children}</main>
     </div>
   )
 }

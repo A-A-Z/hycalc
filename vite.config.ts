@@ -71,7 +71,7 @@ export default defineConfig({
     environment: 'jsdom',
     setupFiles: './src/setupTests.ts',
     coverage: {
-      provider: 'v8',
+      provider: 'istanbul',
       reporter: ['cobertura', 'html'],
       exclude: [
         '**/dev-dist/**',
