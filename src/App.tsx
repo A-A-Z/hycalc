@@ -16,12 +16,14 @@
 */
 
 import { useId, useCallback, useState } from 'react'
+import { createBrowserRouter } from 'react-router'
+import { RouterProvider } from 'react-router/dom'
 import { format, DATE_FORMATS } from 'lib/date'
 
 import { Page } from 'features/page'
-import { Calendar } from 'features/calendar'
-import { Title } from 'features/title'
-import { Toolbar } from 'features/toolbar'
+// import { Calendar } from 'features/calendar'
+// import { Title } from 'features/title'
+// import { Toolbar } from 'features/toolbar'
 import { ConfigProvider } from 'features/config'
 import { DateRecordsProvider } from 'features/records'
 import { StatusProvider } from 'features/status'
@@ -31,6 +33,13 @@ import 'global/assets/reset.css'
 import 'global/assets/app.css'
 import 'global/assets/common.css'
 import 'global/assets/themes/theme-dark.css'
+
+const router = createBrowserRouter([
+  {
+    path: '/',
+    element: <div>Hello World</div>,
+  },
+])
 
 function App() {
   const gridId = useId()
@@ -47,9 +56,10 @@ function App() {
         <DateRecordsProvider>
           <div onMouseEnter={onEnterPage}>
             <Page>
-              <Title />
+              {/* <Title />
               <Calendar />
-              <Toolbar />
+              <Toolbar /> */}
+              <RouterProvider router={router} />
             </Page>
           </div>
         </DateRecordsProvider>
