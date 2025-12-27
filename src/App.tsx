@@ -27,6 +27,7 @@ import { Page } from 'features/page'
 import { ConfigProvider } from 'features/config'
 import { DateRecordsProvider } from 'features/records'
 import { StatusProvider } from 'features/status'
+import { CalendarView } from './views/CalendarPage'
 
 // import themes and global styles and vars
 import 'global/assets/reset.css'
@@ -36,10 +37,14 @@ import 'global/assets/themes/theme-dark.css'
 
 const router = createBrowserRouter([
   {
-    path: '/',
-    element: <div>Hello World</div>,
+    index: true,
+    Component: CalendarView
   },
-])
+  {
+    path: '/:year/:month',
+    Component: CalendarView
+  }
+], { basename: import.meta.env.BASE_URL })
 
 function App() {
   const gridId = useId()
