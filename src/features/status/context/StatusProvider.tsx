@@ -1,4 +1,5 @@
 import { useMemo, useState, useCallback } from 'react'
+import { replace } from 'react-router'
 import { getYearAndMonth } from 'lib/date'
 import { StatusContext } from './StatusContext'
 import { StatusesInit } from '../constaints'
@@ -50,6 +51,8 @@ export const StatusProvider: FC<StatusProviderProps> = ({ gridId, dateCheck, chi
   const navMonthBack = useCallback(() => {
     setMonthOffset(oldValue => oldValue + 1)
     setDirection('back')
+    // TODO: sigh, router needs to be before status
+    replace('/2033/dec')
   }, [])
 
   const navMonthForward = useCallback(() => {
