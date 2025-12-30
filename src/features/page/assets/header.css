@@ -7,13 +7,18 @@
   inset: 0 0 auto 0;
   justify-content: space-between;
   margin: var(--header-gutter);
+  pointer-events: none;
   position: fixed;
   z-index: 10;
+
+  & > div {
+    align-items: center;
+    display: flex;
+    pointer-events: all;
+  }
 }
 
 .header__left {
-  align-items: center;
-  display: flex;
   gap: 8px;
 
   h1 {
@@ -32,9 +37,7 @@
 }
 
 .header__right {
-  align-items: center;
   color: var(--colour-dark-600x);
-  display: flex;
   font-size: 0.8rem;
   height: fit-content;
   gap: 0.5rem;
