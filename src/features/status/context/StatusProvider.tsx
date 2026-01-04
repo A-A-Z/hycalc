@@ -1,6 +1,7 @@
 import { useMemo, useState, useCallback } from 'react'
-import { replace } from 'react-router'
-import { getYearAndMonth } from 'lib/date'
+import { useDateFromParams, useDateNavigate } from 'features/date'
+// import { useNavigate } from 'react-router'
+// import { getYearAndMonth } from 'lib/date'
 import { StatusContext } from './StatusContext'
 import { StatusesInit } from '../constaints'
 
@@ -18,9 +19,13 @@ export const StatusProvider: FC<StatusProviderProps> = ({ gridId, dateCheck, chi
   const [isCustomMode, setIsCustomMode] = useState(StatusesInit.isCustomMode)
   const [isPlanMode, setIsPlanMode] = useState(StatusesInit.isPlanMode)
   const [direcction, setDirection] = useState<ChangeDirection>('none')
+  // TODO: move to hook?
+  // const navigate = useNavigate()
+  const navToDate = useDateNavigate()
 
   // get current year and month
-  const { year, month } = getYearAndMonth(monthOffset)
+  // const { year, month } = getYearAndMonth(monthOffset)
+  const [, year, month] = useDateFromParams()
 
   // get the first day of the current month/year
   const firstOfTheMonth = useMemo(() => new Date(year, (month - 1), 1), [year, month])
@@ -49,16 +54,18 @@ export const StatusProvider: FC<StatusProviderProps> = ({ gridId, dateCheck, chi
   }, [])
 
   const navMonthBack = useCallback(() => {
+    navToDate(1)
     setMonthOffset(oldValue => oldValue + 1)
     setDirection('back')
-    // TODO: sigh, router needs to be before status
-    replace('/2033/dec')
-  }, [])
+    // TODO: change to hook
+    // navigate('/2033/dec')
+  }, [navToDate])
 
   const navMonthForward = useCallback(() => {
+    navToDate(-1)
     setMonthOffset(oldValue => oldValue - 1)
     setDirection('forward')
-  }, [])
+  }, [navToDate])
 
   const value: StatusContextValues = useMemo(() => ({
     gridId,

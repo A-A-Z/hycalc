@@ -1,5 +1,6 @@
 import { getYear, getMonth, subMonths } from 'date-fns'
 
+// TODO: still needed?
 export const getYearAndMonth = (monthOffset: number = 0): { year: number; month: number } => {
   // Subtract the monthOffset from the current date
   const date = subMonths(new Date(), monthOffset);

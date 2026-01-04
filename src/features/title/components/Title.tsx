@@ -1,4 +1,4 @@
-import { useEffect, use } from 'react'
+import { use } from 'react'
 import { format, DATE_FORMATS } from 'lib/date'
 import { DateRecordsContext } from 'features/records'
 import { StatusContext } from 'features/status'
@@ -13,14 +13,11 @@ export const Title: FC = () => {
   // Get ratio (day of the week param is not important)
   const { ratio, estRatio, hasPlans } = use(DateRecordsContext)
   const { firstOfTheMonth, isPlanMode } = use(StatusContext)
-
-  useEffect(() => {
-    // Update document title with current maonth and ratio
-    document.title = `${format(firstOfTheMonth, DATE_FORMATS.documentTitle)} ${ratio}% - HyCalc`
-  }, [firstOfTheMonth, ratio])
+  const documentTitle = `${format(firstOfTheMonth, DATE_FORMATS.documentTitle)} ${ratio}% - HyCalc`
 
   return (
     <div className="title">
+      <title>{documentTitle}</title>
       <div className="title__left">
         <MonthSpinbutton />
         <DateLabel />
