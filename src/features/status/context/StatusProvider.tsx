@@ -1,12 +1,10 @@
 import { useMemo, useState, useCallback } from 'react'
 import { useDateFromParams, useDateNavigate } from 'features/date'
-// import { useNavigate } from 'react-router'
-// import { getYearAndMonth } from 'lib/date'
 import { StatusContext } from './StatusContext'
 import { StatusesInit } from '../constaints'
 
 import type { FC } from 'react'
-import type { ChangeDirection } from 'global/types'
+
 import type {
   StatusContextValues,
   StatusProviderProps,
@@ -18,17 +16,15 @@ export const StatusProvider: FC<StatusProviderProps> = ({ gridId, dateCheck, chi
   const [isReadOnly, setIsReadOnly] = useState(StatusesInit.isReadOnly)
   const [isCustomMode, setIsCustomMode] = useState(StatusesInit.isCustomMode)
   const [isPlanMode, setIsPlanMode] = useState(StatusesInit.isPlanMode)
-  const [direcction, setDirection] = useState<ChangeDirection>('none')
-  // TODO: move to hook?
-  // const navigate = useNavigate()
-  const navToDate = useDateNavigate()
 
   // get current year and month
-  // const { year, month } = getYearAndMonth(monthOffset)
   const [, year, month] = useDateFromParams()
 
+  // get nav function
+  const navToDate = useDateNavigate()
+
   // get the first day of the current month/year
-  const firstOfTheMonth = useMemo(() => new Date(year, (month - 1), 1), [year, month])
+  const firstOfTheMonth = useMemo(() => new Date(year, (month - 1), 1), [month, year])
 
   const toggleCustomMode: ToggleStatusFn = useCallback(isOn => {
     // turn off other modes
@@ -55,16 +51,10 @@ export const StatusProvider: FC<StatusProviderProps> = ({ gridId, dateCheck, chi
 
   const navMonthBack = useCallback(() => {
     navToDate(1)
-    setMonthOffset(oldValue => oldValue + 1)
-    setDirection('back')
-    // TODO: change to hook
-    // navigate('/2033/dec')
   }, [navToDate])
 
   const navMonthForward = useCallback(() => {
     navToDate(-1)
-    setMonthOffset(oldValue => oldValue - 1)
-    setDirection('forward')
   }, [navToDate])
 
   const value: StatusContextValues = useMemo(() => ({
@@ -73,7 +63,6 @@ export const StatusProvider: FC<StatusProviderProps> = ({ gridId, dateCheck, chi
     month,
     monthOffset,
     firstOfTheMonth,
-    direcction,
     isReadOnly,
     isCustomMode,
     isPlanMode,
@@ -90,7 +79,6 @@ export const StatusProvider: FC<StatusProviderProps> = ({ gridId, dateCheck, chi
     month,
     monthOffset,
     firstOfTheMonth,
-    direcction,
     isReadOnly,
     isCustomMode,
     isPlanMode,

@@ -1,5 +1,5 @@
 import type { ReactNode, Dispatch, SetStateAction } from 'react'
-import type { ChangeDirection } from 'global/types'
+// import type { ChangeDirection } from 'global/types'
 
 export type ToggleStatusFn = (isOn?: boolean) => void
 
@@ -7,9 +7,9 @@ export interface StatusContextValues {
   gridId: string
   month: number
   year: number
-  firstOfTheMonth: Date
+  firstOfTheMonth: Date // TODO: kill?
   monthOffset: number
-  direcction: ChangeDirection
+  // direcction: ChangeDirection
   isReadOnly: boolean
   isCustomMode: boolean
   isPlanMode: boolean
