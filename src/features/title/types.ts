@@ -12,3 +12,11 @@ export interface UseDateLabelReturn {
   /** Which direction the date is moving */
   direction: ChangeDirection
 }
+
+export interface RatioProps {
+  value: number
+  estValue: number
+  isEstVisible: boolean
+}
+
+export interface LiveStatusProps extends RatioProps {}

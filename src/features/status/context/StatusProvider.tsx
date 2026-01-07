@@ -1,10 +1,9 @@
 import { useMemo, useState, useCallback } from 'react'
-import { useDateFromParams, useDateNavigate } from 'features/date'
+import { useDateFromParams } from 'features/date'
 import { StatusContext } from './StatusContext'
 import { StatusesInit } from '../constaints'
 
 import type { FC } from 'react'
-
 import type {
   StatusContextValues,
   StatusProviderProps,
@@ -12,16 +11,12 @@ import type {
 } from '../types'
 
 export const StatusProvider: FC<StatusProviderProps> = ({ gridId, dateCheck, children }) => {
-  const [monthOffset, setMonthOffset] = useState(StatusesInit.monthOffset)
   const [isReadOnly, setIsReadOnly] = useState(StatusesInit.isReadOnly)
   const [isCustomMode, setIsCustomMode] = useState(StatusesInit.isCustomMode)
   const [isPlanMode, setIsPlanMode] = useState(StatusesInit.isPlanMode)
 
   // get current year and month
   const [, year, month] = useDateFromParams()
-
-  // get nav function
-  const navToDate = useDateNavigate()
 
   // get the first day of the current month/year
   const firstOfTheMonth = useMemo(() => new Date(year, (month - 1), 1), [month, year])
@@ -49,27 +44,15 @@ export const StatusProvider: FC<StatusProviderProps> = ({ gridId, dateCheck, chi
     setIsPlanMode(isOn)
   }, [])
 
-  const navMonthBack = useCallback(() => {
-    navToDate(1)
-  }, [navToDate])
-
-  const navMonthForward = useCallback(() => {
-    navToDate(-1)
-  }, [navToDate])
-
   const value: StatusContextValues = useMemo(() => ({
     gridId,
     year,
     month,
-    monthOffset,
     firstOfTheMonth,
     isReadOnly,
     isCustomMode,
     isPlanMode,
     dateCheck,
-    setMonthOffset,
-    navMonthBack,
-    navMonthForward,
     toggleCustomMode,
     togglePlanMode
   }), [
@@ -77,16 +60,12 @@ export const StatusProvider: FC<StatusProviderProps> = ({ gridId, dateCheck, chi
     dateCheck,
     year,
     month,
-    monthOffset,
     firstOfTheMonth,
     isReadOnly,
     isCustomMode,
     isPlanMode,
     toggleCustomMode,
-    togglePlanMode,
-    navMonthBack,
-    navMonthForward,
-    setMonthOffset
+    togglePlanMode
   ])
 
   return <StatusContext value={value}>{children}</StatusContext>

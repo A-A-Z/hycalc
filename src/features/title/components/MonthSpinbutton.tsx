@@ -1,23 +1,15 @@
-import { useMemo, useCallback, use } from 'react'
-import { format, DATE_FORMATS } from 'lib/date'
+import { useCallback, use } from 'react'
+import { useDateNavigate } from 'features/date'
 import { StatusContext } from 'features/status'
 import '../assets/month-spinbutton.css'
 
 import type { FC, KeyboardEventHandler } from 'react'
 
 export const MonthSpinbutton: FC = () => {
-  const {
-    monthOffset,
-    firstOfTheMonth,
-    isReadOnly,
-    navMonthForward,
-    navMonthBack
-  } = use(StatusContext)
-
-  const valueTxt = useMemo(
-    () => format(firstOfTheMonth, DATE_FORMATS.calendarTitleMonth), 
-    [firstOfTheMonth]
-  )
+  const { isReadOnly } = use(StatusContext)
+  const navToDate = useDateNavigate()
+  const navMonthBack = useCallback(() => navToDate(1), [navToDate])
+  const navMonthForward = useCallback(() => navToDate(-1), [navToDate])
 
   // Handle arrow keys on the spinbutton
   const handleKeyDown: KeyboardEventHandler<HTMLDivElement> = useCallback(e => {
@@ -32,17 +24,15 @@ export const MonthSpinbutton: FC = () => {
         navMonthForward()
         break
     }
-  }, [navMonthBack, navMonthForward, isReadOnly])
+  }, [isReadOnly, navMonthBack, navMonthForward])
 
   return (
     <div
       className="month-nav"
-      role="spinbutton"
+      role="group"
       tabIndex={isReadOnly ? -1 : 0}
-      aria-label="Select month"
-      aria-valuenow={monthOffset}
-      aria-valuetext={valueTxt}
       onKeyDown={handleKeyDown}
+      aria-label="Use up and down arrow keys to select month"
     >
       <button
         className="month-nav__btn month-nav__btn--back"

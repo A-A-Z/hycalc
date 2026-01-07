@@ -4,12 +4,7 @@ import { useRatioNumber } from '../hooks/useRatioNumber'
 import '../assets/ratio.css'
 
 import type { FC } from 'react'
-
-interface RatioProps {
-  value: number
-  estValue: number
-  isEstVisible: boolean
-}
+import type { RatioProps } from '../types'
 
 export const Ratio: FC<RatioProps> = ({ value, estValue, isEstVisible }) => {
   const currentValue = useRatioNumber(value)
@@ -18,14 +13,6 @@ export const Ratio: FC<RatioProps> = ({ value, estValue, isEstVisible }) => {
   const isEstUpdating = useMemo(() => (currentEstValue !== estValue), [currentEstValue, estValue])
   return (
     <div className="ratio">
-      <div
-        role="status"
-        className="visually-hidden"
-        aria-live="polite"
-      >
-        {`${value} percent on site.`}
-        {isEstVisible && `Estimated ${estValue} percent on site.`}
-      </div>
       <div className={clsx(
         'ratio__label',
         'ratio__label--normal',

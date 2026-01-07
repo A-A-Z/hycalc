@@ -5,6 +5,7 @@ import { StatusContext } from 'features/status'
 import { MonthSpinbutton } from './MonthSpinbutton'
 import { DateLabel } from './DateLabel'
 import { Ratio } from './Ratio'
+import { LiveStatus } from './LiveStatus'
 import '../assets/title.css'
 
 import type { FC } from 'react'
@@ -14,6 +15,7 @@ export const Title: FC = () => {
   const { ratio, estRatio, hasPlans } = use(DateRecordsContext)
   const { firstOfTheMonth, isPlanMode } = use(StatusContext)
   const documentTitle = `${format(firstOfTheMonth, DATE_FORMATS.documentTitle)} ${ratio}% - HyCalc`
+  const isEstVisible = hasPlans || isPlanMode
 
   return (
     <div className="title">
@@ -22,7 +24,8 @@ export const Title: FC = () => {
         <MonthSpinbutton />
         <DateLabel />
       </div>
-      <Ratio value={ratio} estValue={estRatio} isEstVisible={hasPlans || isPlanMode} />
+      <Ratio value={ratio} estValue={estRatio} isEstVisible={isEstVisible} />
+      <LiveStatus value={ratio} estValue={estRatio} isEstVisible={isEstVisible}  />
     </div>
   )
 }

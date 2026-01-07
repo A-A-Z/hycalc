@@ -13,15 +13,10 @@ describe('<Page />', () => {
     month: 0,
     year: 2023,
     firstOfTheMonth: new Date(2023, 0, 1),
-    monthOffset: 0,
-    direcction: 'none',
     isReadOnly: false,
     isCustomMode: false,
     isPlanMode: false,
     dateCheck: '',
-    setMonthOffset: vi.fn() as StatusContextValues['setMonthOffset'],
-    navMonthBack: vi.fn(),
-    navMonthForward: vi.fn(),
     toggleCustomMode: vi.fn(),
     togglePlanMode: vi.fn()
   }
