@@ -2,7 +2,7 @@
   "name": "hycalc",
   "description": "Hybrid workplace calculator",
   "private": false,
-  "version": "1.5.2",
+  "version": "1.6.0",
   "type": "module",
   "scripts": {
     "dev": "vite --host",
