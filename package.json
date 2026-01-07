@@ -2,8 +2,9 @@
   "name": "hycalc",
   "description": "Hybrid workplace calculator",
   "private": false,
-  "version": "1.6.0",
+  "version": "1.6.1",
   "type": "module",
+  "homepage": "https://a-a-z.github.io/hycalc/",
   "scripts": {
     "dev": "vite --host",
     "build": "tsc && vite build",
