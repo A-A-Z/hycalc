@@ -15,7 +15,7 @@
 * along with this program.  If not, see <https://www.gnu.org/licenses/>.
 */
 
-import { createBrowserRouter } from 'react-router'
+import { createHashRouter } from 'react-router'
 import { RouterProvider } from 'react-router/dom'
 import { CalendarView } from './views/CalendarPage'
 
@@ -25,7 +25,7 @@ import 'global/assets/app.css'
 import 'global/assets/common.css'
 import 'global/assets/themes/theme-dark.css'
 
-const router = createBrowserRouter([
+const router = createHashRouter([
   {
     index: true,
     Component: CalendarView
@@ -34,7 +34,7 @@ const router = createBrowserRouter([
     path: '/:year/:month',
     Component: CalendarView
   }
-], { basename: import.meta.env.BASE_URL })
+])
 
 function App() {
   return (
