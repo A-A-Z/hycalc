@@ -2,7 +2,7 @@ import { useNavigate } from 'react-router'
 import { format, subMonths, isSameMonth } from 'lib/date'
 import { useDateFromParams } from './useDateFromParams'
 
-type DateNavigateFn = (monthOffset: number) => void
+import type { DateNavigateFn } from '../types'
 
 export const useDateNavigate = (): DateNavigateFn => {
   const navigate = useNavigate()
@@ -14,6 +14,7 @@ export const useDateNavigate = (): DateNavigateFn => {
     const newDate = subMonths(currentDate, monthOffset)
 
     if (isSameMonth(today, newDate)) {
+      // if the current month then force the index url
       navigate('/')
       return
     }
