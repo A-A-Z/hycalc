@@ -1,5 +1,4 @@
-import type { ReactNode, Dispatch, SetStateAction } from 'react'
-import type { ChangeDirection } from 'global/types'
+import type { ReactNode } from 'react'
 
 export type ToggleStatusFn = (isOn?: boolean) => void
 
@@ -8,15 +7,10 @@ export interface StatusContextValues {
   month: number
   year: number
   firstOfTheMonth: Date
-  monthOffset: number
-  direcction: ChangeDirection
   isReadOnly: boolean
   isCustomMode: boolean
   isPlanMode: boolean
   dateCheck: string,
-  setMonthOffset: Dispatch<SetStateAction<number>>
-  navMonthBack: () => void
-  navMonthForward: () => void
   toggleCustomMode: ToggleStatusFn
   togglePlanMode: ToggleStatusFn
 }

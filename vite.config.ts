@@ -51,6 +51,17 @@ export default defineConfig({
             type: 'image/png',
             purpose: 'maskable'
           }
+        ],
+        // https://learn.microsoft.com/en-us/microsoft-edge/progressive-web-apps/how-to/handle-files
+        file_handlers: [
+          {
+              action: '/openFile',
+              accept: {
+                'text/*': [
+                  '.json'
+                ]
+              }
+          }
         ]
       }
     }),

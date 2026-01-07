@@ -15,16 +15,9 @@
 * along with this program.  If not, see <https://www.gnu.org/licenses/>.
 */
 
-import { useId, useCallback, useState } from 'react'
-import { format, DATE_FORMATS } from 'lib/date'
-
-import { Page } from 'features/page'
-import { Calendar } from 'features/calendar'
-import { Title } from 'features/title'
-import { Toolbar } from 'features/toolbar'
-import { ConfigProvider } from 'features/config'
-import { DateRecordsProvider } from 'features/records'
-import { StatusProvider } from 'features/status'
+import { createBrowserRouter } from 'react-router'
+import { RouterProvider } from 'react-router/dom'
+import { CalendarView } from './views/CalendarPage'
 
 // import themes and global styles and vars
 import 'global/assets/reset.css'
@@ -32,29 +25,20 @@ import 'global/assets/app.css'
 import 'global/assets/common.css'
 import 'global/assets/themes/theme-dark.css'
 
+const router = createBrowserRouter([
+  {
+    index: true,
+    Component: CalendarView
+  },
+  {
+    path: '/:year/:month',
+    Component: CalendarView
+  }
+], { basename: import.meta.env.BASE_URL })
+
 function App() {
-  const gridId = useId()
-  const [dateCheck, setDateCheck] = useState(format(new Date(), DATE_FORMATS.dateKey))
-
-  // force a update event the user enters the page on a different date
-  const onEnterPage = useCallback(() => {
-    setDateCheck(format(new Date(), DATE_FORMATS.dateKey))
-  }, [])
-
   return (
-    <StatusProvider gridId={gridId} dateCheck={dateCheck}>
-      <ConfigProvider>
-        <DateRecordsProvider>
-          <div onMouseEnter={onEnterPage}>
-            <Page>
-              <Title />
-              <Calendar />
-              <Toolbar />
-            </Page>
-          </div>
-        </DateRecordsProvider>
-      </ConfigProvider>
-    </StatusProvider>
+    <RouterProvider router={router} />
   )
 }
 
