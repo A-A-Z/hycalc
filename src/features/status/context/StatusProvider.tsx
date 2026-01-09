@@ -10,7 +10,7 @@ import type {
   ToggleStatusFn
 } from '../types'
 
-export const StatusProvider: FC<StatusProviderProps> = ({ gridId, dateCheck, children }) => {
+export const StatusProvider: FC<StatusProviderProps> = ({ gridId, children }) => {
   const [isReadOnly, setIsReadOnly] = useState(StatusesInit.isReadOnly)
   const [isCustomMode, setIsCustomMode] = useState(StatusesInit.isCustomMode)
   const [isPlanMode, setIsPlanMode] = useState(StatusesInit.isPlanMode)
@@ -52,12 +52,10 @@ export const StatusProvider: FC<StatusProviderProps> = ({ gridId, dateCheck, chi
     isReadOnly,
     isCustomMode,
     isPlanMode,
-    dateCheck,
     toggleCustomMode,
     togglePlanMode
   }), [
     gridId,
-    dateCheck,
     year,
     month,
     firstOfTheMonth,

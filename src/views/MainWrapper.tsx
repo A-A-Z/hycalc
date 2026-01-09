@@ -1,27 +1,33 @@
-import { useId, useState } from 'react'
+import { useId, useRef } from 'react'
+import { useNavigate } from 'react-router'
 import { Page } from 'features/page'
 import { ConfigProvider } from 'features/config'
 import { DateRecordsProvider } from 'features/records'
 import { StatusProvider } from 'features/status'
-import { format, DATE_FORMATS } from 'lib/date'
+import { isSameDay } from 'lib/date'
 
-import type { FC, ReactNode } from 'react'
+import type { FC, ReactNode, MouseEventHandler } from 'react'
 
 interface MainWrapperProps {
   children: ReactNode
 }
 
 export const MainWrapper: FC<MainWrapperProps> = ({ children }) => {
+  const navigate = useNavigate()
   const gridId = useId()
-  const [dateCheck, setDateCheck] = useState(format(new Date(), DATE_FORMATS.dateKey))
+  const renderDate = useRef(new Date())
 
-  // force a update event the user enters the page on a different date
-  const onEnterPage = () => {
-    setDateCheck(format(new Date(), DATE_FORMATS.dateKey))
+  const onEnterPage: MouseEventHandler<HTMLDivElement> = () => {
+    const currentDate = new Date()
+    if (!isSameDay(renderDate.current, currentDate)) {
+      // if not the same date as first rendered then go to today
+      renderDate.current = currentDate
+      navigate('/')
+    }
   }
 
   return (
-    <StatusProvider gridId={gridId} dateCheck={dateCheck}>
+    <StatusProvider gridId={gridId}>
       <ConfigProvider>
         <DateRecordsProvider>
           <div onMouseEnter={onEnterPage}>

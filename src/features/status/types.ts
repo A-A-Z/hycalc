@@ -10,13 +10,11 @@ export interface StatusContextValues {
   isReadOnly: boolean
   isCustomMode: boolean
   isPlanMode: boolean
-  dateCheck: string,
   toggleCustomMode: ToggleStatusFn
   togglePlanMode: ToggleStatusFn
 }
 
 export interface StatusProviderProps {
   gridId: string
-  dateCheck: string
   children: ReactNode
 }
