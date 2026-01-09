@@ -8,7 +8,6 @@ export const StatusesInit: StatusContextValues = {
   isReadOnly: false,
   isCustomMode: false,
   isPlanMode: false,
-  dateCheck: '',
   toggleCustomMode: () => null,
   togglePlanMode: () => null
 }

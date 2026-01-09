@@ -21,7 +21,6 @@ describe('<MonthSpinbutton />', () => {
     isReadOnly: false,
     isCustomMode: false,
     isPlanMode: false,
-    dateCheck: '',
     toggleCustomMode: vi.fn(),
     togglePlanMode: vi.fn()
   }
