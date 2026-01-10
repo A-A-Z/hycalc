@@ -8,11 +8,11 @@
   border-radius: 4px;
   color: var(--link-colour);
   display: inline-flex;
-  font-size: 0.9rem;
+  font-size: 0.8rem;
   height: auto;
   justify-content: center;
   transition: color 0.2s ease, border 0.2s ease;
-  width: 1.4rem;
+  width: 1.3rem;
 
   &:hover,
   &:focus-visible {
