@@ -1,17 +1,15 @@
 import { Calendar } from 'features/calendar'
 import { Title } from 'features/title'
 import { Toolbar } from 'features/toolbar'
-import { format } from 'lib/date'
 import { MainWrapper } from './MainWrapper'
 
 import type { FC } from 'react'
 
 export const CalendarView: FC = () => {
-  const key = format(new Date(), 'yyyy-MM-dd')
   return (
-    <MainWrapper key={key}>
+    <MainWrapper>
       <Title />
-      <Calendar key={key} />
+      <Calendar />
       <Toolbar />
     </MainWrapper>
   )
