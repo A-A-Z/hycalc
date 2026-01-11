@@ -5,6 +5,7 @@ import { StatusContext } from 'features/status'
 import { MonthSpinbutton } from './MonthSpinbutton'
 import { DateLabel } from './DateLabel'
 import { Ratio } from './Ratio'
+import { HomeLink } from './HomeLink'
 import { LiveStatus } from './LiveStatus'
 import '../assets/title.css'
 
@@ -23,6 +24,7 @@ export const Title: FC = () => {
       <div className="title__left">
         <MonthSpinbutton />
         <DateLabel />
+        <HomeLink />
       </div>
       <Ratio value={ratio} estValue={estRatio} isEstVisible={isEstVisible} />
       <LiveStatus value={ratio} estValue={estRatio} isEstVisible={isEstVisible}  />

@@ -1,0 +1,30 @@
+.home-link {
+  --link-colour: var(--colour-text-primary);
+  --border-colour: transparent;
+
+  align-items: center;
+  aspect-ratio: 1 / 1;
+  outline: 1px solid var(--border-colour);
+  border-radius: 4px;
+  color: var(--link-colour);
+  display: inline-flex;
+  font-size: 0.8rem;
+  height: auto;
+  justify-content: center;
+  transition: color 0.2s ease, border 0.2s ease;
+  width: 1.3rem;
+
+  &:hover,
+  &:focus-visible {
+    --link-colour: var(--colour-text-highlight);
+    --border-colour: var(--colour-border-default);
+  }
+}
+
+.home-link--forward {
+  transform: rotate(90deg);
+}
+
+.home-link--back {
+  transform: rotate(-90deg);
+}

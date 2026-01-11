@@ -27,24 +27,25 @@
   height: auto;
   padding: calc(var(--arrow-size) / 4);
   width: auto;
-}
-.month-nav__btn:hover {
-  --btn-colour: var(--colour-text-highlight);
-}
-.month-nav__btn:disabled {
-  --btn-colour: var(--colour-dark-400);
 
-  cursor: default;
-}
+  &:hover {
+    --btn-colour: var(--colour-text-highlight);
+  }
 
-.month-nav__btn:after  {
-  content: "";
-  border-left: calc(var(--arrow-size) / 2) solid transparent;
-  border-right: calc(var(--arrow-size) / 2) solid transparent;
-  display: block;
-  height: 0;
-  transition: border-color 0.2s ease;
-  width: 0; 
+  &:disabled {
+    --btn-colour: var(--colour-dark-400);
+    cursor: default;
+  }
+
+  &:after  {
+    content: "";
+    border-left: calc(var(--arrow-size) / 2) solid transparent;
+    border-right: calc(var(--arrow-size) / 2) solid transparent;
+    display: block;
+    height: 0;
+    transition: border-color 0.2s ease;
+    width: 0; 
+  }
 }
 
 .month-nav__btn.month-nav__btn--back:after  {
