@@ -3,7 +3,6 @@ import { render } from '@testing-library/react'
 import { useDateFromParams } from 'features/date'
 import { HomeLink } from './HomeLink'
 
-// import type { ReactNode } from 'react'
 import type { LinkProps } from 'react-router'
 
 vi.mock('react-router', () => ({
