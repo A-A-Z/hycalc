@@ -15,16 +15,7 @@ import { Day } from './Day'
 import '../assets/week.css'
 
 import type { FC } from 'react'
-import type { WeekRef, WeekRefFnc, DayRefFnc } from '../types'
-
-interface WeekProps {
-  weekIndex: number
-  date: Date
-  activeMonth: number
-  activeYear: number
-  weekdayRefs: WeekRef
-  handleKeyDown: WeekRefFnc
-}
+import type { WeekProps, DayRefFnc } from '../types'
 
 export const Week: FC<WeekProps> = ({
   weekIndex,

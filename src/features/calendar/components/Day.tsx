@@ -16,15 +16,8 @@ import {
 } from '../constants'
 import '../assets/day.css'
 
-import type { FC, Ref, ReactNode, KeyboardEventHandler, MouseEventHandler } from 'react'
-import type { DayRefFnc } from '../types'
-
-interface DayWrapperProps {
-  isOffMonth: boolean
-  isDayToday: boolean
-  dayIndex: number
-  children: ReactNode
-}
+import type { FC, KeyboardEventHandler, MouseEventHandler } from 'react'
+import type { DayProps, DayWrapperProps } from '../types'
 
 const DayWrapper: FC<DayWrapperProps> = ({ isOffMonth, isDayToday, dayIndex, children }) => (
   <div
@@ -37,16 +30,6 @@ const DayWrapper: FC<DayWrapperProps> = ({ isOffMonth, isDayToday, dayIndex, chi
     aria-colindex={dayIndex + 1}
   >{children}</div>
 )
-
-interface DayProps {
-  dayIndex: number
-  date: Date
-  isTabbed: boolean
-  isOffMonth: boolean
-  isDisabled: boolean
-  handKeyDown: DayRefFnc,
-  ref?: Ref<HTMLButtonElement>
-}
 
 export const Day: FC<DayProps> = ({
   dayIndex,
